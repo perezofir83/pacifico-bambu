@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pacifico Bambu — Operations Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --dark-green: #1B4332;
+  --medium-green: #2D6A4F;
+  --accent-green: #52B788;
+  --light-green: #B7E4C7;
+  --bg: #FAFDF8;
+  --white: #ffffff;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --status-not-started: #9ca3af;
+  --status-in-progress: #3b82f6;
+  --status-done: #22c55e;
+  --status-blocked: #ef4444;
+  --owner-juan: #22c55e;
+  --owner-diego: #f97316;
+  --owner-ofir: #3b82f6;
+  --owner-shared: #86efac;
+  --urgency-urgent: #ef4444;
+  --urgency-medium: #f59e0b;
+  --urgency-not-urgent: #6b7280;
+  --sidebar-width: 420px;
+  --topbar-height: 56px;
+  --filterbar-height: 52px;
+  --tabbar-height: 44px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--gray-800);
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+/* Top Bar */
+.topbar {
+  height: var(--topbar-height);
+  background: var(--dark-green);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+}
+.topbar-title {
+  font-family: 'Space Grotesk', sans-serif;
+  color: var(--white);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+.topbar-title span { color: var(--light-green); font-weight: 400; }
+.topbar-actions { display: flex; gap: 8px; }
+.topbar-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--white);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.topbar-btn:hover { background: rgba(255,255,255,0.22); }
+.topbar-btn.danger { border-color: rgba(239,68,68,0.5); color: #fca5a5; }
+.topbar-btn.danger:hover { background: rgba(239,68,68,0.2); }
+
+/* Tab Bar */
+.tabbar {
+  position: fixed;
+  top: var(--topbar-height);
+  left: 0; right: 0;
+  height: var(--tabbar-height);
+  background: var(--medium-green);
+  display: flex;
+  align-items: stretch;
+  padding: 0 24px;
+  z-index: 99;
+}
+.tab-btn {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.65);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 0 18px;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.15s;
+}
+.tab-btn:hover { color: rgba(255,255,255,0.9); }
+.tab-btn.active {
+  color: var(--white);
+}
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 12px; right: 12px;
+  height: 3px;
+  background: var(--light-green);
+  border-radius: 3px 3px 0 0;
+}
+
+/* Filter Bar */
+.filterbar {
+  position: fixed;
+  top: calc(var(--topbar-height) + var(--tabbar-height));
+  left: 0; right: 0;
+  height: var(--filterbar-height);
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  gap: 12px;
+  z-index: 98;
+}
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.filter-label {
+  font-size: 12px;
+  color: var(--gray-500);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.filter-select {
+  padding: 5px 28px 5px 10px;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  background: var(--white);
+  color: var(--gray-700);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+.filter-select:focus { outline: none; border-color: var(--accent-green); box-shadow: 0 0 0 2px rgba(82,183,136,0.2); }
+.filter-search {
+  padding: 5px 10px;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  width: 200px;
+  margin-left: auto;
+}
+.filter-search:focus { outline: none; border-color: var(--accent-green); box-shadow: 0 0 0 2px rgba(82,183,136,0.2); }
+
+/* Main Content */
+.main {
+  margin-top: calc(var(--topbar-height) + var(--tabbar-height) + var(--filterbar-height));
+  padding: 0;
+  transition: margin-right 0.3s;
+}
+.main.sidebar-open { margin-right: var(--sidebar-width); }
+
+/* View Panels */
+.view-panel { display: none; }
+.view-panel.active { display: block; }
+
+/* Gantt View */
+.gantt-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: calc(100vh - var(--topbar-height) - var(--tabbar-height) - var(--filterbar-height));
+}
+.gantt-table {
+  width: 100%;
+  min-width: 1200px;
+  border-collapse: collapse;
+}
+.gantt-table th {
+  position: sticky;
+  top: 0;
+  background: var(--gray-50);
+  border-bottom: 2px solid var(--gray-200);
+  padding: 8px 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  z-index: 10;
+  white-space: nowrap;
+}
+.gantt-table th.col-task { text-align: left; padding-left: 16px; min-width: 340px; position: sticky; left: 0; z-index: 11; }
+.gantt-table th.col-owner { min-width: 90px; }
+.gantt-table th.col-budget { min-width: 90px; }
+.gantt-table th.col-timeline { min-width: 44px; }
+.gantt-table th.current-period { background: rgba(82,183,136,0.12); color: var(--medium-green); }
+
+/* Category Header */
+.category-header {
+  background: var(--gray-50);
+  border-bottom: 1px solid var(--gray-200);
+  cursor: pointer;
+  user-select: none;
+}
+.category-header td {
+  padding: 10px 16px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--dark-green);
+}
+.category-header .cat-toggle {
+  display: inline-block;
+  width: 18px;
+  transition: transform 0.2s;
+  color: var(--gray-400);
+}
+.category-header .cat-toggle.collapsed { transform: rotate(-90deg); }
+.category-header .cat-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--gray-500);
+  margin-left: 8px;
+}
+.category-header .cat-budget {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--accent-green);
+  margin-left: 12px;
+}
+
+/* Subcategory Header */
+.subcategory-header {
+  background: var(--white);
+  border-bottom: 1px solid var(--gray-100);
+}
+.subcategory-header td {
+  padding: 6px 16px 6px 36px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-600);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Task Row */
+.task-row {
+  border-bottom: 1px solid var(--gray-100);
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.task-row:hover { background: rgba(82,183,136,0.04); }
+.task-row.selected { background: rgba(82,183,136,0.08); }
+.task-row td {
+  padding: 8px 6px;
+  font-size: 13px;
+  vertical-align: middle;
+}
+.task-row td.col-task {
+  padding-left: 16px;
+  position: sticky;
+  left: 0;
+  background: inherit;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.task-row:hover td.col-task { background: rgba(82,183,136,0.04); }
+.task-row.selected td.col-task { background: rgba(82,183,136,0.08); }
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.status-dot.not-started { background: var(--status-not-started); }
+.status-dot.in-progress { background: var(--status-in-progress); }
+.status-dot.done { background: var(--status-done); }
+.status-dot.blocked { background: var(--status-blocked); }
+
+.task-name {
+  font-size: 13px;
+  color: var(--gray-800);
+  line-height: 1.3;
+}
+.task-name.milestone {
+  font-weight: 600;
+  color: var(--dark-green);
+}
+.task-question-indicator {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: #f59e0b;
+  border-radius: 50%;
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+
+.owner-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.owner-badge.juan { background: rgba(34,197,94,0.12); color: #16a34a; }
+.owner-badge.diego { background: rgba(249,115,22,0.12); color: #ea580c; }
+.owner-badge.ofir { background: rgba(59,130,246,0.12); color: #2563eb; }
+.owner-badge.shared { background: rgba(134,239,172,0.15); color: #15803d; }
+.owner-badge.all { background: rgba(134,239,172,0.15); color: #15803d; }
+
+.budget-cell {
+  font-size: 12px;
+  color: var(--gray-600);
+  text-align: right;
+  padding-right: 12px !important;
+  white-space: nowrap;
+}
+
+/* Gantt bars */
+.gantt-cell {
+  padding: 4px 1px !important;
+  position: relative;
+}
+.gantt-cell.current-period { background: rgba(82,183,136,0.06); }
+.gantt-bar {
+  height: 20px;
+  border-radius: 4px;
+  opacity: 0.85;
+}
+.gantt-bar.juan { background: var(--owner-juan); }
+.gantt-bar.diego { background: var(--owner-diego); }
+.gantt-bar.ofir { background: var(--owner-ofir); }
+.gantt-bar.shared { background: var(--owner-shared); }
+.gantt-bar.all { background: var(--owner-shared); }
+
+.milestone-diamond {
+  width: 16px; height: 16px;
+  transform: rotate(45deg);
+  margin: 2px auto;
+  border-radius: 2px;
+}
+.milestone-diamond.juan { background: var(--owner-juan); }
+.milestone-diamond.diego { background: var(--owner-diego); }
+.milestone-diamond.ofir { background: var(--owner-ofir); }
+.milestone-diamond.shared { background: var(--owner-shared); }
+.milestone-diamond.all { background: var(--owner-shared); }
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: var(--topbar-height);
+  right: calc(-1 * var(--sidebar-width));
+  width: var(--sidebar-width);
+  height: calc(100vh - var(--topbar-height));
+  background: var(--white);
+  border-left: 1px solid var(--gray-200);
+  box-shadow: -4px 0 16px rgba(0,0,0,0.06);
+  z-index: 200;
+  transition: right 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.sidebar.open { right: 0; }
+.sidebar-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.sidebar-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--dark-green);
+  line-height: 1.3;
+}
+.sidebar-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: var(--gray-400);
+  cursor: pointer;
+  padding: 2px 6px;
+  line-height: 1;
+  border-radius: 4px;
+}
+.sidebar-close:hover { background: var(--gray-100); color: var(--gray-600); }
+.sidebar-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 20px;
+}
+.sidebar-section {
+  margin-bottom: 20px;
+}
+.sidebar-section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--gray-400);
+  margin-bottom: 8px;
+}
+.sidebar-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.sidebar-field-label {
+  font-size: 12px;
+  color: var(--gray-500);
+  min-width: 70px;
+}
+.sidebar-field-value {
+  font-size: 13px;
+  color: var(--gray-800);
+}
+.sidebar-status-select {
+  padding: 4px 8px;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+}
+.sidebar-question {
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--gray-700);
+  line-height: 1.4;
+}
+.sidebar-question::before {
+  content: '?';
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px; height: 18px;
+  background: #f59e0b;
+  color: white;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 8px;
+}
+
+/* Comments */
+.comment-list { margin-bottom: 12px; }
+.comment-item {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.comment-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.comment-author {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--medium-green);
+}
+.comment-time {
+  font-size: 11px;
+  color: var(--gray-400);
+}
+.comment-text {
+  font-size: 13px;
+  color: var(--gray-700);
+  line-height: 1.4;
+}
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.comment-author-input, .comment-text-input {
+  padding: 8px 10px;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  resize: vertical;
+}
+.comment-author-input:focus, .comment-text-input:focus {
+  outline: none;
+  border-color: var(--accent-green);
+}
+.comment-text-input { min-height: 60px; }
+.comment-submit {
+  align-self: flex-end;
+  padding: 6px 16px;
+  background: var(--accent-green);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.comment-submit:hover { background: var(--medium-green); }
+
+/* Open Questions View */
+.questions-view { padding: 24px; }
+.questions-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.questions-table th {
+  background: var(--gray-50);
+  padding: 10px 14px;
+  text-align: left;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--gray-200);
+}
+.questions-table td {
+  padding: 10px 14px;
+  font-size: 13px;
+  border-bottom: 1px solid var(--gray-100);
+  vertical-align: top;
+}
+.urgency-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.urgency-badge.urgent { background: rgba(239,68,68,0.1); color: var(--urgency-urgent); }
+.urgency-badge.medium { background: rgba(245,158,11,0.1); color: var(--urgency-medium); }
+.urgency-badge.not-urgent { background: var(--gray-100); color: var(--urgency-not-urgent); }
+
+/* Milestones View */
+.milestones-view { padding: 24px; }
+.milestone-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-left: 4px solid var(--accent-green);
+  transition: box-shadow 0.15s;
+}
+.milestone-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.milestone-card.done { border-left-color: var(--status-done); opacity: 0.7; }
+.milestone-card.blocked { border-left-color: var(--status-blocked); }
+.milestone-date {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--medium-green);
+  min-width: 90px;
+  text-align: center;
+}
+.milestone-diamond-icon {
+  width: 14px; height: 14px;
+  background: var(--accent-green);
+  transform: rotate(45deg);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.milestone-info { flex: 1; }
+.milestone-info-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 2px;
+}
+.milestone-info-owner {
+  font-size: 12px;
+  color: var(--gray-500);
+}
+.milestone-info-desc {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+.milestone-status-select {
+  padding: 4px 8px;
+  border: 1px solid var(--gray-300);
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+}
+
+/* Budget View */
+.budget-view { padding: 24px; }
+.budget-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.budget-summary-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.budget-summary-label {
+  font-size: 12px;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.budget-summary-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--dark-green);
+}
+.budget-category-list { }
+.budget-category-row {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.budget-cat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.budget-cat-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--gray-800);
+}
+.budget-cat-amount {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--medium-green);
+}
+.budget-bar-bg {
+  height: 8px;
+  background: var(--gray-100);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.budget-bar-fill {
+  height: 100%;
+  background: var(--accent-green);
+  border-radius: 4px;
+  transition: width 0.3s;
+}
+.budget-task-list {
+  margin-top: 10px;
+}
+.budget-task-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 12px;
+  color: var(--gray-600);
+  border-bottom: 1px solid var(--gray-50);
+}
+
+/* Hidden file input */
+.hidden-input { display: none; }
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.25);
+  z-index: 150;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.overlay.active { opacity: 1; pointer-events: all; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  :root { --sidebar-width: 360px; }
+  .filter-search { width: 140px; }
+}
+@media (max-width: 768px) {
+  :root { --sidebar-width: 100vw; }
+  .topbar-title span { display: none; }
+  .filterbar { flex-wrap: wrap; height: auto; padding: 8px 16px; gap: 8px; }
+  .filter-search { width: 100%; margin-left: 0; }
+  .gantt-table th.col-task { min-width: 200px; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gray-400); }
+
+/* Animation helpers */
+.fade-in { animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="topbar">
+  <div class="topbar-title">Pacifico Bambu <span>— Operations Tracker</span></div>
+  <div class="topbar-actions">
+    <button class="topbar-btn" onclick="exportData()" title="Export current state as JSON">Export</button>
+    <button class="topbar-btn" onclick="document.getElementById('importInput').click()" title="Import state from JSON">Import</button>
+    <button class="topbar-btn danger" onclick="resetData()" title="Reset to default data">Reset</button>
+    <input type="file" id="importInput" class="hidden-input" accept=".json" onchange="importData(event)">
+  </div>
+</div>
+
+<!-- Tab Bar -->
+<div class="tabbar">
+  <button class="tab-btn active" data-view="gantt">Gantt</button>
+  <button class="tab-btn" data-view="questions">Open Questions</button>
+  <button class="tab-btn" data-view="milestones">Milestones</button>
+  <button class="tab-btn" data-view="budget">Budget</button>
+</div>
+
+<!-- Filter Bar -->
+<div class="filterbar">
+  <div class="filter-group">
+    <span class="filter-label">Year</span>
+    <select class="filter-select" id="filterYear">
+      <option value="all">All</option>
+      <option value="2026" selected>2026</option>
+      <option value="2027">2027</option>
+      <option value="2028-2032">2028-2032</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Category</span>
+    <select class="filter-select" id="filterCategory">
+      <option value="all">All</option>
+      <option value="Agriculture">Agriculture</option>
+      <option value="Treatment">Treatment</option>
+      <option value="Infrastructure">Infrastructure</option>
+      <option value="Legal">Legal</option>
+      <option value="Finance">Finance</option>
+      <option value="Sales">Sales</option>
+      <option value="Certifications">Certifications</option>
+      <option value="Carbon">Carbon</option>
+      <option value="Team">Team</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Owner</span>
+    <select class="filter-select" id="filterOwner">
+      <option value="all">All</option>
+      <option value="Juan">Juan</option>
+      <option value="Diego">Diego</option>
+      <option value="Ofir">Ofir</option>
+    </select>
+  </div>
+  <div class="filter-group">
+    <span class="filter-label">Status</span>
+    <select class="filter-select" id="filterStatus">
+      <option value="all">All</option>
+      <option value="not-started">Not Started</option>
+      <option value="in-progress">In Progress</option>
+      <option value="done">Done</option>
+      <option value="blocked">Blocked</option>
+    </select>
+  </div>
+  <input type="text" class="filter-search" id="filterSearch" placeholder="Search tasks...">
+</div>
+
+<!-- Main Content -->
+<div class="main" id="mainContent">
+  <div class="view-panel active" id="view-gantt"></div>
+  <div class="view-panel" id="view-questions"></div>
+  <div class="view-panel" id="view-milestones"></div>
+  <div class="view-panel" id="view-budget"></div>
+</div>
+
+<!-- Sidebar Overlay -->
+<div class="overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title" id="sidebarTitle"></div>
+    <button class="sidebar-close" onclick="closeSidebar()">&times;</button>
+  </div>
+  <div class="sidebar-body" id="sidebarBody"></div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const DEFAULT_TASKS = [
+  // ===== 2026 - Agriculture =====
+  {id:"26-ag-01",year:"2026",category:"Agriculture",subcategory:"1.1 Mapping & Inventory",task:"Clear, cut, map & count existing 10 ha — full inventory",owner:"Juan + Diego",budget:0,question:"How many mature poles exist?",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-ag-02",year:"2026",category:"Agriculture",subcategory:"1.1 Mapping & Inventory",task:"Count plants & poles per hectare (census)",owner:"Juan",budget:0,question:"GPS mapping needed?",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-ag-03",year:"2026",category:"Agriculture",subcategory:"1.1 Mapping & Inventory",task:"Assess health, density & maturity of existing bamboo",owner:"Juan + Diego",budget:0,question:"Which areas mature enough?",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-ag-04",year:"2026",category:"Agriculture",subcategory:"1.2 Prepare 20 ha for 2027",task:"Select & mark next 20 ha for 2027 planting",owner:"Juan",budget:0,question:"Proximity to roads? Water? Slope?",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-ag-05",year:"2026",category:"Agriculture",subcategory:"1.2 Prepare 20 ha for 2027",task:"Clear & clean selected 20 ha",owner:"Juan + workers",budget:0,question:"",timeline:["May","Jun","Jul","Aug","Sep"],milestone:false,status:"not-started"},
+  {id:"26-ag-06",year:"2026",category:"Agriculture",subcategory:"1.2 Prepare 20 ha for 2027",task:"Soil preparation: plowing, leveling",owner:"Juan + workers",budget:0,question:"Tractor rental needed?",timeline:["Aug","Sep","Oct","Nov"],milestone:false,status:"not-started"},
+  {id:"26-ag-07",year:"2026",category:"Agriculture",subcategory:"1.2 Prepare 20 ha for 2027",task:"Identify & secure seedling supplier for 2027",owner:"Juan + Ofir",budget:0,question:"Which supplier? Lead time?",timeline:["Jun","Jul"],milestone:false,status:"not-started"},
+  {id:"26-ag-08",year:"2026",category:"Agriculture",subcategory:"1.2 Prepare 20 ha for 2027",task:"Water source assessment for 30 ha",owner:"Juan",budget:0,question:"Sufficient? Irrigation needed?",timeline:["May","Jun"],milestone:false,status:"not-started"},
+  {id:"26-ag-09",year:"2026",category:"Agriculture",subcategory:"1.3 First Harvest",task:"Selective harvest from existing 10 ha: ~1,000 poles",owner:"Juan + workers",budget:0,question:"Harvest in fall (fewer pests)",timeline:["Sep","Oct","Nov"],milestone:false,status:"not-started"},
+  {id:"26-ag-10",year:"2026",category:"Agriculture",subcategory:"1.3 First Harvest",task:"Grade, mark & store harvested poles",owner:"Juan + Diego",budget:0,question:"Grading criteria?",timeline:["Sep","Oct","Nov"],milestone:false,status:"not-started"},
+  {id:"26-ag-11",year:"2026",category:"Agriculture",subcategory:"1.3 First Harvest",task:"Prepare poles for treatment",owner:"Juan + workers",budget:0,question:"",timeline:["Sep","Oct","Nov"],milestone:false,status:"not-started"},
+  {id:"26-ag-12",year:"2026",category:"Agriculture",subcategory:"1.4 Nursery",task:"Build nursery infrastructure",owner:"Diego",budget:300000,question:"",timeline:["Jun","Jul","Aug","Sep"],milestone:false,status:"not-started"},
+  {id:"26-ag-13",year:"2026",category:"Agriculture",subcategory:"1.4 Nursery",task:"First propagation trial from existing root stock",owner:"Juan",budget:0,question:"Need specialist? Contact CEBAMEX?",timeline:["Sep","Oct","Nov"],milestone:false,status:"not-started"},
+
+  // ===== 2026 - Treatment =====
+  {id:"26-tr-01",year:"2026",category:"Treatment",subcategory:"",task:"Build 10 small treatment pools (30 poles x 7 days each)",owner:"Diego",budget:1300000,question:"Materials? Local contractor?",timeline:["Apr","May","Jun"],milestone:false,status:"not-started"},
+  {id:"26-tr-02",year:"2026",category:"Treatment",subcategory:"",task:"Purchase treatment chemicals (boric acid + borax)",owner:"Diego",budget:0,question:"Supplier? Annual quantity?",timeline:["Jun"],milestone:false,status:"not-started"},
+  {id:"26-tr-03",year:"2026",category:"Treatment",subcategory:"",task:"Build drying yard",owner:"Diego",budget:15000,question:"",timeline:["May","Jun"],milestone:false,status:"not-started"},
+  {id:"26-tr-04",year:"2026",category:"Treatment",subcategory:"",task:"Treat & dry first harvest poles (~1,000 poles)",owner:"Diego + Juan",budget:0,question:"How many batches?",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"26-tr-05",year:"2026",category:"Treatment",subcategory:"",task:"Document treatment process (QC protocol + photos)",owner:"Diego + Ofir",budget:0,question:"",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"26-tr-06",year:"2026",category:"Treatment",subcategory:"",task:"Define treatment quality standards & rejection criteria",owner:"Diego",budget:0,question:"",timeline:["Aug","Sep"],milestone:false,status:"not-started"},
+
+  // ===== 2026 - Infrastructure =====
+  {id:"26-in-01",year:"2026",category:"Infrastructure",subcategory:"",task:"Road improvements for truck access to plantation",owner:"Juan",budget:500000,question:"Which sections? Contractor?",timeline:["Apr","May","Jun","Jul"],milestone:false,status:"not-started"},
+  {id:"26-in-02",year:"2026",category:"Infrastructure",subcategory:"",task:"Upgrade Zapotal work yard",owner:"Diego",budget:0,question:"What is missing?",timeline:["May","Jun"],milestone:false,status:"not-started"},
+  {id:"26-in-03",year:"2026",category:"Infrastructure",subcategory:"",task:"Lighting, electricity, fencing for treatment area",owner:"Diego",budget:0,question:"Included in pool budget?",timeline:["Jun","Jul"],milestone:false,status:"not-started"},
+
+  // ===== 2026 - Legal =====
+  {id:"26-le-01",year:"2026",category:"Legal",subcategory:"4.1 Land Title",task:"Verify: is the land ejidal or comunal?",owner:"Ofir + Juan",budget:0,question:"Changes entire process!",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-le-02",year:"2026",category:"Legal",subcategory:"4.1 Land Title",task:"Find local lawyer (agricultural land experience)",owner:"Ofir",budget:0,question:"Recommendations? Cost?",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-le-03",year:"2026",category:"Legal",subcategory:"4.1 Land Title",task:"Acta de posesion (municipal possession certificate)",owner:"Juan + Ofir",budget:2000,question:"",timeline:["Apr","May"],milestone:false,status:"not-started"},
+  {id:"26-le-04",year:"2026",category:"Legal",subcategory:"4.1 Land Title",task:"Escritura publica (notarized public deed)",owner:"Ofir",budget:20000,question:"How long does notary take?",timeline:["May","Jun","Jul"],milestone:false,status:"not-started"},
+  {id:"26-le-05",year:"2026",category:"Legal",subcategory:"4.1 Land Title",task:"Inscripcion RPP (public property registry)",owner:"Ofir",budget:10000,question:"",timeline:["Jul","Aug","Sep"],milestone:false,status:"not-started"},
+  {id:"26-le-06",year:"2026",category:"Legal",subcategory:"4.1 Land Title",task:"Certificado catastral (cadastral certificate)",owner:"Ofir",budget:5000,question:"",timeline:["Jun","Jul"],milestone:false,status:"not-started"},
+  {id:"26-le-07",year:"2026",category:"Legal",subcategory:"4.1 Land Title",task:"40-year lease agreement",owner:"Ofir + Juan",budget:8000,question:"Termination clauses?",timeline:["Aug","Sep","Oct"],milestone:false,status:"not-started"},
+  {id:"26-le-08",year:"2026",category:"Legal",subcategory:"4.1 Land Title",task:"MILESTONE: Land title complete",owner:"Ofir",budget:0,question:"",timeline:["Oct"],milestone:true,status:"not-started"},
+  {id:"26-le-09",year:"2026",category:"Legal",subcategory:"4.2 Certifications",task:"Contact CEBAMEX — species validation",owner:"Ofir",budget:0,question:"",timeline:["May","Jun"],milestone:false,status:"not-started"},
+  {id:"26-le-10",year:"2026",category:"Legal",subcategory:"4.2 Certifications",task:"Obtain technical validation letter from CEBAMEX",owner:"Ofir",budget:15000,question:"Cost? Timeline?",timeline:["Jul","Aug","Sep"],milestone:false,status:"not-started"},
+  {id:"26-le-11",year:"2026",category:"Legal",subcategory:"4.2 Certifications",task:"FSC gap analysis (pre-assessment)",owner:"Ofir",budget:25000,question:"Only after land title",timeline:["Nov","Dec"],milestone:false,status:"not-started"},
+
+  // ===== 2026 - Finance =====
+  {id:"26-fi-01",year:"2026",category:"Finance",subcategory:"",task:"Deploy bridge funding (5M MXN)",owner:"Ofir",budget:5000000,question:"Bank account? Release mechanism?",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-fi-02",year:"2026",category:"Finance",subcategory:"",task:"Finalize interactive financial model",owner:"Ofir",budget:0,question:"",timeline:["Apr","May"],milestone:false,status:"not-started"},
+  {id:"26-fi-03",year:"2026",category:"Finance",subcategory:"",task:"Build investor pitch deck",owner:"Ofir",budget:0,question:"",timeline:["May","Jun"],milestone:false,status:"not-started"},
+  {id:"26-fi-04",year:"2026",category:"Finance",subcategory:"",task:"Prepare due diligence materials",owner:"Ofir",budget:0,question:"Required documents?",timeline:["Jun","Jul","Aug"],milestone:false,status:"not-started"},
+  {id:"26-fi-05",year:"2026",category:"Finance",subcategory:"",task:"Company formation (SA de CV / SAPI / SPR)",owner:"Ofir",budget:0,question:"Which structure?",timeline:["May","Jun","Jul"],milestone:false,status:"not-started"},
+  {id:"26-fi-06",year:"2026",category:"Finance",subcategory:"",task:"Set up accounting system",owner:"Ofir",budget:0,question:"Local accountant? Software?",timeline:["Jun","Jul"],milestone:false,status:"not-started"},
+  {id:"26-fi-07",year:"2026",category:"Finance",subcategory:"",task:"Q3 quarterly report to bridge investors",owner:"Ofir",budget:0,question:"",timeline:["Sep"],milestone:false,status:"not-started"},
+
+  // ===== 2026 - Sales =====
+  {id:"26-sa-01",year:"2026",category:"Sales",subcategory:"6.1 Digital Assets",task:"WhatsApp Business account + product catalog PDF",owner:"Ofir",budget:0,question:"",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-sa-02",year:"2026",category:"Sales",subcategory:"6.1 Digital Assets",task:"Google Business Profile (Oaxaca)",owner:"Ofir",budget:0,question:"Address for verification?",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-sa-03",year:"2026",category:"Sales",subcategory:"6.1 Digital Assets",task:"Domain + business email (pacificobambu.com)",owner:"Ofir",budget:1500,question:"",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-sa-04",year:"2026",category:"Sales",subcategory:"6.1 Digital Assets",task:"LinkedIn Company Page",owner:"Ofir",budget:0,question:"",timeline:["Apr","May"],milestone:false,status:"not-started"},
+  {id:"26-sa-05",year:"2026",category:"Sales",subcategory:"6.1 Digital Assets",task:"1-page product sheet (PDF in Spanish)",owner:"Ofir",budget:0,question:"Species, treatment, pricing, MOQ",timeline:["May"],milestone:false,status:"not-started"},
+  {id:"26-sa-06",year:"2026",category:"Sales",subcategory:"Sales — Outreach",task:"Map architects & builders in Oaxaca",owner:"Diego + Ofir",budget:0,question:"",timeline:["May","Jun","Jul","Aug"],milestone:false,status:"not-started"},
+  {id:"26-sa-07",year:"2026",category:"Sales",subcategory:"Sales — Outreach",task:"First 3 paid sales",owner:"Diego + Ofir",budget:0,question:"",timeline:["Oct","Nov","Dec"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Agriculture =====
+  {id:"27-ag-01",year:"2027",category:"Agriculture",subcategory:"",task:"Order 10,000 seedlings for 20 ha (external supplier)",owner:"Juan + Ofir",budget:350000,question:"Volume discount?",timeline:["Jan","Feb","Mar"],milestone:false,status:"not-started"},
+  {id:"27-ag-02",year:"2027",category:"Agriculture",subcategory:"",task:"Final soil prep for 20 ha",owner:"Juan + workers",budget:0,question:"",timeline:["Mar","Apr"],milestone:false,status:"not-started"},
+  {id:"27-ag-03",year:"2027",category:"Agriculture",subcategory:"",task:"PLANT 20 new ha (May-August) — FIRST NEW PLANTING",owner:"Juan + workers",budget:0,question:"",timeline:["May","Jun","Jul","Aug"],milestone:false,status:"not-started"},
+  {id:"27-ag-04",year:"2027",category:"Agriculture",subcategory:"",task:"MILESTONE: 30 ha cumulative",owner:"Juan",budget:0,question:"",timeline:["Aug"],milestone:true,status:"not-started"},
+  {id:"27-ag-05",year:"2027",category:"Agriculture",subcategory:"",task:"Irrigation & monitoring of new seedlings",owner:"Juan + workers",budget:0,question:"",timeline:["May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"27-ag-06",year:"2027",category:"Agriculture",subcategory:"",task:"Ongoing maintenance: existing 10 ha",owner:"Juan + workers",budget:0,question:"",timeline:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"27-ag-07",year:"2027",category:"Agriculture",subcategory:"",task:"Harvest from base 10 ha (yr 6): ~3,000 gross poles",owner:"Juan + workers",budget:0,question:"",timeline:["Sep","Oct","Nov"],milestone:false,status:"not-started"},
+  {id:"27-ag-08",year:"2027",category:"Agriculture",subcategory:"",task:"Continue nursery propagation",owner:"Juan",budget:0,question:"How many baby bamboo growing?",timeline:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"27-ag-09",year:"2027",category:"Agriculture",subcategory:"",task:"Select & prepare next 25 ha for 2028 planting",owner:"Juan",budget:0,question:"",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Treatment =====
+  {id:"27-tr-01",year:"2027",category:"Treatment",subcategory:"",task:"Treat + dry 2,550 net poles",owner:"Diego + Juan",budget:0,question:"~5 full cycles",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"27-tr-02",year:"2027",category:"Treatment",subcategory:"",task:"Upgrade QC: tagging + tracking system",owner:"Diego",budget:0,question:"",timeline:["Feb","Mar"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Infrastructure =====
+  {id:"27-in-01",year:"2027",category:"Infrastructure",subcategory:"",task:"Warehouse Phase 1 — El Azulillo",owner:"Diego",budget:130000,question:"",timeline:["Jan","Feb","Mar","Apr"],milestone:false,status:"not-started"},
+  {id:"27-in-02",year:"2027",category:"Infrastructure",subcategory:"",task:"Bamboo cabin + kitchen (on-site)",owner:"Diego + Juan",budget:120000,question:"",timeline:["Apr","May","Jun"],milestone:false,status:"not-started"},
+  {id:"27-in-03",year:"2027",category:"Infrastructure",subcategory:"",task:"Vehicles: truck + 2 pickups",owner:"Ofir",budget:3000000,question:"New/used? Leasing?",timeline:["May","Jun"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Finance =====
+  {id:"27-fi-01",year:"2027",category:"Finance",subcategory:"",task:"Quarterly reports to bridge investors",owner:"Ofir",budget:0,question:"",timeline:["Mar","Jun","Sep"],milestone:false,status:"not-started"},
+  {id:"27-fi-02",year:"2027",category:"Finance",subcategory:"",task:"Annual summary + major round prep materials",owner:"Ofir",budget:0,question:"1 year of real data",timeline:["Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"27-fi-03",year:"2027",category:"Finance",subcategory:"",task:"Begin investor conversations for 2028 major round",owner:"Ofir",budget:0,question:"How much? What equity?",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Sales =====
+  {id:"27-sa-01",year:"2027",category:"Sales",subcategory:"",task:"Sell 2,550 poles x 400 MXN = 1,020,000 MXN",owner:"Diego + Ofir",budget:0,question:"",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"27-sa-02",year:"2027",category:"Sales",subcategory:"",task:"Expand to Puebla & Veracruz buyers",owner:"Ofir + Diego",budget:0,question:"",timeline:["Jul","Aug","Sep","Oct"],milestone:false,status:"not-started"},
+  {id:"27-sa-03",year:"2027",category:"Sales",subcategory:"",task:"Partner with 3+ architects (flagship projects)",owner:"Ofir + Diego",budget:0,question:"",timeline:["May","Jun","Jul","Aug"],milestone:false,status:"not-started"},
+  {id:"27-sa-04",year:"2027",category:"Sales",subcategory:"",task:"Ongoing client management + repeat orders",owner:"Diego",budget:0,question:"",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"27-sa-05",year:"2027",category:"Sales",subcategory:"",task:"Create case study from first project",owner:"Ofir",budget:0,question:"Need client permission",timeline:["Nov","Dec"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Certifications =====
+  {id:"27-ce-01",year:"2027",category:"Certifications",subcategory:"",task:"FSC formal audit",owner:"Ofir",budget:60000,question:"Rainforest Alliance / SCS?",timeline:["Jan","Feb","Mar","Apr","May","Jun"],milestone:false,status:"not-started"},
+  {id:"27-ce-02",year:"2027",category:"Certifications",subcategory:"",task:"MILESTONE: FSC certificate obtained",owner:"Ofir",budget:0,question:"",timeline:["Jun"],milestone:true,status:"not-started"},
+  {id:"27-ce-03",year:"2027",category:"Certifications",subcategory:"",task:"Early ASTM testing (prep for US export)",owner:"Ofir",budget:0,question:"Which lab in Mexico?",timeline:["Jul","Aug","Sep"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Carbon =====
+  {id:"27-ca-01",year:"2027",category:"Carbon",subcategory:"",task:"Sign aggregator contract (3yr + exit clause)",owner:"Ofir",budget:0,question:"Only sign after 30+ ha",timeline:["Jul","Aug"],milestone:false,status:"not-started"},
+  {id:"27-ca-02",year:"2027",category:"Carbon",subcategory:"",task:"Begin PDD (Project Design Document)",owner:"Ofir",budget:0,question:"Project developer cost?",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Team =====
+  {id:"27-te-01",year:"2027",category:"Team",subcategory:"",task:"Hire permanent nursery worker",owner:"Juan",budget:156000,question:"Annual cost",timeline:["Jan","Feb"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Agriculture =====
+  {id:"28-ag-01",year:"2028-2032",category:"Agriculture",subcategory:"",task:"Plant 25 ha (2028) — external seedlings",owner:"Juan",budget:0,question:"",timeline:["28Q2","28Q3"],milestone:false,status:"not-started"},
+  {id:"29-ag-01",year:"2028-2032",category:"Agriculture",subcategory:"",task:"Plant 25 ha (2029) — transition to own seedlings",owner:"Juan",budget:0,question:"What % internal?",timeline:["29Q2","29Q3"],milestone:false,status:"not-started"},
+  {id:"30-ag-01",year:"2028-2032",category:"Agriculture",subcategory:"",task:"Plant 30 ha (2030) — own baby bamboo",owner:"Juan",budget:0,question:"",timeline:["30Q2","30Q3"],milestone:false,status:"not-started"},
+  {id:"31-ag-01",year:"2028-2032",category:"Agriculture",subcategory:"",task:"Plant 35 ha (2031) — own baby bamboo",owner:"Juan",budget:0,question:"",timeline:["31Q2","31Q3"],milestone:false,status:"not-started"},
+  {id:"32-ag-01",year:"2028-2032",category:"Agriculture",subcategory:"",task:"Plant 35 ha (2032) — own baby bamboo",owner:"Juan",budget:0,question:"",timeline:["32Q2","32Q3"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Treatment =====
+  {id:"28-tr-01",year:"2028-2032",category:"Treatment",subcategory:"",task:"Treat 5,100 poles (2028)",owner:"Diego + Juan",budget:0,question:"",timeline:["28Q3","28Q4"],milestone:false,status:"not-started"},
+  {id:"29-tr-01",year:"2028-2032",category:"Treatment",subcategory:"",task:"Treat 10,200 poles (2029)",owner:"Diego + Juan",budget:0,question:"",timeline:["29Q3","29Q4"],milestone:false,status:"not-started"},
+  {id:"30-tr-01",year:"2028-2032",category:"Treatment",subcategory:"",task:"Treat 15,300 poles (2030)",owner:"Diego + Juan",budget:0,question:"Last year without large pools",timeline:["30Q3","30Q4"],milestone:false,status:"not-started"},
+  {id:"31-tr-01",year:"2028-2032",category:"Treatment",subcategory:"",task:"Build first industrial pool (2031): 2,000 poles/batch",owner:"Diego",budget:0,question:"Cost? Supplier?",timeline:["31Q1","31Q2"],milestone:false,status:"not-started"},
+  {id:"32-tr-01",year:"2028-2032",category:"Treatment",subcategory:"",task:"Scale to 3 large pools (2032)",owner:"Diego",budget:0,question:"",timeline:["32Q1","32Q2"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Finance =====
+  {id:"28-fi-01",year:"2028-2032",category:"Finance",subcategory:"",task:"MILESTONE: Close major round H1 2028 (~18M MXN)",owner:"Ofir",budget:0,question:"Final amount + equity?",timeline:["28Q1","28Q2"],milestone:true,status:"not-started"},
+  {id:"28-fi-02",year:"2028-2032",category:"Finance",subcategory:"",task:"Ongoing quarterly investor reports",owner:"Ofir",budget:0,question:"",timeline:["28Q1","28Q2","28Q3","28Q4","29Q1","29Q2","29Q3","29Q4","30Q1","30Q2","30Q3","30Q4","31Q1","31Q2","31Q3","31Q4","32Q1","32Q2","32Q3","32Q4"],milestone:false,status:"not-started"},
+  {id:"30-fi-01",year:"2028-2032",category:"Finance",subcategory:"",task:"MILESTONE: 2030 — first cash-positive year",owner:"All",budget:0,question:"",timeline:["30Q4"],milestone:true,status:"not-started"},
+  {id:"30-fi-02",year:"2028-2032",category:"Finance",subcategory:"",task:"Begin dividend distributions (2030+)",owner:"Ofir",budget:0,question:"",timeline:["30Q4","31Q1","31Q2","31Q3","31Q4","32Q1","32Q2","32Q3","32Q4"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Sales =====
+  {id:"28-sa-01",year:"2028-2032",category:"Sales",subcategory:"",task:"Sell 5,100 poles (2028) = 2.04M MXN",owner:"Diego + Ofir",budget:0,question:"",timeline:["28Q3","28Q4"],milestone:false,status:"not-started"},
+  {id:"29-sa-01",year:"2028-2032",category:"Sales",subcategory:"",task:"Sell 10,200 poles (2029) = 4.08M MXN",owner:"Diego + Ofir",budget:0,question:"",timeline:["29Q3","29Q4"],milestone:false,status:"not-started"},
+  {id:"29-sa-02",year:"2028-2032",category:"Sales",subcategory:"",task:"Expand to national market: CDMX, Guadalajara",owner:"Ofir + Diego",budget:0,question:"",timeline:["29Q1","29Q2","29Q3","29Q4","30Q1","30Q2","30Q3","30Q4"],milestone:false,status:"not-started"},
+  {id:"28-sa-02",year:"2028-2032",category:"Sales",subcategory:"",task:"Booth at Expo CIHAC (2028/2030)",owner:"Ofir + Diego",budget:0,question:"~35K MXN",timeline:["28Q3","30Q3"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Certifications =====
+  {id:"28-ce-01",year:"2028-2032",category:"Certifications",subcategory:"",task:"ASTM testing (export prep)",owner:"Ofir",budget:0,question:"",timeline:["28Q1","28Q2","28Q3","28Q4"],milestone:false,status:"not-started"},
+  {id:"29-ce-01",year:"2028-2032",category:"Certifications",subcategory:"",task:"MILESTONE: Verra first credit issuance (~2029)",owner:"Ofir",budget:0,question:"18 months after registration",timeline:["29Q4"],milestone:true,status:"not-started"},
+  {id:"31-ce-01",year:"2028-2032",category:"Certifications",subcategory:"",task:"Begin ICC-ES certification (2031) — 2.5M MXN",owner:"Ofir",budget:0,question:"Funded from revenue",timeline:["31Q1","31Q2","31Q3","31Q4","32Q1","32Q2","32Q3","32Q4"],milestone:false,status:"not-started"},
+  {id:"31-ce-02",year:"2028-2032",category:"Certifications",subcategory:"",task:"US trade shows: Greenbuild, PCBC (2031+)",owner:"Ofir + Diego",budget:0,question:"",timeline:["31Q3","31Q4","32Q3","32Q4"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Carbon =====
+  {id:"28-ca-01",year:"2028-2032",category:"Carbon",subcategory:"",task:"Verra PDD + baseline measurement",owner:"Ofir",budget:0,question:"350-700K MXN from major round",timeline:["28Q1","28Q2","28Q3","28Q4"],milestone:false,status:"not-started"},
+  {id:"29-ca-01",year:"2028-2032",category:"Carbon",subcategory:"",task:"Verra validation (third-party audit)",owner:"Ofir",budget:0,question:"",timeline:["29Q1","29Q2","29Q3"],milestone:false,status:"not-started"},
+  {id:"32-ca-01",year:"2028-2032",category:"Carbon",subcategory:"",task:"Self-manage vs aggregator decision (2032)",owner:"Ofir",budget:0,question:"",timeline:["32Q1","32Q2"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Infrastructure =====
+  {id:"28-in-01",year:"2028-2032",category:"Infrastructure",subcategory:"",task:"Platform + warehouse expansion (2028)",owner:"Diego",budget:0,question:"80K MXN",timeline:["28Q1","28Q2"],milestone:false,status:"not-started"},
+  {id:"29-in-01",year:"2028-2032",category:"Infrastructure",subcategory:"",task:"Warehouse Phase 2 — Zapotal (2029)",owner:"Diego",budget:0,question:"130K MXN",timeline:["29Q1","29Q2"],milestone:false,status:"not-started"},
+  {id:"29-in-02",year:"2028-2032",category:"Infrastructure",subcategory:"",task:"Showroom + offices (2029)",owner:"Diego + Ofir",budget:0,question:"500K MXN",timeline:["29Q2","29Q3","29Q4"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Team =====
+  {id:"28-te-01",year:"2028-2032",category:"Team",subcategory:"",task:"Hire: nursery manager + 2 field workers (2028)",owner:"Juan",budget:0,question:"Team = 8",timeline:["28Q1","28Q2"],milestone:false,status:"not-started"},
+  {id:"29-te-01",year:"2028-2032",category:"Team",subcategory:"",task:"Hire: QC + warehouse manager (2029)",owner:"Juan + Diego",budget:0,question:"Team = ~12",timeline:["29Q1","29Q2"],milestone:false,status:"not-started"},
+  {id:"31-te-01",year:"2028-2032",category:"Team",subcategory:"",task:"Scale to 15-18 employees (2031)",owner:"Juan + Diego",budget:0,question:"",timeline:["31Q1","31Q2"],milestone:false,status:"not-started"},
+];
+
+const OPEN_QUESTIONS = [
+  {id:1,area:"Land",question:"Is the land ejidal or comunal?",owner:"Ofir + Juan",urgency:"urgent"},
+  {id:2,area:"Land",question:"Current registration status — what exists?",owner:"Juan",urgency:"urgent"},
+  {id:3,area:"Seedlings",question:"Supplier for 2027 planting? Lead time?",owner:"Juan",urgency:"urgent"},
+  {id:4,area:"Seedlings",question:"Seedling survival rate?",owner:"Juan",urgency:"medium"},
+  {id:5,area:"Agriculture",question:"GPS mapping of 10 ha — needed?",owner:"Juan + Ofir",urgency:"medium"},
+  {id:6,area:"Agriculture",question:"Water source for 30 ha? Irrigation needed?",owner:"Juan",urgency:"urgent"},
+  {id:7,area:"Treatment",question:"Large industrial pool cost (2,000 poles)?",owner:"Diego",urgency:"not-urgent"},
+  {id:8,area:"Treatment",question:"Borax supplier? Annual quantity? Cost?",owner:"Diego",urgency:"medium"},
+  {id:9,area:"Finance",question:"Major round amount — 18M? 15M? 22M?",owner:"Ofir",urgency:"medium"},
+  {id:10,area:"Finance",question:"Legal structure — SA de CV? SAPI? SPR?",owner:"Ofir",urgency:"urgent"},
+  {id:11,area:"Finance",question:"Bank account — whose name? Release mechanism?",owner:"Ofir",urgency:"urgent"},
+  {id:12,area:"Legal",question:"Lawyer — who? Cost? Ag land experience?",owner:"Ofir",urgency:"urgent"},
+  {id:13,area:"Sales",question:"Payment terms? 50% upfront?",owner:"Diego + Ofir",urgency:"medium"},
+  {id:14,area:"Sales",question:"Minimum order quantity?",owner:"Diego + Ofir",urgency:"medium"},
+  {id:15,area:"Sales",question:"Existing buyer relationships?",owner:"Diego",urgency:"urgent"},
+  {id:16,area:"Vehicles",question:"Truck + 2 pickups — new/used? Leasing?",owner:"Ofir",urgency:"not-urgent"},
+  {id:17,area:"Certifications",question:"CEBAMEX contact? Validation cost?",owner:"Ofir",urgency:"medium"},
+  {id:18,area:"Certifications",question:"ASTM lab in Mexico?",owner:"Ofir",urgency:"not-urgent"},
+  {id:19,area:"Carbon",question:"Which aggregator?",owner:"Ofir",urgency:"not-urgent"},
+  {id:20,area:"Team",question:"Worker terms? IMSS? Contract type?",owner:"Ofir + Juan",urgency:"urgent"},
+];
+
+const MILESTONES_DATA = [
+  {date:"Apr 2026",name:"Map & count existing 10 ha",owner:"Juan",desc:"Real data baseline",taskId:"26-ag-01"},
+  {date:"Apr 2026",name:"Deploy bridge funding (5M MXN)",owner:"Ofir",desc:"Operations enabled",taskId:"26-fi-01"},
+  {date:"Jun 2026",name:"10 treatment pools built",owner:"Diego",desc:"~15,600 poles/yr capacity",taskId:"26-tr-01"},
+  {date:"Sep 2026",name:"20 ha cleared & prepped for 2027",owner:"Juan",desc:"Ready for planting",taskId:"26-ag-05"},
+  {date:"Oct 2026",name:"Land title registration complete",owner:"Ofir + Juan",desc:"FSC + due diligence",taskId:"26-le-08"},
+  {date:"Dec 2026",name:"First sales: 340K MXN",owner:"Diego + Ofir",desc:"Market validation",taskId:"26-sa-07"},
+  {date:"Aug 2027",name:"20 ha planted (30 ha cumulative)",owner:"Juan",desc:"Scale trajectory",taskId:"27-ag-04"},
+  {date:"Jun 2027",name:"FSC certificate obtained",owner:"Ofir",desc:"Price premium",taskId:"27-ce-02"},
+  {date:"H1 2028",name:"Close major round (~18M MXN)",owner:"Ofir",desc:"Growth funding",taskId:"28-fi-01"},
+  {date:"Q3 2029",name:"First Verra carbon credits",owner:"Ofir",desc:"ESG revenue",taskId:"29-ce-01"},
+  {date:"2030",name:"First cash-positive year",owner:"All",desc:"Dividends",taskId:"30-fi-01"},
+  {date:"2031",name:"Begin ICC-ES certification",owner:"Ofir",desc:"US market pathway",taskId:"31-ce-01"},
+  {date:"2032",name:"180 ha cumulative",owner:"Juan",desc:"Near full capacity",taskId:null},
+  {date:"2033",name:"190 ha — planting complete",owner:"Juan",desc:"Full plantation",taskId:null},
+  {date:"~2034",name:"ICC-ES certified — first US export",owner:"Ofir",desc:"US market",taskId:null},
+];
+
+// ============================================================
+// STATE
+// ============================================================
+const LS_KEY = 'pacifico_bambu_tracker';
+let tasks = [];
+let comments = {}; // taskId -> [{author, text, timestamp}]
+let collapsedCategories = {};
+let selectedTaskId = null;
+let currentView = 'gantt';
+
+function loadState() {
+  const saved = localStorage.getItem(LS_KEY);
+  if (saved) {
+    try {
+      const state = JSON.parse(saved);
+      tasks = state.tasks || JSON.parse(JSON.stringify(DEFAULT_TASKS));
+      comments = state.comments || {};
+      collapsedCategories = state.collapsedCategories || {};
+    } catch(e) {
+      tasks = JSON.parse(JSON.stringify(DEFAULT_TASKS));
+      comments = {};
+      collapsedCategories = {};
+    }
+  } else {
+    tasks = JSON.parse(JSON.stringify(DEFAULT_TASKS));
+    comments = {};
+    collapsedCategories = {};
+  }
+}
+
+function saveState() {
+  localStorage.setItem(LS_KEY, JSON.stringify({tasks, comments, collapsedCategories}));
+}
+
+function resetData() {
+  if (!confirm('Reset all data to defaults? This will erase all status changes and comments.')) return;
+  localStorage.removeItem(LS_KEY);
+  loadState();
+  render();
+  closeSidebar();
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify({tasks, comments, collapsedCategories}, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'pacifico_bambu_tracker_' + new Date().toISOString().slice(0,10) + '.json';
+  a.click();
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const state = JSON.parse(e.target.result);
+      if (state.tasks) {
+        tasks = state.tasks;
+        comments = state.comments || {};
+        collapsedCategories = state.collapsedCategories || {};
+        saveState();
+        render();
+        closeSidebar();
+      } else {
+        alert('Invalid file format.');
+      }
+    } catch(err) {
+      alert('Error reading file: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function getOwnerClass(owner) {
+  const o = owner.toLowerCase();
+  if (o === 'all') return 'all';
+  if (o.includes('+') || o.includes('workers')) {
+    // Check primary owner
+    if (o.startsWith('juan')) return 'juan';
+    if (o.startsWith('diego')) return 'diego';
+    if (o.startsWith('ofir')) return 'ofir';
+    return 'shared';
+  }
+  if (o === 'juan') return 'juan';
+  if (o === 'diego') return 'diego';
+  if (o === 'ofir') return 'ofir';
+  return 'shared';
+}
+
+function formatBudget(n) {
+  if (!n) return '';
+  return '$' + n.toLocaleString('en-US');
+}
+
+function getCurrentPeriod() {
+  const now = new Date();
+  const month = now.toLocaleString('en-US', {month:'short'});
+  const year = now.getFullYear();
+  const quarter = 'Q' + Math.ceil((now.getMonth()+1)/3);
+  return {month, year, quarter, yearQuarter: year.toString().slice(2) + quarter};
+}
+
+const MONTHS_2026 = ['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTHS_2027 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const QUARTERS_2028_2032 = [];
+for (let y = 28; y <= 32; y++) {
+  for (let q = 1; q <= 4; q++) {
+    QUARTERS_2028_2032.push(y + 'Q' + q);
+  }
+}
+
+function getTimelineCols(yearFilter) {
+  if (yearFilter === '2026') return MONTHS_2026;
+  if (yearFilter === '2027') return MONTHS_2027;
+  if (yearFilter === '2028-2032') return QUARTERS_2028_2032;
+  // All: show quarters for everything
+  const allCols = [];
+  // 2026 as Q2-Q4
+  allCols.push('26Q2','26Q3','26Q4');
+  // 2027 as Q1-Q4
+  for (let q=1;q<=4;q++) allCols.push('27Q'+q);
+  // 2028-2032
+  QUARTERS_2028_2032.forEach(c => allCols.push(c));
+  return allCols;
+}
+
+function getTimelineLabel(col, yearFilter) {
+  if (yearFilter === '2026' || yearFilter === '2027') return col;
+  // Quarter labels
+  const yr = col.slice(0,2);
+  const q = col.slice(2);
+  return "'" + yr + ' ' + q;
+}
+
+function taskMatchesTimeline(taskTimeline, col, yearFilter) {
+  if (yearFilter === '2026' || yearFilter === '2027') {
+    return taskTimeline.includes(col);
+  }
+  // Quarter matching
+  if (taskTimeline.includes(col)) return true;
+  // For "all" view, map months to quarters
+  if (yearFilter === 'all') {
+    // Check if task has month-level data that maps to this quarter
+    const yr = col.slice(0,2);
+    const qNum = parseInt(col.slice(3));
+    const monthsInQ = getMonthsInQuarter(qNum);
+    const yearPrefix = '20' + yr;
+    // Check if any month matches
+    for (const m of monthsInQ) {
+      if (taskTimeline.includes(m)) {
+        // Only if the task year matches
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function getMonthsInQuarter(q) {
+  if (q===1) return ['Jan','Feb','Mar'];
+  if (q===2) return ['Apr','May','Jun'];
+  if (q===3) return ['Jul','Aug','Sep'];
+  if (q===4) return ['Oct','Nov','Dec'];
+  return [];
+}
+
+function isCurrentPeriod(col, yearFilter) {
+  const cp = getCurrentPeriod();
+  if (yearFilter === '2026' && cp.year === 2026) return col === cp.month;
+  if (yearFilter === '2027' && cp.year === 2027) return col === cp.month;
+  if (yearFilter === '2028-2032') {
+    const yr = parseInt('20' + col.slice(0,2));
+    const q = 'Q' + col.slice(3);
+    return yr === cp.year && q === cp.quarter;
+  }
+  if (yearFilter === 'all') {
+    return col === cp.yearQuarter;
+  }
+  return false;
+}
+
+function filterTasks() {
+  const yearF = document.getElementById('filterYear').value;
+  const catF = document.getElementById('filterCategory').value;
+  const ownerF = document.getElementById('filterOwner').value;
+  const statusF = document.getElementById('filterStatus').value;
+  const searchF = document.getElementById('filterSearch').value.toLowerCase();
+
+  return tasks.filter(t => {
+    if (yearF !== 'all' && t.year !== yearF) return false;
+    if (catF !== 'all' && t.category !== catF) return false;
+    if (ownerF !== 'all' && !t.owner.includes(ownerF)) return false;
+    if (statusF !== 'all' && t.status !== statusF) return false;
+    if (searchF && !t.task.toLowerCase().includes(searchF) && !t.category.toLowerCase().includes(searchF)) return false;
+    return true;
+  });
+}
+
+// ============================================================
+// RENDER
+// ============================================================
+function render() {
+  renderGantt();
+  renderQuestions();
+  renderMilestones();
+  renderBudget();
+}
+
+function renderGantt() {
+  const container = document.getElementById('view-gantt');
+  const yearFilter = document.getElementById('filterYear').value;
+  const filtered = filterTasks();
+  const cols = getTimelineCols(yearFilter);
+
+  // Group by category then subcategory
+  const groups = {};
+  filtered.forEach(t => {
+    if (!groups[t.category]) groups[t.category] = {};
+    const sub = t.subcategory || '__none__';
+    if (!groups[t.category][sub]) groups[t.category][sub] = [];
+    groups[t.category][sub].push(t);
+  });
+
+  let html = '<div class="gantt-container"><table class="gantt-table">';
+  // Header
+  html += '<thead><tr>';
+  html += '<th class="col-task">Task</th>';
+  html += '<th class="col-owner">Owner</th>';
+  html += '<th class="col-budget">Budget</th>';
+  cols.forEach(col => {
+    const isCurrent = isCurrentPeriod(col, yearFilter);
+    html += `<th class="col-timeline${isCurrent ? ' current-period' : ''}">${getTimelineLabel(col, yearFilter)}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  const categoryOrder = ['Agriculture','Treatment','Infrastructure','Legal','Finance','Sales','Certifications','Carbon','Team'];
+  const sortedCats = Object.keys(groups).sort((a,b) => {
+    const ia = categoryOrder.indexOf(a);
+    const ib = categoryOrder.indexOf(b);
+    return (ia === -1 ? 99 : ia) - (ib === -1 ? 99 : ib);
+  });
+
+  sortedCats.forEach(cat => {
+    const subs = groups[cat];
+    const allTasks = Object.values(subs).flat();
+    const doneCount = allTasks.filter(t => t.status === 'done').length;
+    const totalBudget = allTasks.reduce((s,t) => s + (t.budget||0), 0);
+    const isCollapsed = collapsedCategories[cat];
+
+    html += `<tr class="category-header" onclick="toggleCategory('${cat}')">`;
+    html += `<td colspan="${3 + cols.length}">`;
+    html += `<span class="cat-toggle ${isCollapsed ? 'collapsed' : ''}">&#9660;</span> `;
+    html += `${cat}`;
+    html += `<span class="cat-count">${doneCount}/${allTasks.length}</span>`;
+    if (totalBudget > 0) html += `<span class="cat-budget">${formatBudget(totalBudget)} MXN</span>`;
+    html += '</td></tr>';
+
+    if (!isCollapsed) {
+      const subKeys = Object.keys(subs).sort((a,b) => a === '__none__' ? -1 : a.localeCompare(b));
+      subKeys.forEach(sub => {
+        if (sub !== '__none__' && subKeys.length > 1) {
+          html += `<tr class="subcategory-header"><td colspan="${3 + cols.length}">${sub}</td></tr>`;
+        }
+        subs[sub].forEach(t => {
+          const ownerCls = getOwnerClass(t.owner);
+          const isSelected = selectedTaskId === t.id;
+          html += `<tr class="task-row${isSelected ? ' selected' : ''}" onclick="openSidebar('${t.id}')">`;
+          // Task name cell
+          html += `<td class="col-task">`;
+          html += `<span class="status-dot ${t.status}"></span>`;
+          html += `<span class="task-name${t.milestone ? ' milestone' : ''}">${t.milestone ? '&#9670; ' : ''}${escHtml(t.task)}</span>`;
+          if (t.question) html += `<span class="task-question-indicator" title="${escHtml(t.question)}"></span>`;
+          html += '</td>';
+          // Owner
+          html += `<td style="text-align:center"><span class="owner-badge ${ownerCls}">${escHtml(t.owner.split('+')[0].split(' ')[0])}</span></td>`;
+          // Budget
+          html += `<td class="budget-cell">${t.budget ? formatBudget(t.budget) : ''}</td>`;
+          // Timeline
+          cols.forEach(col => {
+            const isCurrent = isCurrentPeriod(col, yearFilter);
+            const active = taskMatchesTimeline(t.timeline, col, yearFilter);
+            html += `<td class="gantt-cell${isCurrent ? ' current-period' : ''}">`;
+            if (active) {
+              if (t.milestone) {
+                html += `<div class="milestone-diamond ${ownerCls}"></div>`;
+              } else {
+                html += `<div class="gantt-bar ${ownerCls}"></div>`;
+              }
+            }
+            html += '</td>';
+          });
+          html += '</tr>';
+        });
+      });
+    }
+  });
+
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+function renderQuestions() {
+  const container = document.getElementById('view-questions');
+  let html = '<div class="questions-view"><h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">Open Questions (20)</h2>';
+  html += '<table class="questions-table"><thead><tr>';
+  html += '<th>#</th><th>Area</th><th>Question</th><th>Owner</th><th>Urgency</th>';
+  html += '</tr></thead><tbody>';
+
+  OPEN_QUESTIONS.forEach(q => {
+    html += '<tr class="fade-in">';
+    html += `<td style="color:var(--gray-400);font-weight:600">${q.id}</td>`;
+    html += `<td style="font-weight:500">${q.area}</td>`;
+    html += `<td>${escHtml(q.question)}</td>`;
+    html += `<td><span class="owner-badge ${getOwnerClass(q.owner)}">${escHtml(q.owner)}</span></td>`;
+    html += `<td><span class="urgency-badge ${q.urgency}">${q.urgency.replace('-',' ')}</span></td>`;
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+function renderMilestones() {
+  const container = document.getElementById('view-milestones');
+  let html = '<div class="milestones-view"><h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">Key Milestones</h2>';
+
+  MILESTONES_DATA.forEach(m => {
+    const linkedTask = m.taskId ? tasks.find(t => t.id === m.taskId) : null;
+    const status = linkedTask ? linkedTask.status : 'not-started';
+    const cardClass = status === 'done' ? 'done' : status === 'blocked' ? 'blocked' : '';
+
+    html += `<div class="milestone-card ${cardClass}">`;
+    html += `<div class="milestone-date">${m.date}</div>`;
+    html += `<div class="milestone-diamond-icon"></div>`;
+    html += `<div class="milestone-info">`;
+    html += `<div class="milestone-info-name">${escHtml(m.name)}</div>`;
+    html += `<div class="milestone-info-owner">${escHtml(m.owner)}</div>`;
+    if (m.desc) html += `<div class="milestone-info-desc">${escHtml(m.desc)}</div>`;
+    html += '</div>';
+    if (linkedTask) {
+      html += `<select class="milestone-status-select" onchange="updateTaskStatus('${linkedTask.id}', this.value); event.stopPropagation();">`;
+      ['not-started','in-progress','done','blocked'].forEach(s => {
+        html += `<option value="${s}"${linkedTask.status===s?' selected':''}>${s.replace('-',' ')}</option>`;
+      });
+      html += '</select>';
+    }
+    html += '</div>';
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderBudget() {
+  const container = document.getElementById('view-budget');
+  const totalBudget = tasks.reduce((s,t) => s + (t.budget||0), 0);
+  const tasksWithBudget = tasks.filter(t => t.budget > 0);
+
+  // Group by category
+  const catBudgets = {};
+  tasks.forEach(t => {
+    if (!catBudgets[t.category]) catBudgets[t.category] = {total:0, tasks:[]};
+    if (t.budget > 0) {
+      catBudgets[t.category].total += t.budget;
+      catBudgets[t.category].tasks.push(t);
+    }
+  });
+
+  let html = '<div class="budget-view">';
+  html += '<h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">Budget Overview</h2>';
+
+  // Summary cards
+  html += '<div class="budget-summary-cards">';
+  html += `<div class="budget-summary-card"><div class="budget-summary-label">Total Budget</div><div class="budget-summary-value">${formatBudget(totalBudget)} MXN</div></div>`;
+  html += `<div class="budget-summary-card"><div class="budget-summary-label">Items with Budget</div><div class="budget-summary-value">${tasksWithBudget.length}</div></div>`;
+  html += `<div class="budget-summary-card"><div class="budget-summary-label">Categories</div><div class="budget-summary-value">${Object.keys(catBudgets).filter(k => catBudgets[k].total > 0).length}</div></div>`;
+
+  // 2026 budget
+  const budget2026 = tasks.filter(t => t.year === '2026').reduce((s,t) => s + (t.budget||0), 0);
+  html += `<div class="budget-summary-card"><div class="budget-summary-label">2026 Budget</div><div class="budget-summary-value">${formatBudget(budget2026)} MXN</div></div>`;
+  html += '</div>';
+
+  // Category breakdown
+  html += '<div class="budget-category-list">';
+  const sortedCats = Object.entries(catBudgets).filter(([,v]) => v.total > 0).sort((a,b) => b[1].total - a[1].total);
+  sortedCats.forEach(([cat, data]) => {
+    const pct = totalBudget > 0 ? (data.total / totalBudget * 100) : 0;
+    html += '<div class="budget-category-row">';
+    html += '<div class="budget-cat-header">';
+    html += `<div class="budget-cat-name">${cat}</div>`;
+    html += `<div class="budget-cat-amount">${formatBudget(data.total)} MXN (${pct.toFixed(1)}%)</div>`;
+    html += '</div>';
+    html += `<div class="budget-bar-bg"><div class="budget-bar-fill" style="width:${pct}%"></div></div>`;
+    html += '<div class="budget-task-list">';
+    data.tasks.forEach(t => {
+      html += `<div class="budget-task-item"><span>${escHtml(t.task)}</span><span style="font-weight:500">${formatBudget(t.budget)}</span></div>`;
+    });
+    html += '</div></div>';
+  });
+  html += '</div></div>';
+  container.innerHTML = html;
+}
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+function openSidebar(taskId) {
+  selectedTaskId = taskId;
+  const t = tasks.find(x => x.id === taskId);
+  if (!t) return;
+
+  document.getElementById('sidebarTitle').textContent = t.task;
+  const body = document.getElementById('sidebarBody');
+  const taskComments = comments[taskId] || [];
+
+  let html = '';
+  // Details
+  html += '<div class="sidebar-section">';
+  html += '<div class="sidebar-section-title">Details</div>';
+  html += `<div class="sidebar-field"><span class="sidebar-field-label">Category</span><span class="sidebar-field-value">${t.category}${t.subcategory ? ' / ' + t.subcategory : ''}</span></div>`;
+  html += `<div class="sidebar-field"><span class="sidebar-field-label">Owner</span><span class="sidebar-field-value"><span class="owner-badge ${getOwnerClass(t.owner)}">${escHtml(t.owner)}</span></span></div>`;
+  html += `<div class="sidebar-field"><span class="sidebar-field-label">Year</span><span class="sidebar-field-value">${t.year}</span></div>`;
+  html += `<div class="sidebar-field"><span class="sidebar-field-label">Timeline</span><span class="sidebar-field-value">${t.timeline.join(', ')}</span></div>`;
+  if (t.budget) html += `<div class="sidebar-field"><span class="sidebar-field-label">Budget</span><span class="sidebar-field-value" style="font-weight:600;color:var(--medium-green)">${formatBudget(t.budget)} MXN</span></div>`;
+  if (t.milestone) html += `<div class="sidebar-field"><span class="sidebar-field-label">Type</span><span class="sidebar-field-value" style="font-weight:600;color:var(--dark-green)">&#9670; Milestone</span></div>`;
+  html += '</div>';
+
+  // Status
+  html += '<div class="sidebar-section">';
+  html += '<div class="sidebar-section-title">Status</div>';
+  html += '<select class="sidebar-status-select" onchange="updateTaskStatus(\'' + taskId + '\', this.value)">';
+  ['not-started','in-progress','done','blocked'].forEach(s => {
+    html += `<option value="${s}"${t.status===s?' selected':''}>${s.replace(/-/g,' ').replace(/\b\w/g, c => c.toUpperCase())}</option>`;
+  });
+  html += '</select></div>';
+
+  // Open Question
+  if (t.question) {
+    html += '<div class="sidebar-section">';
+    html += '<div class="sidebar-section-title">Open Question</div>';
+    html += `<div class="sidebar-question">${escHtml(t.question)}</div>`;
+    html += '</div>';
+  }
+
+  // Comments
+  html += '<div class="sidebar-section">';
+  html += `<div class="sidebar-section-title">Comments (${taskComments.length})</div>`;
+  html += '<div class="comment-list">';
+  taskComments.forEach(c => {
+    html += '<div class="comment-item">';
+    html += `<div class="comment-meta"><span class="comment-author">${escHtml(c.author)}</span><span class="comment-time">${new Date(c.timestamp).toLocaleString()}</span></div>`;
+    html += `<div class="comment-text">${escHtml(c.text)}</div>`;
+    html += '</div>';
+  });
+  html += '</div>';
+  html += '<div class="comment-form">';
+  html += '<input type="text" class="comment-author-input" id="commentAuthor" placeholder="Your name" value="' + (localStorage.getItem('pb_comment_author') || '') + '">';
+  html += '<textarea class="comment-text-input" id="commentText" placeholder="Add a comment..."></textarea>';
+  html += `<button class="comment-submit" onclick="addComment('${taskId}')">Add Comment</button>`;
+  html += '</div></div>';
+
+  body.innerHTML = html;
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('sidebarOverlay').classList.add('active');
+  document.getElementById('mainContent').classList.add('sidebar-open');
+  renderGantt(); // re-render to show selected state
+}
+
+function closeSidebar() {
+  selectedTaskId = null;
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('active');
+  document.getElementById('mainContent').classList.remove('sidebar-open');
+  renderGantt();
+}
+
+function updateTaskStatus(taskId, status) {
+  const t = tasks.find(x => x.id === taskId);
+  if (t) {
+    t.status = status;
+    saveState();
+    render();
+    if (selectedTaskId === taskId) openSidebar(taskId);
+  }
+}
+
+function addComment(taskId) {
+  const authorEl = document.getElementById('commentAuthor');
+  const textEl = document.getElementById('commentText');
+  const author = authorEl.value.trim();
+  const text = textEl.value.trim();
+  if (!author || !text) return;
+
+  if (!comments[taskId]) comments[taskId] = [];
+  comments[taskId].push({author, text, timestamp: Date.now()});
+  localStorage.setItem('pb_comment_author', author);
+  saveState();
+  openSidebar(taskId);
+}
+
+// ============================================================
+// INTERACTIONS
+// ============================================================
+function toggleCategory(cat) {
+  collapsedCategories[cat] = !collapsedCategories[cat];
+  saveState();
+  renderGantt();
+}
+
+function escHtml(str) {
+  if (!str) return '';
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// Tab switching
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentView = btn.dataset.view;
+    document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('view-' + currentView).classList.add('active');
+  });
+});
+
+// Filter changes
+['filterYear','filterCategory','filterOwner','filterStatus'].forEach(id => {
+  document.getElementById(id).addEventListener('change', render);
+});
+document.getElementById('filterSearch').addEventListener('input', render);
+
+// ============================================================
+// INIT
+// ============================================================
+loadState();
+render();
+</script>
+</body>
+</html>
