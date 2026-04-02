@@ -87,6 +87,7 @@ h1, h2, h3, h4, h5, h6 {
 .topbar-btn:hover { background: rgba(255,255,255,0.22); }
 .topbar-btn.danger { border-color: rgba(239,68,68,0.5); color: #fca5a5; }
 .topbar-btn.danger:hover { background: rgba(239,68,68,0.2); }
+.lang-toggle { font-weight: 600; min-width: 42px; text-align: center; background: rgba(255,255,255,0.2); }
 
 /* Tab Bar */
 .tabbar {
@@ -760,6 +761,7 @@ h1, h2, h3, h4, h5, h6 {
 <div class="topbar">
   <div class="topbar-title">Pacifico Bambu <span>— Operations Tracker</span></div>
   <div class="topbar-actions">
+    <button class="topbar-btn lang-toggle" onclick="toggleLang()" id="langToggle">ES</button>
     <button class="topbar-btn" onclick="exportData()" title="Export current state as JSON">Export</button>
     <button class="topbar-btn" onclick="document.getElementById('importInput').click()" title="Import state from JSON">Import</button>
     <button class="topbar-btn danger" onclick="resetData()" title="Reset to default data">Reset</button>
@@ -796,6 +798,7 @@ h1, h2, h3, h4, h5, h6 {
       <option value="Legal">Legal</option>
       <option value="Finance">Finance</option>
       <option value="Sales">Sales</option>
+      <option value="Marketing">Marketing</option>
       <option value="Certifications">Certifications</option>
       <option value="Carbon">Carbon</option>
       <option value="Team">Team</option>
@@ -907,6 +910,15 @@ const DEFAULT_TASKS = [
   {id:"26-sa-06",year:"2026",category:"Sales",subcategory:"Sales — Outreach",task:"Map architects & builders in Oaxaca",owner:"Diego + Ofir",budget:0,question:"",timeline:["May","Jun","Jul","Aug"],milestone:false,status:"not-started"},
   {id:"26-sa-07",year:"2026",category:"Sales",subcategory:"Sales — Outreach",task:"First 3 paid sales",owner:"Diego + Ofir",budget:0,question:"",timeline:["Oct","Nov","Dec"],milestone:false,status:"not-started"},
 
+  // ===== 2026 - Marketing =====
+  {id:"26-mk-01",year:"2026",category:"Marketing",subcategory:"Brand Identity",task:"Brand identity + logo design",owner:"Ofir",budget:25000,question:"Designer recommendations?",timeline:["Apr","May"],milestone:false,status:"not-started"},
+  {id:"26-mk-02",year:"2026",category:"Marketing",subcategory:"Brand Identity",task:"Photography + video (plantation documentation)",owner:"Ofir",budget:12000,question:"Local photographer?",timeline:["Apr"],milestone:false,status:"not-started"},
+  {id:"26-mk-03",year:"2026",category:"Marketing",subcategory:"Brand Identity",task:"Business cards + letterhead",owner:"Ofir",budget:3000,question:"",timeline:["May"],milestone:false,status:"not-started"},
+  {id:"26-mk-04",year:"2026",category:"Marketing",subcategory:"Website & Content",task:"Website (bilingual EN/ES)",owner:"Ofir",budget:25000,question:"WordPress / Webflow?",timeline:["May","Jun","Jul","Aug"],milestone:false,status:"not-started"},
+  {id:"26-mk-05",year:"2026",category:"Marketing",subcategory:"Website & Content",task:"Investor presentation deck",owner:"Ofir",budget:0,question:"",timeline:["May","Jun"],milestone:false,status:"not-started"},
+  {id:"26-mk-06",year:"2026",category:"Marketing",subcategory:"Events & PR",task:"Expo CIHAC (visitor pass)",owner:"Ofir",budget:5000,question:"October, CDMX",timeline:["Oct"],milestone:false,status:"not-started"},
+  {id:"26-mk-07",year:"2026",category:"Marketing",subcategory:"Events & PR",task:"Press/media outreach — sustainable construction angle",owner:"Ofir",budget:0,question:"Which publications?",timeline:["Aug","Sep","Oct"],milestone:false,status:"not-started"},
+
   // ===== 2027 - Agriculture =====
   {id:"27-ag-01",year:"2027",category:"Agriculture",subcategory:"",task:"Order 10,000 seedlings for 20 ha (external supplier)",owner:"Juan + Ofir",budget:350000,question:"Volume discount?",timeline:["Jan","Feb","Mar"],milestone:false,status:"not-started"},
   {id:"27-ag-02",year:"2027",category:"Agriculture",subcategory:"",task:"Final soil prep for 20 ha",owner:"Juan + workers",budget:0,question:"",timeline:["Mar","Apr"],milestone:false,status:"not-started"},
@@ -938,6 +950,11 @@ const DEFAULT_TASKS = [
   {id:"27-sa-03",year:"2027",category:"Sales",subcategory:"",task:"Partner with 3+ architects (flagship projects)",owner:"Ofir + Diego",budget:0,question:"",timeline:["May","Jun","Jul","Aug"],milestone:false,status:"not-started"},
   {id:"27-sa-04",year:"2027",category:"Sales",subcategory:"",task:"Ongoing client management + repeat orders",owner:"Diego",budget:0,question:"",timeline:["Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
   {id:"27-sa-05",year:"2027",category:"Sales",subcategory:"",task:"Create case study from first project",owner:"Ofir",budget:0,question:"Need client permission",timeline:["Nov","Dec"],milestone:false,status:"not-started"},
+
+  // ===== 2027 - Marketing =====
+  {id:"27-mk-01",year:"2027",category:"Marketing",subcategory:"",task:"Website update — add sales data + case studies",owner:"Ofir",budget:0,question:"",timeline:["Nov","Dec"],milestone:false,status:"not-started"},
+  {id:"27-mk-02",year:"2027",category:"Marketing",subcategory:"",task:"Video: bamboo plantation + treatment process documentary",owner:"Ofir",budget:15000,question:"Professional videographer?",timeline:["Jun","Jul","Aug"],milestone:false,status:"not-started"},
+  {id:"27-mk-03",year:"2027",category:"Marketing",subcategory:"",task:"Social media content calendar (LinkedIn + Instagram)",owner:"Ofir",budget:0,question:"",timeline:["Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],milestone:false,status:"not-started"},
 
   // ===== 2027 - Certifications =====
   {id:"27-ce-01",year:"2027",category:"Certifications",subcategory:"",task:"FSC formal audit",owner:"Ofir",budget:60000,question:"Rainforest Alliance / SCS?",timeline:["Jan","Feb","Mar","Apr","May","Jun"],milestone:false,status:"not-started"},
@@ -976,6 +993,11 @@ const DEFAULT_TASKS = [
   {id:"29-sa-01",year:"2028-2032",category:"Sales",subcategory:"",task:"Sell 10,200 poles (2029) = 4.08M MXN",owner:"Diego + Ofir",budget:0,question:"",timeline:["29Q3","29Q4"],milestone:false,status:"not-started"},
   {id:"29-sa-02",year:"2028-2032",category:"Sales",subcategory:"",task:"Expand to national market: CDMX, Guadalajara",owner:"Ofir + Diego",budget:0,question:"",timeline:["29Q1","29Q2","29Q3","29Q4","30Q1","30Q2","30Q3","30Q4"],milestone:false,status:"not-started"},
   {id:"28-sa-02",year:"2028-2032",category:"Sales",subcategory:"",task:"Booth at Expo CIHAC (2028/2030)",owner:"Ofir + Diego",budget:0,question:"~35K MXN",timeline:["28Q3","30Q3"],milestone:false,status:"not-started"},
+
+  // ===== 2028-2032 - Marketing =====
+  {id:"28-mk-01",year:"2028-2032",category:"Marketing",subcategory:"",task:"Booth at Expo CIHAC (2028) — exhibitor",owner:"Ofir",budget:35000,question:"",timeline:["28Q3"],milestone:false,status:"not-started"},
+  {id:"29-mk-01",year:"2028-2032",category:"Marketing",subcategory:"",task:"US market entry branding (English materials, US website)",owner:"Ofir",budget:0,question:"",timeline:["29Q3","29Q4","30Q1"],milestone:false,status:"not-started"},
+  {id:"31-mk-01",year:"2028-2032",category:"Marketing",subcategory:"",task:"US trade show materials: Greenbuild, PCBC",owner:"Ofir",budget:0,question:"Booth design cost?",timeline:["31Q2","31Q3"],milestone:false,status:"not-started"},
 
   // ===== 2028-2032 - Certifications =====
   {id:"28-ce-01",year:"2028-2032",category:"Certifications",subcategory:"",task:"ASTM testing (export prep)",owner:"Ofir",budget:0,question:"",timeline:["28Q1","28Q2","28Q3","28Q4"],milestone:false,status:"not-started"},
@@ -1041,6 +1063,97 @@ const MILESTONES_DATA = [
 ];
 
 // ============================================================
+// I18N
+// ============================================================
+const LANG = {
+  en: {
+    title: 'Operations Tracker',
+    gantt: 'Gantt', questions: 'Open Questions', milestones: 'Milestones', budget: 'Budget',
+    year: 'YEAR', category: 'CATEGORY', owner: 'OWNER', status: 'STATUS',
+    search: 'Search tasks...', all: 'All',
+    task: 'TASK', budgetCol: 'BUDGET',
+    notStarted: 'Not Started', inProgress: 'In Progress', done: 'Done', blocked: 'Blocked',
+    exportBtn: 'Export', importBtn: 'Import', resetBtn: 'Reset',
+    openQuestions: 'Open Questions', area: 'AREA', question: 'QUESTION', urgency: 'URGENCY',
+    keyMilestones: 'Key Milestones', whatItUnlocks: 'What It Unlocks',
+    budgetOverview: 'Budget Overview', totalBudget: 'TOTAL BUDGET', itemsWithBudget: 'ITEMS WITH BUDGET', categories: 'CATEGORIES',
+    addComment: 'Add Comment', comments: 'Comments', noComments: 'No comments yet',
+    authorPlaceholder: 'Your name', commentPlaceholder: 'Add a note or comment...',
+    resetConfirm: 'Reset all data to defaults? This will erase all status changes and comments.',
+    urgent: 'URGENT', medium: 'MEDIUM', notUrgent: 'NOT URGENT',
+    openQuestion: 'Open Question', timeline: 'Timeline', details: 'Details',
+    of: 'of', budget2026: '2026 Budget'
+  },
+  es: {
+    title: 'Seguimiento de Operaciones',
+    gantt: 'Gantt', questions: 'Preguntas Abiertas', milestones: 'Hitos', budget: 'Presupuesto',
+    year: 'AÑO', category: 'CATEGORÍA', owner: 'RESPONSABLE', status: 'ESTADO',
+    search: 'Buscar tareas...', all: 'Todos',
+    task: 'TAREA', budgetCol: 'PRESUPUESTO',
+    notStarted: 'Sin iniciar', inProgress: 'En progreso', done: 'Completado', blocked: 'Bloqueado',
+    exportBtn: 'Exportar', importBtn: 'Importar', resetBtn: 'Reiniciar',
+    openQuestions: 'Preguntas Abiertas', area: 'ÁREA', question: 'PREGUNTA', urgency: 'URGENCIA',
+    keyMilestones: 'Hitos Clave', whatItUnlocks: 'Lo que desbloquea',
+    budgetOverview: 'Resumen de Presupuesto', totalBudget: 'PRESUPUESTO TOTAL', itemsWithBudget: 'ITEMS CON PRESUPUESTO', categories: 'CATEGORÍAS',
+    addComment: 'Agregar Comentario', comments: 'Comentarios', noComments: 'Sin comentarios aún',
+    authorPlaceholder: 'Tu nombre', commentPlaceholder: 'Agregar una nota o comentario...',
+    resetConfirm: '¿Reiniciar todos los datos? Esto borrará todos los cambios de estado y comentarios.',
+    urgent: 'URGENTE', medium: 'MEDIO', notUrgent: 'NO URGENTE',
+    openQuestion: 'Pregunta Abierta', timeline: 'Cronograma', details: 'Detalles',
+    of: 'de', budget2026: 'Presupuesto 2026'
+  }
+};
+
+let currentLang = localStorage.getItem('pacifico_lang') || 'en';
+
+function t(key) { return LANG[currentLang][key] || LANG.en[key] || key; }
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'es' : 'en';
+  localStorage.setItem('pacifico_lang', currentLang);
+  document.getElementById('langToggle').textContent = currentLang === 'en' ? 'ES' : 'EN';
+  updateUILang();
+  render();
+}
+
+function updateUILang() {
+  // Update static UI elements
+  document.querySelector('.topbar-title span').textContent = '— ' + t('title');
+  document.querySelector('[data-view="gantt"]').textContent = t('gantt');
+  document.querySelector('[data-view="questions"]').textContent = t('questions');
+  document.querySelector('[data-view="milestones"]').textContent = t('milestones');
+  document.querySelector('[data-view="budget"]').textContent = t('budget');
+
+  // Filter labels
+  const labels = document.querySelectorAll('.filter-label');
+  if (labels[0]) labels[0].textContent = t('year');
+  if (labels[1]) labels[1].textContent = t('category');
+  if (labels[2]) labels[2].textContent = t('owner');
+  if (labels[3]) labels[3].textContent = t('status');
+
+  document.getElementById('filterSearch').placeholder = t('search');
+
+  // Status options
+  const statusSelect = document.getElementById('filterStatus');
+  statusSelect.options[0].text = t('all');
+  statusSelect.options[1].text = t('notStarted');
+  statusSelect.options[2].text = t('inProgress');
+  statusSelect.options[3].text = t('done');
+  statusSelect.options[4].text = t('blocked');
+
+  // Topbar buttons (skip lang-toggle, get the others)
+  const btns = document.querySelectorAll('.topbar-btn:not(.lang-toggle)');
+  if (btns[0]) btns[0].textContent = t('exportBtn');
+  if (btns[1]) btns[1].textContent = t('importBtn');
+  if (btns[2]) btns[2].textContent = t('resetBtn');
+
+  // Category "All" and Owner "All" and Year "All"
+  document.getElementById('filterCategory').options[0].text = t('all');
+  document.getElementById('filterOwner').options[0].text = t('all');
+  document.getElementById('filterYear').options[0].text = t('all');
+}
+
+// ============================================================
 // STATE
 // ============================================================
 const LS_KEY = 'pacifico_bambu_tracker';
@@ -1075,7 +1188,7 @@ function saveState() {
 }
 
 function resetData() {
-  if (!confirm('Reset all data to defaults? This will erase all status changes and comments.')) return;
+  if (!confirm(t('resetConfirm'))) return;
   localStorage.removeItem(LS_KEY);
   loadState();
   render();
@@ -1233,12 +1346,12 @@ function filterTasks() {
   const statusF = document.getElementById('filterStatus').value;
   const searchF = document.getElementById('filterSearch').value.toLowerCase();
 
-  return tasks.filter(t => {
-    if (yearF !== 'all' && t.year !== yearF) return false;
-    if (catF !== 'all' && t.category !== catF) return false;
-    if (ownerF !== 'all' && !t.owner.includes(ownerF)) return false;
-    if (statusF !== 'all' && t.status !== statusF) return false;
-    if (searchF && !t.task.toLowerCase().includes(searchF) && !t.category.toLowerCase().includes(searchF)) return false;
+  return tasks.filter(tk => {
+    if (yearF !== 'all' && tk.year !== yearF) return false;
+    if (catF !== 'all' && tk.category !== catF) return false;
+    if (ownerF !== 'all' && !tk.owner.includes(ownerF)) return false;
+    if (statusF !== 'all' && tk.status !== statusF) return false;
+    if (searchF && !tk.task.toLowerCase().includes(searchF) && !tk.category.toLowerCase().includes(searchF)) return false;
     return true;
   });
 }
@@ -1261,26 +1374,26 @@ function renderGantt() {
 
   // Group by category then subcategory
   const groups = {};
-  filtered.forEach(t => {
-    if (!groups[t.category]) groups[t.category] = {};
-    const sub = t.subcategory || '__none__';
-    if (!groups[t.category][sub]) groups[t.category][sub] = [];
-    groups[t.category][sub].push(t);
+  filtered.forEach(tk => {
+    if (!groups[tk.category]) groups[tk.category] = {};
+    const sub = tk.subcategory || '__none__';
+    if (!groups[tk.category][sub]) groups[tk.category][sub] = [];
+    groups[tk.category][sub].push(tk);
   });
 
   let html = '<div class="gantt-container"><table class="gantt-table">';
   // Header
   html += '<thead><tr>';
-  html += '<th class="col-task">Task</th>';
-  html += '<th class="col-owner">Owner</th>';
-  html += '<th class="col-budget">Budget</th>';
+  html += '<th class="col-task">' + t('task') + '</th>';
+  html += '<th class="col-owner">' + t('owner') + '</th>';
+  html += '<th class="col-budget">' + t('budgetCol') + '</th>';
   cols.forEach(col => {
     const isCurrent = isCurrentPeriod(col, yearFilter);
     html += `<th class="col-timeline${isCurrent ? ' current-period' : ''}">${getTimelineLabel(col, yearFilter)}</th>`;
   });
   html += '</tr></thead><tbody>';
 
-  const categoryOrder = ['Agriculture','Treatment','Infrastructure','Legal','Finance','Sales','Certifications','Carbon','Team'];
+  const categoryOrder = ['Agriculture','Treatment','Infrastructure','Legal','Finance','Sales','Marketing','Certifications','Carbon','Team'];
   const sortedCats = Object.keys(groups).sort((a,b) => {
     const ia = categoryOrder.indexOf(a);
     const ib = categoryOrder.indexOf(b);
@@ -1290,8 +1403,8 @@ function renderGantt() {
   sortedCats.forEach(cat => {
     const subs = groups[cat];
     const allTasks = Object.values(subs).flat();
-    const doneCount = allTasks.filter(t => t.status === 'done').length;
-    const totalBudget = allTasks.reduce((s,t) => s + (t.budget||0), 0);
+    const doneCount = allTasks.filter(tk => tk.status === 'done').length;
+    const totalBudget = allTasks.reduce((s,tk) => s + (tk.budget||0), 0);
     const isCollapsed = collapsedCategories[cat];
 
     html += `<tr class="category-header" onclick="toggleCategory('${cat}')">`;
@@ -1308,27 +1421,27 @@ function renderGantt() {
         if (sub !== '__none__' && subKeys.length > 1) {
           html += `<tr class="subcategory-header"><td colspan="${3 + cols.length}">${sub}</td></tr>`;
         }
-        subs[sub].forEach(t => {
-          const ownerCls = getOwnerClass(t.owner);
-          const isSelected = selectedTaskId === t.id;
-          html += `<tr class="task-row${isSelected ? ' selected' : ''}" onclick="openSidebar('${t.id}')">`;
+        subs[sub].forEach(tk => {
+          const ownerCls = getOwnerClass(tk.owner);
+          const isSelected = selectedTaskId === tk.id;
+          html += `<tr class="task-row${isSelected ? ' selected' : ''}" onclick="openSidebar('${tk.id}')">`;
           // Task name cell
           html += `<td class="col-task">`;
-          html += `<span class="status-dot ${t.status}"></span>`;
-          html += `<span class="task-name${t.milestone ? ' milestone' : ''}">${t.milestone ? '&#9670; ' : ''}${escHtml(t.task)}</span>`;
-          if (t.question) html += `<span class="task-question-indicator" title="${escHtml(t.question)}"></span>`;
+          html += `<span class="status-dot ${tk.status}"></span>`;
+          html += `<span class="task-name${tk.milestone ? ' milestone' : ''}">${tk.milestone ? '&#9670; ' : ''}${escHtml(tk.task)}</span>`;
+          if (tk.question) html += `<span class="task-question-indicator" title="${escHtml(tk.question)}"></span>`;
           html += '</td>';
           // Owner
-          html += `<td style="text-align:center"><span class="owner-badge ${ownerCls}">${escHtml(t.owner.split('+')[0].split(' ')[0])}</span></td>`;
+          html += `<td style="text-align:center"><span class="owner-badge ${ownerCls}">${escHtml(tk.owner.split('+')[0].split(' ')[0])}</span></td>`;
           // Budget
-          html += `<td class="budget-cell">${t.budget ? formatBudget(t.budget) : ''}</td>`;
+          html += `<td class="budget-cell">${tk.budget ? formatBudget(tk.budget) : ''}</td>`;
           // Timeline
           cols.forEach(col => {
             const isCurrent = isCurrentPeriod(col, yearFilter);
-            const active = taskMatchesTimeline(t.timeline, col, yearFilter);
+            const active = taskMatchesTimeline(tk.timeline, col, yearFilter);
             html += `<td class="gantt-cell${isCurrent ? ' current-period' : ''}">`;
             if (active) {
-              if (t.milestone) {
+              if (tk.milestone) {
                 html += `<div class="milestone-diamond ${ownerCls}"></div>`;
               } else {
                 html += `<div class="gantt-bar ${ownerCls}"></div>`;
@@ -1348,9 +1461,9 @@ function renderGantt() {
 
 function renderQuestions() {
   const container = document.getElementById('view-questions');
-  let html = '<div class="questions-view"><h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">Open Questions (20)</h2>';
+  let html = '<div class="questions-view"><h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">' + t('openQuestions') + ' (20)</h2>';
   html += '<table class="questions-table"><thead><tr>';
-  html += '<th>#</th><th>Area</th><th>Question</th><th>Owner</th><th>Urgency</th>';
+  html += '<th>#</th><th>' + t('area') + '</th><th>' + t('question') + '</th><th>' + t('owner') + '</th><th>' + t('urgency') + '</th>';
   html += '</tr></thead><tbody>';
 
   OPEN_QUESTIONS.forEach(q => {
@@ -1359,7 +1472,8 @@ function renderQuestions() {
     html += `<td style="font-weight:500">${q.area}</td>`;
     html += `<td>${escHtml(q.question)}</td>`;
     html += `<td><span class="owner-badge ${getOwnerClass(q.owner)}">${escHtml(q.owner)}</span></td>`;
-    html += `<td><span class="urgency-badge ${q.urgency}">${q.urgency.replace('-',' ')}</span></td>`;
+    const urgencyLabel = q.urgency === 'urgent' ? t('urgent') : q.urgency === 'medium' ? t('medium') : t('notUrgent');
+    html += `<td><span class="urgency-badge ${q.urgency}">${urgencyLabel}</span></td>`;
     html += '</tr>';
   });
 
@@ -1369,10 +1483,10 @@ function renderQuestions() {
 
 function renderMilestones() {
   const container = document.getElementById('view-milestones');
-  let html = '<div class="milestones-view"><h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">Key Milestones</h2>';
+  let html = '<div class="milestones-view"><h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">' + t('keyMilestones') + '</h2>';
 
   MILESTONES_DATA.forEach(m => {
-    const linkedTask = m.taskId ? tasks.find(t => t.id === m.taskId) : null;
+    const linkedTask = m.taskId ? tasks.find(tk => tk.id === m.taskId) : null;
     const status = linkedTask ? linkedTask.status : 'not-started';
     const cardClass = status === 'done' ? 'done' : status === 'blocked' ? 'blocked' : '';
 
@@ -1386,8 +1500,9 @@ function renderMilestones() {
     html += '</div>';
     if (linkedTask) {
       html += `<select class="milestone-status-select" onchange="updateTaskStatus('${linkedTask.id}', this.value); event.stopPropagation();">`;
+      const msLabels = {'not-started':t('notStarted'),'in-progress':t('inProgress'),'done':t('done'),'blocked':t('blocked')};
       ['not-started','in-progress','done','blocked'].forEach(s => {
-        html += `<option value="${s}"${linkedTask.status===s?' selected':''}>${s.replace('-',' ')}</option>`;
+        html += `<option value="${s}"${linkedTask.status===s?' selected':''}>${msLabels[s]}</option>`;
       });
       html += '</select>';
     }
@@ -1400,31 +1515,31 @@ function renderMilestones() {
 
 function renderBudget() {
   const container = document.getElementById('view-budget');
-  const totalBudget = tasks.reduce((s,t) => s + (t.budget||0), 0);
-  const tasksWithBudget = tasks.filter(t => t.budget > 0);
+  const totalBudget = tasks.reduce((s,tk) => s + (tk.budget||0), 0);
+  const tasksWithBudget = tasks.filter(tk => tk.budget > 0);
 
   // Group by category
   const catBudgets = {};
-  tasks.forEach(t => {
-    if (!catBudgets[t.category]) catBudgets[t.category] = {total:0, tasks:[]};
-    if (t.budget > 0) {
-      catBudgets[t.category].total += t.budget;
-      catBudgets[t.category].tasks.push(t);
+  tasks.forEach(tk => {
+    if (!catBudgets[tk.category]) catBudgets[tk.category] = {total:0, tasks:[]};
+    if (tk.budget > 0) {
+      catBudgets[tk.category].total += tk.budget;
+      catBudgets[tk.category].tasks.push(tk);
     }
   });
 
   let html = '<div class="budget-view">';
-  html += '<h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">Budget Overview</h2>';
+  html += '<h2 style="font-family:Space Grotesk;color:var(--dark-green);margin-bottom:16px;">' + t('budgetOverview') + '</h2>';
 
   // Summary cards
   html += '<div class="budget-summary-cards">';
-  html += `<div class="budget-summary-card"><div class="budget-summary-label">Total Budget</div><div class="budget-summary-value">${formatBudget(totalBudget)} MXN</div></div>`;
-  html += `<div class="budget-summary-card"><div class="budget-summary-label">Items with Budget</div><div class="budget-summary-value">${tasksWithBudget.length}</div></div>`;
-  html += `<div class="budget-summary-card"><div class="budget-summary-label">Categories</div><div class="budget-summary-value">${Object.keys(catBudgets).filter(k => catBudgets[k].total > 0).length}</div></div>`;
+  html += `<div class="budget-summary-card"><div class="budget-summary-label">${t('totalBudget')}</div><div class="budget-summary-value">${formatBudget(totalBudget)} MXN</div></div>`;
+  html += `<div class="budget-summary-card"><div class="budget-summary-label">${t('itemsWithBudget')}</div><div class="budget-summary-value">${tasksWithBudget.length}</div></div>`;
+  html += `<div class="budget-summary-card"><div class="budget-summary-label">${t('categories')}</div><div class="budget-summary-value">${Object.keys(catBudgets).filter(k => catBudgets[k].total > 0).length}</div></div>`;
 
   // 2026 budget
-  const budget2026 = tasks.filter(t => t.year === '2026').reduce((s,t) => s + (t.budget||0), 0);
-  html += `<div class="budget-summary-card"><div class="budget-summary-label">2026 Budget</div><div class="budget-summary-value">${formatBudget(budget2026)} MXN</div></div>`;
+  const budget2026 = tasks.filter(tk => tk.year === '2026').reduce((s,tk) => s + (tk.budget||0), 0);
+  html += `<div class="budget-summary-card"><div class="budget-summary-label">${t('budget2026')}</div><div class="budget-summary-value">${formatBudget(budget2026)} MXN</div></div>`;
   html += '</div>';
 
   // Category breakdown
@@ -1439,8 +1554,8 @@ function renderBudget() {
     html += '</div>';
     html += `<div class="budget-bar-bg"><div class="budget-bar-fill" style="width:${pct}%"></div></div>`;
     html += '<div class="budget-task-list">';
-    data.tasks.forEach(t => {
-      html += `<div class="budget-task-item"><span>${escHtml(t.task)}</span><span style="font-weight:500">${formatBudget(t.budget)}</span></div>`;
+    data.tasks.forEach(tk => {
+      html += `<div class="budget-task-item"><span>${escHtml(tk.task)}</span><span style="font-weight:500">${formatBudget(tk.budget)}</span></div>`;
     });
     html += '</div></div>';
   });
@@ -1453,45 +1568,46 @@ function renderBudget() {
 // ============================================================
 function openSidebar(taskId) {
   selectedTaskId = taskId;
-  const t = tasks.find(x => x.id === taskId);
-  if (!t) return;
+  const tk = tasks.find(x => x.id === taskId);
+  if (!tk) return;
 
-  document.getElementById('sidebarTitle').textContent = t.task;
+  document.getElementById('sidebarTitle').textContent = tk.task;
   const body = document.getElementById('sidebarBody');
   const taskComments = comments[taskId] || [];
 
   let html = '';
   // Details
   html += '<div class="sidebar-section">';
-  html += '<div class="sidebar-section-title">Details</div>';
-  html += `<div class="sidebar-field"><span class="sidebar-field-label">Category</span><span class="sidebar-field-value">${t.category}${t.subcategory ? ' / ' + t.subcategory : ''}</span></div>`;
-  html += `<div class="sidebar-field"><span class="sidebar-field-label">Owner</span><span class="sidebar-field-value"><span class="owner-badge ${getOwnerClass(t.owner)}">${escHtml(t.owner)}</span></span></div>`;
-  html += `<div class="sidebar-field"><span class="sidebar-field-label">Year</span><span class="sidebar-field-value">${t.year}</span></div>`;
-  html += `<div class="sidebar-field"><span class="sidebar-field-label">Timeline</span><span class="sidebar-field-value">${t.timeline.join(', ')}</span></div>`;
-  if (t.budget) html += `<div class="sidebar-field"><span class="sidebar-field-label">Budget</span><span class="sidebar-field-value" style="font-weight:600;color:var(--medium-green)">${formatBudget(t.budget)} MXN</span></div>`;
-  if (t.milestone) html += `<div class="sidebar-field"><span class="sidebar-field-label">Type</span><span class="sidebar-field-value" style="font-weight:600;color:var(--dark-green)">&#9670; Milestone</span></div>`;
+  html += '<div class="sidebar-section-title">' + t('details') + '</div>';
+  html += `<div class="sidebar-field"><span class="sidebar-field-label">${t('category')}</span><span class="sidebar-field-value">${tk.category}${tk.subcategory ? ' / ' + tk.subcategory : ''}</span></div>`;
+  html += `<div class="sidebar-field"><span class="sidebar-field-label">${t('owner')}</span><span class="sidebar-field-value"><span class="owner-badge ${getOwnerClass(tk.owner)}">${escHtml(tk.owner)}</span></span></div>`;
+  html += `<div class="sidebar-field"><span class="sidebar-field-label">${t('year')}</span><span class="sidebar-field-value">${tk.year}</span></div>`;
+  html += `<div class="sidebar-field"><span class="sidebar-field-label">${t('timeline')}</span><span class="sidebar-field-value">${tk.timeline.join(', ')}</span></div>`;
+  if (tk.budget) html += `<div class="sidebar-field"><span class="sidebar-field-label">${t('budgetCol')}</span><span class="sidebar-field-value" style="font-weight:600;color:var(--medium-green)">${formatBudget(tk.budget)} MXN</span></div>`;
+  if (tk.milestone) html += `<div class="sidebar-field"><span class="sidebar-field-label">Type</span><span class="sidebar-field-value" style="font-weight:600;color:var(--dark-green)">&#9670; Milestone</span></div>`;
   html += '</div>';
 
   // Status
   html += '<div class="sidebar-section">';
-  html += '<div class="sidebar-section-title">Status</div>';
+  html += '<div class="sidebar-section-title">' + t('status') + '</div>';
   html += '<select class="sidebar-status-select" onchange="updateTaskStatus(\'' + taskId + '\', this.value)">';
+  const sbLabels = {'not-started':t('notStarted'),'in-progress':t('inProgress'),'done':t('done'),'blocked':t('blocked')};
   ['not-started','in-progress','done','blocked'].forEach(s => {
-    html += `<option value="${s}"${t.status===s?' selected':''}>${s.replace(/-/g,' ').replace(/\b\w/g, c => c.toUpperCase())}</option>`;
+    html += `<option value="${s}"${tk.status===s?' selected':''}>${sbLabels[s]}</option>`;
   });
   html += '</select></div>';
 
   // Open Question
-  if (t.question) {
+  if (tk.question) {
     html += '<div class="sidebar-section">';
-    html += '<div class="sidebar-section-title">Open Question</div>';
-    html += `<div class="sidebar-question">${escHtml(t.question)}</div>`;
+    html += '<div class="sidebar-section-title">' + t('openQuestion') + '</div>';
+    html += `<div class="sidebar-question">${escHtml(tk.question)}</div>`;
     html += '</div>';
   }
 
   // Comments
   html += '<div class="sidebar-section">';
-  html += `<div class="sidebar-section-title">Comments (${taskComments.length})</div>`;
+  html += `<div class="sidebar-section-title">${t('comments')} (${taskComments.length})</div>`;
   html += '<div class="comment-list">';
   taskComments.forEach(c => {
     html += '<div class="comment-item">';
@@ -1501,9 +1617,9 @@ function openSidebar(taskId) {
   });
   html += '</div>';
   html += '<div class="comment-form">';
-  html += '<input type="text" class="comment-author-input" id="commentAuthor" placeholder="Your name" value="' + (localStorage.getItem('pb_comment_author') || '') + '">';
-  html += '<textarea class="comment-text-input" id="commentText" placeholder="Add a comment..."></textarea>';
-  html += `<button class="comment-submit" onclick="addComment('${taskId}')">Add Comment</button>`;
+  html += '<input type="text" class="comment-author-input" id="commentAuthor" placeholder="' + t('authorPlaceholder') + '" value="' + (localStorage.getItem('pb_comment_author') || '') + '">';
+  html += '<textarea class="comment-text-input" id="commentText" placeholder="' + t('commentPlaceholder') + '"></textarea>';
+  html += `<button class="comment-submit" onclick="addComment('${taskId}')">${t('addComment')}</button>`;
   html += '</div></div>';
 
   body.innerHTML = html;
@@ -1522,9 +1638,9 @@ function closeSidebar() {
 }
 
 function updateTaskStatus(taskId, status) {
-  const t = tasks.find(x => x.id === taskId);
-  if (t) {
-    t.status = status;
+  const tk = tasks.find(x => x.id === taskId);
+  if (tk) {
+    tk.status = status;
     saveState();
     render();
     if (selectedTaskId === taskId) openSidebar(taskId);
@@ -1582,6 +1698,8 @@ document.getElementById('filterSearch').addEventListener('input', render);
 // INIT
 // ============================================================
 loadState();
+document.getElementById('langToggle').textContent = currentLang === 'en' ? 'ES' : 'EN';
+updateUILang();
 render();
 </script>
 </body>
