@@ -638,7 +638,7 @@ slide = prs.slides.add_slide(prs.slide_layouts[6])
 add_bg(slide)
 add_section_label(slide, "FINANCIAL PROJECTIONS")
 add_title(slide, "Path to Profitability")
-add_subtitle(slide, "Conservative projections: 110 ha at maturity, 2,000 poles/ha mature yield, 400 MXN/pole.")
+add_subtitle(slide, "CONSERVATIVE BASE: 110 ha at maturity, 1,400 poles/ha mature yield, 400 MXN/pole. Options: 1K / 2K / 3K.")
 
 # Bar chart area
 chart_card = add_rect(slide, MARGIN, Inches(2.6), Inches(8.0), Inches(4.2), BG_CARD, RGBColor(0x1A, 0x4A, 0x30))
@@ -646,8 +646,8 @@ add_text_box(slide, MARGIN + Inches(0.3), Inches(2.7), Inches(3), Inches(0.35),
              "Revenue Growth (MXN)", font_size=13, color=WHITE, bold=True)
 
 bars = [
-    ("2026", 0.034, 1), ("2027", 0.51, 2), ("2028", 1.0, 4), ("2029", 1.7, 6),
-    ("2030", 2.9, 10), ("2032", 6.5, 22), ("2034", 21.3, 60), ("2038", 73.0, 100),
+    ("2026", 0.034, 1), ("2027", 0.51, 2), ("2028", 0.68, 3), ("2029", 1.19, 5),
+    ("2030", 1.39, 6), ("2032", 4.1, 18), ("2034", 15.0, 50), ("2038", 52.0, 100),
 ]
 max_h = Inches(2.8)
 for i, (year, revenue, pct) in enumerate(bars):
@@ -679,10 +679,10 @@ add_text_box(slide, Inches(9.3), Inches(2.7), Inches(3.0), Inches(0.35),
 milestones = [
     ("2026", "Pilot · 100 poles"),
     ("2027", "Ramp · 1,500 poles"),
-    ("2029", "Growth · 4,250 poles"),
-    ("2032", "Cash-positive"),
     ("2031", "110 ha complete"),
-    ("2038", "Full maturity"),
+    ("2033", "Cash-positive cum."),
+    ("2038", "Full @ 1,400/ha"),
+    ("—", "154K poles/year"),
 ]
 for i, (yr, desc) in enumerate(milestones):
     y = Inches(3.15) + Inches(i * 0.35)
@@ -710,9 +710,9 @@ add_title(slide, "Three Scenarios")
 add_subtitle(slide, "Even at conservative yields, the business is profitable. We model what happens if bamboo produces half of our base case.")
 
 scenarios = [
-    ("Conservative", "1,000", YELLOW, [("Revenue 2034", "10.6M MXN"), ("Revenue 2038", "36.5M MXN"), ("Break-even", "2034")], "Still profitable"),
-    ("Base Case", "2,000", ACCENT, [("Revenue 2034", "21.3M MXN"), ("Revenue 2038", "73M MXN"), ("Break-even", "2032")], "Our projection"),
-    ("Optimistic", "3,000", BLUE_SOFT, [("Revenue 2034", "32M MXN"), ("Revenue 2038", "110M MXN"), ("Break-even", "2031")], "Possible upside"),
+    ("Conservative", "1,000", YELLOW, [("Revenue 2034", "10.6M MXN"), ("Revenue 2038", "37M MXN"), ("Break-even", "2034")], "Downside protection"),
+    ("Base Case ⭐", "1,400", ACCENT, [("Revenue 2034", "15M MXN"), ("Revenue 2038", "52M MXN"), ("Break-even", "2033")], "OUR PROJECTION"),
+    ("Optimistic", "2,000-3,000", BLUE_SOFT, [("Revenue 2034", "21-32M"), ("Revenue 2038", "73-110M"), ("Break-even", "2031-32")], "Possible upside"),
 ]
 for i, (name, yield_val, color, metrics, tag) in enumerate(scenarios):
     x = MARGIN + Inches(i * 3.9)
@@ -746,7 +746,7 @@ for i, (name, yield_val, color, metrics, tag) in enumerate(scenarios):
 
 # Bottom note
 add_text_box(slide, MARGIN, Inches(6.7), Inches(11.7), Inches(0.4),
-             "Key assumptions: 400 MXN/pole · 15% waste · 110 ha (50 own + 60 leased) · Smooth planting 2027-2031. Only yield varies.",
+             "CONSERVATIVE BASE: 1,400 poles/ha (not 2,000). Key assumptions: 400 MXN/pole · 15% waste · 110 ha (50 own + 60 leased). Only yield varies.",
              font_size=10, color=WHITE_60, alignment=PP_ALIGN.CENTER)
 
 
@@ -934,8 +934,8 @@ milestones_data = [
     ("2027-2029 — Scale Own Land", "Plant 50 ha across 3 years (15+15+10). Build pools as needed. Revenue grows 510K → 1.7M MXN. Mgmt salaries start at 20K/month.", ACCENT, True),
     ("2028 — Round 2 Seed", "Close 2.5M Seed at higher valuation (~41.5M post). 2 years of production data. 25 ha already planted. Funds next 4 years.", ACCENT, True),
     ("2030-2031 — Lease Expansion", "Activate replication model: lease 60 ha from neighbors. 10% revenue share to landowners after expenses. 110 ha total active.", WHITE_60, False),
-    ("2032 — Cash-Positive", "First profitable year. 6.5M MXN revenue. Vehicle purchases begin. Dividends planning starts.", WHITE_60, False),
-    ("2033-2038 — Full Maturity", "All 110 ha producing. Revenue scales 11M → 73M MXN. Big bodega 2034. ICC-ES 2037 (1yr before full maturity).", WHITE_40, False),
+    ("2032 — Cash-Positive", "First profitable year. 4.1M MXN revenue. Vehicle purchases begin. Dividends planning starts.", WHITE_60, False),
+    ("2033-2038 — Full Maturity", "All 110 ha producing. Revenue scales to 52M MXN (at 1,400/ha base). Big bodega 2034. ICC-ES 2037.", WHITE_40, False),
 ]
 for i, (title, desc, color, highlighted) in enumerate(milestones_data):
     col = i % 2
@@ -960,7 +960,7 @@ add_bg(slide)
 add_text_box(slide, MARGIN, Inches(1.5), Inches(11.7), Inches(1.0),
              "110 ha", font_size=64, color=ACCENT, bold=True, alignment=PP_ALIGN.CENTER)
 add_text_box(slide, MARGIN, Inches(2.5), Inches(11.7), Inches(0.5),
-             "180,000+ poles/year at full maturity · Replicable model", font_size=22, color=WHITE, bold=True, alignment=PP_ALIGN.CENTER)
+             "154,000 poles/year at full maturity · Replicable to 200+ ha", font_size=22, color=WHITE, bold=True, alignment=PP_ALIGN.CENTER)
 add_text_box(slide, MARGIN, Inches(3.0), Inches(11.7), Inches(0.5),
              "Mexico's first certified Guadua bamboo exporter", font_size=18, color=WHITE_60, alignment=PP_ALIGN.CENTER)
 
