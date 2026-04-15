@@ -437,7 +437,7 @@ add_subtitle(slide, "Grow premium Guadua → treat on-site → sell direct. Cont
 
 # Value chain flow
 steps = ["GROW", "HARVEST", "TREAT", "DRY", "SELL"]
-descs = ["110 ha Guadua", "50 ha own + 60 leased", "Per-10ha pools", "Bodega network", "400 MXN FOB"]
+descs = ["110 ha Guadua", "50 ha own + 60 leased", "Per-10ha pools", "Bodega network", "400+ MXN (low-end)"]
 for i, (step, desc) in enumerate(zip(steps, descs)):
     x = MARGIN + Inches(i * 2.35)
     box = add_rect(slide, x, Inches(2.6), Inches(2.0), Inches(0.9), RGBColor(0x0F, 0x3A, 0x24), ACCENT)
@@ -528,7 +528,7 @@ for i, item in enumerate(infra_items):
 mile = add_rect(slide, Inches(7.0), Inches(5.0), Inches(5.5), Inches(2.0), BG_CARD, RGBColor(0x1A, 0x4A, 0x30))
 add_text_box(slide, Inches(7.3), Inches(5.15), Inches(5.0), Inches(0.3),
              "2026 Milestones (In Progress)", font_size=13, color=WHITE, bold=True)
-miles = ["◉  Map & densify existing 10 ha", "◉  Clear 20 ha for 2027 planting", "◉  First harvest: ~100 poles", "◉  Build first drying bodega", "◉  Land title regularization"]
+miles = ["◉  Densify 10 ha (+3,500 seedlings)", "◉  Clear 20 ha for 2027 planting", "◉  First harvest: ~100 poles pilot", "◉  Build first drying bodega", "◉  Land title regularization"]
 for i, m in enumerate(miles):
     add_text_box(slide, Inches(7.3), Inches(5.55) + Inches(i * 0.28),
                  Inches(5.0), Inches(0.28), m, font_size=9, color=YELLOW)
@@ -602,8 +602,8 @@ team = [
     ("O", "Ofir", "Managing Partner & Head of Growth",
      "Strategy, finance, fundraising, investor relations, legal, marketing, branding, and certifications. Leads all business operations, financial modeling, and growth strategy. Executes the bridge-to-export roadmap.",
      ACCENT, True),
-    ("R", "Rick", "Founding Capital Partner",
-     "Cash contributor with 33.33% equity stake. Skin in the game from day one — demonstrating conviction in the long-term thesis before external investors join.",
+    ("R", "Rick", "Founding Capital Partner · First Angel",
+     "First angel investor. Cash contributor with 20% equity stake. Skin in the game from day one — demonstrating conviction in the long-term thesis before external investors join.",
      WHITE_60, False),
 ]
 for i, (initial, name, role, desc, color, highlighted) in enumerate(team):
