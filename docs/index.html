@@ -748,6 +748,142 @@ body {
   border-radius: 2px;
   margin-bottom: 20px;
 }
+
+/* ═══════════════════════════════════════════════════
+   MOBILE & TABLET RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  html { font-size: 15px; }
+
+  /* Slides: allow content to grow vertically on mobile */
+  .slide {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    padding: 56px 20px 60px;
+  }
+
+  /* Typography scales down */
+  .slide-title { font-size: clamp(1.5rem, 6vw, 2.4rem); line-height: 1.15; }
+  .slide-subtitle { font-size: 0.95rem; line-height: 1.4; }
+  .section-label { font-size: 0.68rem; }
+  .hero-title { font-size: clamp(2rem, 9vw, 3.2rem) !important; line-height: 1.1 !important; }
+  .tagline { font-size: 0.95rem !important; }
+
+  /* Grids → single column */
+  .two-col,
+  .card-grid,
+  .card-grid--2,
+  .card-grid--3,
+  .card-grid--4 {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  /* Remove any inline 2-column grid overrides */
+  [style*="grid-template-columns: 1.2fr"],
+  [style*="grid-template-columns: 2fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns: repeat(2"],
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Side-image layouts stack vertically */
+  .slide-with-side-image {
+    grid-template-columns: 1fr !important;
+  }
+  .slide-with-side-image .side-image {
+    min-height: 220px;
+    max-height: 280px;
+  }
+
+  /* Cards tighter padding */
+  .card { padding: 16px !important; }
+  .card__label { font-size: 0.72rem; }
+  .card__text { font-size: 0.88rem; }
+
+  /* Stat heroes — shrink large numbers */
+  .stat-hero__number { font-size: 2.4rem !important; }
+  .scenario-number { font-size: 2.2rem; }
+
+  /* Bar charts — horizontal scroll on narrow screens */
+  .bar-chart {
+    overflow-x: auto;
+    min-height: 180px;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .bar-chart__col { min-width: 52px; }
+
+  /* Annual Revenue vs Expenses chart — horizontal scroll (9 cols too dense) */
+  section#sexpenses .card > div[style*="grid-template-columns: repeat(9"] {
+    display: grid !important;
+    grid-template-columns: repeat(9, 60px) !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    min-width: 0;
+  }
+
+  /* Funding bridge strip — keep 9-col but scrollable */
+  section#sexpenses .card > div[style*="grid-template-columns: repeat(9"][style*="margin-bottom: 10px"] {
+    grid-template-columns: repeat(9, 70px) !important;
+  }
+
+  /* Summary row (4 KPIs) becomes 2x2 on mobile */
+  section#sexpenses div[style*="grid-template-columns: 1fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Milestone cards stack cleanly */
+  .milestone-card { flex-direction: row; gap: 10px; }
+  .milestone-title { font-size: 0.95rem; }
+  .milestone-desc { font-size: 0.82rem; }
+
+  /* Equity rows remain readable */
+  .equity-row { flex-wrap: wrap; }
+  .equity-row__bar { max-width: 120px; }
+
+  /* Data rows: allow wrap */
+  .data-row { flex-wrap: wrap; gap: 4px; }
+  .data-row__value { font-size: 0.82rem; text-align: left !important; }
+
+  /* Slide number indicator out of the way */
+  .slide-number {
+    bottom: 12px;
+    right: 12px;
+    font-size: 0.65rem;
+  }
+
+  /* Language toggle — slightly smaller, stays accessible */
+  #lang-toggle {
+    top: 10px !important;
+    right: 10px !important;
+    padding: 6px 12px !important;
+    font-size: 0.72rem !important;
+  }
+
+  /* Insight box — tighter */
+  .insight-box { padding: 14px 16px !important; font-size: 0.88rem; }
+
+  /* Flow steps wrap */
+  .flow-step { min-width: 0; }
+
+  /* Ensure images don't overflow */
+  img { max-width: 100%; height: auto; }
+}
+
+@media (max-width: 480px) {
+  .slide { padding: 48px 14px 56px; }
+  .slide-title { font-size: clamp(1.3rem, 7vw, 2rem); }
+  .bar-chart__col { min-width: 46px; }
+  .stat-hero__number { font-size: 2rem !important; }
+  section#sexpenses div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>
 </head>
 <body>
