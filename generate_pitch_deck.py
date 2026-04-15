@@ -665,7 +665,7 @@ for i, (year, revenue, pct) in enumerate(bars):
     bar.adjustments[0] = 0.15
     # Value label
     label = f"{revenue:.0f}M" if revenue >= 1 else f"{revenue*1000:.0f}K"
-    is_highlight = year in ("2030", "2036")
+    is_highlight = year in ("2032", "2038")
     add_text_box(slide, x - Inches(0.1), bar_y - Inches(0.25), Inches(0.8), Inches(0.25),
                  label, font_size=8, color=ACCENT if is_highlight else WHITE_60, bold=is_highlight, alignment=PP_ALIGN.CENTER)
     # Year label
@@ -686,9 +686,9 @@ milestones = [
 ]
 for i, (yr, desc) in enumerate(milestones):
     y = Inches(3.15) + Inches(i * 0.35)
-    c = ACCENT if yr == "2030" else WHITE_60
-    add_text_box(slide, Inches(9.3), y, Inches(0.7), Inches(0.3), yr, font_size=10, color=c, bold=(yr=="2030"))
-    add_text_box(slide, Inches(10.1), y, Inches(2.2), Inches(0.3), desc, font_size=9, color=c, bold=(yr=="2030"), alignment=PP_ALIGN.RIGHT)
+    c = ACCENT if yr == "2032" else WHITE_60
+    add_text_box(slide, Inches(9.3), y, Inches(0.7), Inches(0.3), yr, font_size=10, color=c, bold=(yr=="2032"))
+    add_text_box(slide, Inches(10.1), y, Inches(2.2), Inches(0.3), desc, font_size=9, color=c, bold=(yr=="2032"), alignment=PP_ALIGN.RIGHT)
 
 # Cash-positive box
 cp = add_rect(slide, Inches(9.0), Inches(5.6), Inches(3.5), Inches(1.2), RGBColor(0x0F, 0x3A, 0x24), ACCENT)
@@ -755,9 +755,9 @@ add_text_box(slide, MARGIN, Inches(6.7), Inches(11.7), Inches(0.4),
 # ══════════════════════════════════════════════════════════════
 slide = prs.slides.add_slide(prs.slide_layouts[6])
 add_bg(slide)
-add_section_label(slide, "INVESTMENT OPPORTUNITY")
-add_title(slide, "The Ask")
-add_subtitle(slide, "20% equity reserved for investors. First tranche at the highest-risk early valuation.")
+add_section_label(slide, "CAPITAL RAISE")
+add_title(slide, "Funding Plan & Structure")
+add_subtitle(slide, "Two rounds, 25% total equity ceiling. Round 1 in 3 milestone-based tranches — investor protection built in.")
 
 # Left — Bridge Round
 card_l = add_rect(slide, MARGIN, Inches(2.6), Inches(5.8), Inches(4.4), RGBColor(0x0F, 0x3A, 0x24), ACCENT)
@@ -766,18 +766,18 @@ add_text_box(slide, MARGIN + Inches(0.3), Inches(2.75), Inches(5.2), Inches(0.25
 add_text_box(slide, MARGIN + Inches(0.3), Inches(3.1), Inches(5.2), Inches(0.7),
              "4,000,000", font_size=44, color=WHITE, bold=True)
 add_text_box(slide, MARGIN + Inches(0.3), Inches(3.7), Inches(5.2), Inches(0.4),
-             "MXN for 14% equity", font_size=18, color=WHITE_60)
+             "MXN for 12% equity (3 tranches)", font_size=18, color=WHITE_60)
 add_text_box(slide, MARGIN + Inches(0.3), Inches(4.1), Inches(5.2), Inches(0.3),
-             "Pre-money: ~24.5M MXN · Post-money: ~28.5M MXN", font_size=11, color=WHITE_40)
+             "Pre-money: ~29.3M MXN · Post-money: ~33.3M MXN", font_size=11, color=WHITE_40)
 
 # Use of funds bars
 add_text_box(slide, MARGIN + Inches(0.3), Inches(4.5), Inches(5.2), Inches(0.3),
              "Use of Funds", font_size=12, color=WHITE, bold=True)
 funds = [
-    ("4-year runway: ops to end-2029", 0.45),
-    ("Land prep + planting 50 own ha", 0.25),
-    ("Mgmt salaries (start 2027)", 0.20),
-    ("Bodegas, pools, infrastructure", 0.10),
+    ("Tranche 1 (signing): 2026 + Q1 2027", 0.375),
+    ("Tranche 2 (Q2 2027): Q2-Q4 2027", 0.250),
+    ("Tranche 3 (Q1 2028): until Round 2", 0.375),
+    ("All milestone-based (poles sold, ha)", 0.0),
 ]
 for i, (label, pct) in enumerate(funds):
     y = Inches(4.9) + Inches(i * 0.42)
@@ -807,9 +807,10 @@ add_text_box(slide, Inches(7.5), Inches(2.75), Inches(4.7), Inches(0.3),
 
 eq_items = [
     ("Founding partners (3)", "60%", Inches(2.4), ACCENT),
-    ("Investors total (R1+R2)", "20%", Inches(0.8), BLUE_SOFT),
+    ("Round 1 (Bridge)", "12%", Inches(0.48), BLUE_SOFT),
+    ("Round 2 (Seed 2028)", "9%", Inches(0.36), BLUE_SOFT),
+    ("Future investors/talent", "4%", Inches(0.16), WHITE_40),
     ("Managing Partner (vested)", "15%", Inches(0.6), YELLOW),
-    ("Strategic reserve", "5%", Inches(0.2), WHITE_40),
 ]
 for i, (label, pct, bar_w, color) in enumerate(eq_items):
     y = Inches(3.2) + Inches(i * 0.5)
@@ -823,7 +824,7 @@ for i, (label, pct, bar_w, color) in enumerate(eq_items):
                  pct, font_size=10, color=WHITE, bold=True)
 
 add_text_box(slide, Inches(7.5), Inches(4.6), Inches(4.7), Inches(0.4),
-             "Bridge investor takes 14% — the largest piece. Funds 2026-2029 operations completely. Round 2 (Seed) closes 2028 at significantly higher valuation.",
+             "Hard ceiling: 25% total investor equity. Round 1 at 12% in 3 tranches (milestone-gated). 4% reserved for future investors or talent hires.",
              font_size=8, color=WHITE_40)
 
 # Valuation box
@@ -852,7 +853,7 @@ card_l = add_rect(slide, MARGIN, Inches(2.6), Inches(5.8), Inches(4.2), RGBColor
 add_text_box(slide, MARGIN + Inches(0.3), Inches(2.75), Inches(5.2), Inches(0.25),
              "ROUND 2 — SEED (Q3 2028)", font_size=10, color=ACCENT, bold=True)
 add_text_box(slide, MARGIN + Inches(0.3), Inches(3.2), Inches(5.2), Inches(0.8),
-             "2,500,000 MXN for ~6% equity",
+             "5,000,000 MXN for 9% equity",
              font_size=22, color=WHITE, bold=True)
 
 next_items = [
@@ -873,7 +874,7 @@ add_text_box(slide, Inches(7.5), Inches(2.75), Inches(4.7), Inches(0.3),
 why_items = [
     ("01", "Round 1 funds 4 full years (2026-2029) — no rush for Round 2"),
     ("02", "By 2028 we have 1.02M MXN revenue + 25 ha producing — proven traction"),
-    ("03", "Smaller raise = less dilution; founders keep more equity"),
+    ("03", "5M raise enables marketing investment + US market entry"),
 ]
 for i, (num, text) in enumerate(why_items):
     y = Inches(3.2) + Inches(i * 0.55)
@@ -887,11 +888,11 @@ add_text_box(slide, Inches(7.5), Inches(5.25), Inches(4.7), Inches(0.3),
 add_text_box(slide, Inches(7.5), Inches(5.65), Inches(2.5), Inches(0.3),
              "Round 1 (2026)", font_size=10, color=WHITE_60)
 add_text_box(slide, Inches(10.5), Inches(5.65), Inches(1.7), Inches(0.3),
-             "28.5M MXN", font_size=10, color=WHITE, bold=True, alignment=PP_ALIGN.RIGHT)
+             "33.3M MXN", font_size=10, color=WHITE, bold=True, alignment=PP_ALIGN.RIGHT)
 add_text_box(slide, Inches(7.5), Inches(6.0), Inches(2.5), Inches(0.3),
              "Round 2 (2028)", font_size=10, color=WHITE_60)
 add_text_box(slide, Inches(10.5), Inches(6.0), Inches(1.7), Inches(0.3),
-             "~41.5M MXN", font_size=10, color=ACCENT, bold=True, alignment=PP_ALIGN.RIGHT)
+             "~55.6M MXN", font_size=10, color=ACCENT, bold=True, alignment=PP_ALIGN.RIGHT)
 
 uplift = add_rect(slide, Inches(7.5), Inches(6.4), Inches(4.7), Inches(0.3), RGBColor(0x0F, 0x3A, 0x24), ACCENT)
 add_text_box(slide, Inches(7.5), Inches(6.4), Inches(4.7), Inches(0.3),
@@ -932,9 +933,9 @@ for label, pos in timeline_pts:
 milestones_data = [
     ("2026 — Foundation", "Deploy 4M Bridge. Densify 10 ha. Clear 20 ha for 2027. Build first drying bodega. First harvest: 100 poles. Land title regularization.", ACCENT, True),
     ("2027-2029 — Scale Own Land", "Plant 50 ha across 3 years (15+15+10). Build pools as needed. Revenue grows 510K → 1.7M MXN. Mgmt salaries start at 20K/month.", ACCENT, True),
-    ("2028 — Round 2 Seed", "Close 2.5M Seed at higher valuation (~41.5M post). 2 years of production data. 25 ha already planted. Funds next 4 years.", ACCENT, True),
+    ("2028 — Round 2 Seed", "Close 5M Seed at ~55.6M post-money. 2 years of production data. 25 ha already planted. 50% ops + 50% marketing/export.", ACCENT, True),
     ("2030-2031 — Lease Expansion", "Activate replication model: lease 60 ha from neighbors. 10% revenue share to landowners after expenses. 110 ha total active.", WHITE_60, False),
-    ("2032 — Cash-Positive", "First profitable year. 4.1M MXN revenue. Vehicle purchases begin. Dividends planning starts.", WHITE_60, False),
+    ("2032 — Cash-Positive", "First profitable year. 5.9M MXN revenue. Vehicle purchases begin. Dividends planning starts.", WHITE_60, False),
     ("2033-2038 — Full Maturity", "All 110 ha producing. Revenue scales to 52M MXN (at 1,400/ha base). Big bodega 2034. ICC-ES 2037.", WHITE_40, False),
 ]
 for i, (title, desc, color, highlighted) in enumerate(milestones_data):
