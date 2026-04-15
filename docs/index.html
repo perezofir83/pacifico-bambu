@@ -759,44 +759,84 @@ body {
   .slide {
     width: 100%;
     height: auto;
-    min-height: 100vh;
-    padding: 56px 20px 60px;
+    min-height: auto;
+    padding: 48px 18px 56px;
+    display: block !important;
   }
 
   /* Typography scales down */
-  .slide-title { font-size: clamp(1.5rem, 6vw, 2.4rem); line-height: 1.15; }
+  .slide-title { font-size: clamp(1.5rem, 6vw, 2.4rem) !important; line-height: 1.15 !important; }
   .slide-subtitle { font-size: 0.95rem; line-height: 1.4; }
   .section-label { font-size: 0.68rem; }
-  .hero-title { font-size: clamp(2rem, 9vw, 3.2rem) !important; line-height: 1.1 !important; }
+  .hero-title,
+  h1[class*="hero"],
+  .slide-title[style*="font-size"] { font-size: clamp(1.8rem, 8vw, 2.8rem) !important; line-height: 1.1 !important; }
   .tagline { font-size: 0.95rem !important; }
 
-  /* Grids → single column */
+  /* Grids → single column, never exceed viewport */
   .two-col,
   .card-grid,
   .card-grid--2,
   .card-grid--3,
   .card-grid--4 {
-    grid-template-columns: 1fr !important;
+    grid-template-columns: minmax(0, 1fr) !important;
     gap: 14px !important;
   }
+  .two-col > *,
+  .card-grid > * { min-width: 0 !important; }
 
-  /* Remove any inline 2-column grid overrides */
+  /* Remove inline 2-column grid overrides */
   [style*="grid-template-columns: 1.2fr"],
   [style*="grid-template-columns: 2fr 1fr"],
   [style*="grid-template-columns: 1fr 1fr"],
   [style*="grid-template-columns: repeat(2"],
   [style*="grid-template-columns: repeat(3"],
   [style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Cards can't exceed their grid cell width */
+  .card { max-width: 100%; overflow: hidden; }
+  .card .bar-chart { overflow-x: auto; }
+
+  /* Hero split (slide 1 + closing slide) — stack image below content */
+  .hero-split {
     grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: auto;
+  }
+  .hero-split__content {
+    padding: 48px 18px 24px !important;
+  }
+  .hero-split__image {
+    height: 240px;
+    order: 2;
+  }
+  .hero-split__image::after {
+    background: linear-gradient(0deg, transparent 60%, var(--bg-primary) 100%) !important;
   }
 
   /* Side-image layouts stack vertically */
   .slide-with-side-image {
     grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+  .slide-with-side-image .slide-content {
+    padding: 0 !important;
   }
   .slide-with-side-image .side-image {
-    min-height: 220px;
-    max-height: 280px;
+    height: 220px;
+    max-height: 260px;
+    margin: 16px -18px 0;
+    width: calc(100% + 36px);
+  }
+
+  /* Background-photo slides: reduce min-height and overlay intensity */
+  .slide--bg-photo {
+    min-height: auto;
+  }
+  .slide--bg-photo .slide-content {
+    padding: 48px 18px 56px !important;
   }
 
   /* Cards tighter padding */
@@ -825,10 +865,22 @@ body {
     -webkit-overflow-scrolling: touch;
     min-width: 0;
   }
-
-  /* Funding bridge strip — keep 9-col but scrollable */
   section#sexpenses .card > div[style*="grid-template-columns: repeat(9"][style*="margin-bottom: 10px"] {
     grid-template-columns: repeat(9, 70px) !important;
+  }
+
+  /* Legend above chart — stack vertically on mobile */
+  section#sexpenses .card > div[style*="justify-content: space-between"][style*="margin-bottom: 16px"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  /* Annotation row below chart — stack to 2 lines */
+  section#sexpenses .card > div[style*="justify-content: space-between"][style*="padding-top: 12px"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
   }
 
   /* Summary row (4 KPIs) becomes 2x2 on mobile */
@@ -871,16 +923,29 @@ body {
   /* Flow steps wrap */
   .flow-step { min-width: 0; }
 
+  /* Team cards, problem cards, flow rows — allow wrap */
+  .problem-number { font-size: 1.5rem; }
+  .team-info__role { font-size: 0.8rem; }
+  .team-info__desc { font-size: 0.85rem; }
+
+  /* Closing slide pillars stack */
+  .closing__pillars { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+
+  /* Competitor rows */
+  .competitor-row { flex-wrap: wrap; gap: 8px; }
+
   /* Ensure images don't overflow */
   img { max-width: 100%; height: auto; }
 }
 
 @media (max-width: 480px) {
-  .slide { padding: 48px 14px 56px; }
-  .slide-title { font-size: clamp(1.3rem, 7vw, 2rem); }
+  html { font-size: 14px; }
+  .slide { padding: 44px 12px 52px; }
+  .slide-title { font-size: clamp(1.3rem, 7vw, 1.9rem) !important; }
   .bar-chart__col { min-width: 46px; }
   .stat-hero__number { font-size: 2rem !important; }
-  section#sexpenses div[style*="grid-template-columns: 1fr 1fr"] {
+  .closing__pillars { grid-template-columns: 1fr !important; }
+  section#sexpenses div[style*="grid-template-columns: 1fr 1fr 1fr 1fr"] {
     grid-template-columns: 1fr !important;
   }
 }
