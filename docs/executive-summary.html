@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pacífico Bambu — Executive Summary</title>
+<meta name="description" content="Mexico's first vertically integrated bamboo exporter — Executive Summary for investors."/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --green-900: #1B4332;
+  --green-800: #2D6A4F;
+  --green-700: #40916C;
+  --green-600: #52B788;
+  --green-500: #74C69D;
+  --green-400: #95D5B2;
+  --green-300: #B7E4C7;
+  --green-200: #D8F3DC;
+  --green-100: #F0FFF4;
+  --green-50:  #F7FDF9;
+  --gray-900: #111827;
+  --gray-800: #1F2937;
+  --gray-700: #374151;
+  --gray-600: #4B5563;
+  --gray-500: #6B7280;
+  --gray-400: #9CA3AF;
+  --gray-300: #D1D5DB;
+  --gray-200: #E5E7EB;
+  --gray-100: #F3F4F6;
+  --gray-50:  #F9FAFB;
+  --amber: #D97706;
+  --bg-primary: #FAFDF8;
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--gray-800);
+  background: var(--bg-primary);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container { max-width: 880px; margin: 0 auto; padding: 40px 28px; }
+
+.section-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ═══ SCREEN 1 — HERO + ASK ═══ */
+.hero {
+  background: linear-gradient(135deg, var(--green-900) 0%, var(--green-800) 100%);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -40%; right: -10%;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(149,213,178,0.15), transparent 70%);
+  border-radius: 50%;
+}
+.hero .container { padding: 52px 28px 36px; position: relative; z-index: 1; }
+.hero .section-label { color: var(--green-300); }
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.75rem, 4.8vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+.hero h1 .accent { color: var(--green-400); }
+.hero__lede {
+  font-size: 1.02rem;
+  color: rgba(255,255,255,0.85);
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+.hero__meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.12);
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.7);
+}
+.hero__meta strong { color: #fff; font-weight: 600; }
+
+/* Ask banner */
+.ask-banner {
+  background: var(--green-600);
+  color: #fff;
+  padding: 20px 0;
+}
+.ask-banner__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ask-banner__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.85);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+.ask-banner__amount {
+  font-family: var(--font-heading);
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.ask-banner__detail {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.95);
+  margin-top: 2px;
+}
+
+/* ═══ SCREEN 2 — WHY + PROOF ═══ */
+.proof { padding: 44px 0 48px; }
+.proof .section-label { color: var(--green-700); }
+.proof h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 3.6vw, 1.85rem);
+  font-weight: 700;
+  color: var(--gray-900);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 20px;
+}
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 20px 0 28px;
+}
+.kpi {
+  background: #fff;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 16px 14px;
+  box-shadow: var(--shadow-md);
+}
+.kpi--dark { background: var(--green-800); color: #fff; border: none; }
+.kpi--dark .kpi__num, .kpi--dark .kpi__label { color: #fff; }
+.kpi__num {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green-700);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+.kpi__label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-500);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.proof__narrative {
+  font-size: 1rem;
+  color: var(--gray-700);
+  line-height: 1.65;
+  margin-bottom: 22px;
+}
+.proof__narrative strong { color: var(--gray-900); font-weight: 600; }
+
+.advantages {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.advantages li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 0;
+  font-size: 0.92rem;
+  color: var(--gray-700);
+}
+.advantages .icon {
+  color: var(--green-600);
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ═══ SCREEN 3 — ASK + CTA ═══ */
+.ask-section {
+  background: var(--green-50);
+  padding: 44px 0 40px;
+  border-top: 1px solid var(--gray-200);
+}
+.ask-section .section-label { color: var(--green-700); }
+.ask-section h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 3.6vw, 1.85rem);
+  font-weight: 700;
+  color: var(--gray-900);
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+
+.ask-box {
+  background: #fff;
+  border: 2px solid var(--green-600);
+  border-radius: 10px;
+  padding: 22px;
+  box-shadow: var(--shadow-lg);
+}
+.ask-box__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gray-200);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.ask-box__amount {
+  font-family: var(--font-heading);
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  line-height: 1;
+}
+.ask-box__amount .unit { font-size: 0.9rem; color: var(--gray-500); font-weight: 400; }
+.ask-box__equity { color: var(--green-700); font-weight: 600; margin-top: 3px; font-size: 0.95rem; }
+.ask-box__valuation { text-align: right; font-size: 0.82rem; color: var(--gray-600); }
+.ask-box__valuation strong { color: var(--gray-900); }
+
+.tranche {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--green-50);
+  border-left: 3px solid var(--green-600);
+  border-radius: 4px;
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+}
+.tranche strong { color: var(--green-700); }
+.tranche__amount { color: var(--gray-900); font-weight: 700; flex-shrink: 0; }
+
+.revenue-jump {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--gray-200);
+}
+.revenue-jump__item { text-align: center; }
+.revenue-jump__num {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--green-700);
+  line-height: 1;
+}
+.revenue-jump__label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+.why-low {
+  margin-top: 16px;
+  font-size: 0.86rem;
+  color: var(--gray-600);
+  padding: 12px 14px;
+  background: var(--gray-50);
+  border-radius: 6px;
+  border-left: 3px solid var(--amber);
+}
+.why-low strong { color: var(--gray-900); }
+
+.cta-block {
+  margin-top: 28px;
+  text-align: center;
+  padding: 24px 20px;
+  background: linear-gradient(135deg, var(--green-900), var(--green-700));
+  color: #fff;
+  border-radius: 10px;
+}
+.cta-block h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.cta-block p { color: rgba(255,255,255,0.85); font-size: 0.92rem; margin-bottom: 16px; }
+.btn {
+  display: inline-block;
+  background: var(--green-400);
+  color: var(--green-900);
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.92rem;
+  transition: transform 0.15s;
+}
+.btn:hover { transform: translateY(-1px); }
+
+footer {
+  padding: 20px 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--gray-500);
+  background: #fff;
+  border-top: 1px solid var(--gray-200);
+}
+footer strong { color: var(--gray-800); }
+footer a { color: var(--green-700); text-decoration: none; }
+
+#lang-toggle {
+  position: fixed;
+  top: 12px; right: 12px;
+  z-index: 9999;
+  background: var(--green-800);
+  color: #fff;
+  border: none;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  letter-spacing: 0.05em;
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+  .container { padding: 32px 18px; }
+  .hero .container { padding: 40px 18px 28px; }
+  .hero__meta { grid-template-columns: 1fr; gap: 6px; }
+  .kpi-row { grid-template-columns: 1fr; gap: 8px; }
+  .kpi { padding: 14px; display: flex; align-items: center; gap: 14px; }
+  .kpi__num { margin-bottom: 0; font-size: 1.35rem; min-width: 70px; }
+  .kpi__label { flex: 1; }
+  .ask-box__top { flex-direction: column; align-items: flex-start; }
+  .ask-box__valuation { text-align: left; }
+  .ask-box__amount { font-size: 1.85rem; }
+  .revenue-jump__num { font-size: 1.1rem; }
+  .proof, .ask-section { padding: 36px 0; }
+}
+</style>
+</head>
+<body>
+
+<button id="lang-toggle" onclick="toggleLang()">
+<span id="lang-toggle-label">ES</span>
+</button>
+
+<!-- ═══════════════════════════════════════════════════
+     SCREEN 1 — HERO + ASK
+     ═══════════════════════════════════════════════════ -->
+<section class="hero">
+<div class="container">
+<p class="section-label" data-es="Resumen Ejecutivo · Ronda Bridge 2026">Executive Summary · Bridge Round 2026</p>
+<h1 data-es='El primer exportador mexicano de bambú <span class="accent">verticalmente integrado</span> al mercado de EE.UU.'>Mexico's first <span class="accent">vertically integrated</span> bamboo exporter to the US market.</h1>
+<p class="hero__lede" data-es="5 años de I+D biológica detrás. Desplegamos capital ahora hacia 110 ha activas y flujo positivo en 2031.">Five years of biological R&amp;D behind us. Deploying capital now toward 110 active hectares and cash-positive by 2031.</p>
+<div class="hero__meta">
+<div data-es="<strong>Ubicación:</strong> Oaxaca, Mx"><strong>Location:</strong> Oaxaca, Mx</div>
+<div data-es="<strong>Arrendamiento:</strong> 40 años"><strong>Lease:</strong> 40 years</div>
+<div data-es="<strong>Puerto:</strong> Salina Cruz ~150 km"><strong>Port:</strong> Salina Cruz ~150 km</div>
+<div data-es="<strong>Mercado:</strong> EE.UU. vía USMCA"><strong>Market:</strong> US via USMCA</div>
+</div>
+</div>
+</section>
+
+<div class="ask-banner">
+<div class="container ask-banner__inner">
+<div>
+<div class="ask-banner__label" data-es="Ronda Bridge · Abierta Ahora">Bridge Round · Open Now</div>
+<div class="ask-banner__amount">4,000,000 MXN</div>
+</div>
+<div class="ask-banner__detail" data-es="12% equity · 3 tramos por hitos">12% equity · 3 milestone tranches</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SCREEN 2 — WHY WE WIN (Opportunity + Traction)
+     ═══════════════════════════════════════════════════ -->
+<section class="proof">
+<div class="container">
+<p class="section-label" data-es="Por Qué Ganamos">Why We Win</p>
+<h2 data-es="Un mercado de $10-12B sin un solo competidor mexicano certificado — y 5 años de ventaja que no se pueden comprar.">A $10-12B market with zero certified Mexican competitor — and a 5-year lead that can't be bought.</h2>
+
+<div class="kpi-row">
+<div class="kpi kpi--dark">
+<div class="kpi__num">$10-12B</div>
+<div class="kpi__label" data-es="Mercado EE.UU. Bambú de Ingeniería">US Engineered Bamboo Market</div>
+</div>
+<div class="kpi">
+<div class="kpi__num">0</div>
+<div class="kpi__label" data-es="Exportadores Mx Certificados (ICC-ES/ASTM)">Certified Mx Exporters (ICC-ES/ASTM)</div>
+</div>
+<div class="kpi">
+<div class="kpi__num">5-7 yr</div>
+<div class="kpi__label" data-es="Barrera Biológica Permanente">Permanent Biological Moat</div>
+</div>
+</div>
+
+<p class="proof__narrative" data-es="Desde abril 2021 operamos un <strong>piloto biológico de 6 ha</strong>: 3,000 plántulas sembradas, <strong>1,500 validadas</strong> tras 5 años. Conocemos la especie correcta, la densidad correcta, las parcelas correctas. El plan: escalar a <strong>110 ha activas para 2031</strong> — 50 ha propias + 60 ha arrendadas a vecinos, todas bajo arrendamiento de 40 años firmado.">Since April 2021 we've run a <strong>6 ha biological pilot</strong>: 3,000 seedlings planted, <strong>1,500 validated</strong> after 5 years. We know the right species, the right density, the right plots. The plan: scale to <strong>110 active hectares by 2031</strong> — 50 ha own + 60 ha neighbor-leased, all under a signed 40-year lease.</p>
+
+<ul class="advantages">
+<li><span class="icon">✓</span><span data-es="<strong>Ubicación estratégica + USMCA libre de aranceles</strong> — los compradores americanos están saliendo de las cadenas asiáticas. Nuestra plantación está a 150 km de Salina Cruz, el nuevo puerto pacífico de México y alternativa terrestre al Canal de Panamá (inversión de $120B MXN)."><strong>Strategic location + USMCA duty-free</strong> — US construction buyers are moving supply chains out of Asia. Our plantation sits 150 km from Salina Cruz, Mexico's new Pacific port and $120B land alternative to the Panama Canal.</span></li>
+<li><span class="icon">✓</span><span data-es="<strong>Integración vertical</strong> — plantación, cosecha, tratamiento y secado en sitio. Propagación propia desde 2029 → costo baja 71%."><strong>Vertical integration</strong> — plantation, harvest, treatment, drying on-site. Own propagation from 2029 → cost drops 71%.</span></li>
+<li><span class="icon">✓</span><span data-es="<strong>Foso biológico</strong> — 5 años ya invertidos. Cualquier competidor que arranque hoy llega al mercado 5+ años después."><strong>Biological moat</strong> — 5 years already invested. Any competitor starting today reaches the market 5+ years behind.</span></li>
+</ul>
+</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SCREEN 3 — ASK + CTA
+     ═══════════════════════════════════════════════════ -->
+<section class="ask-section">
+<div class="container">
+<p class="section-label" data-es="La Solicitud">The Ask</p>
+<h2 data-es="Ronda Bridge 4M MXN en 3 tramos por hitos — protección al inversionista integrada.">4M MXN Bridge in 3 milestone-based tranches — investor protection built in.</h2>
+
+<div class="ask-box">
+<div class="ask-box__top">
+<div>
+<div class="ask-box__amount">4,000,000 <span class="unit">MXN</span></div>
+<div class="ask-box__equity" data-es="por 12% equity">for 12% equity</div>
+</div>
+<div class="ask-box__valuation">
+<div data-es="Pre-money: <strong>29.3M MXN</strong>">Pre-money: <strong>29.3M MXN</strong></div>
+<div data-es="Post-money: <strong>33.3M MXN</strong>">Post-money: <strong>33.3M MXN</strong></div>
+</div>
+</div>
+
+<div class="tranche"><span data-es="<strong>Tramo 1 — Firma</strong> · cubre 2026 + Q1 2027"><strong>Tranche 1 — Signing</strong> · covers 2026 + Q1 2027</span><span class="tranche__amount">1.5M</span></div>
+<div class="tranche"><span data-es="<strong>Tramo 2 — Q2 2027</strong> · tras 1,500 postes vendidos"><strong>Tranche 2 — Q2 2027</strong> · after 1,500 poles sold</span><span class="tranche__amount">1.0M</span></div>
+<div class="tranche"><span data-es="<strong>Tramo 3 — Q1 2028</strong> · tras 15 ha más sembradas"><strong>Tranche 3 — Q1 2028</strong> · after 15 more ha planted</span><span class="tranche__amount">1.5M</span></div>
+
+<div class="revenue-jump">
+<div class="revenue-jump__item">
+<div class="revenue-jump__num">34K</div>
+<div class="revenue-jump__label" data-es="Ingresos 2026">2026 Revenue</div>
+</div>
+<div class="revenue-jump__item">
+<div class="revenue-jump__num">5.0M</div>
+<div class="revenue-jump__label" data-es="Flujo positivo 2031">Cash-positive 2031</div>
+</div>
+<div class="revenue-jump__item">
+<div class="revenue-jump__num">53M</div>
+<div class="revenue-jump__label" data-es="Madurez total 2038">Full maturity 2038</div>
+</div>
+</div>
+
+<div class="why-low" data-es="<strong>¿Por qué esta valuación es baja?</strong> Entras antes de que se resuelva la fase de riesgo. Una vez probada la producción a escala, la siguiente ronda refleja un perfil de riesgo fundamentalmente distinto — y una valuación mucho más alta."><strong>Why is this valuation low?</strong> You're entering before the risk phase is resolved. Once production is proven at scale, the next round reflects a fundamentally different risk profile — and a much higher valuation.</div>
+</div>
+
+<div class="cta-block">
+<h3 data-es="¿15 minutos esta semana?">15 minutes this week?</h3>
+<p data-es="Puedo compartir la presentación completa, el modelo financiero y el plan detallado de milestones.">I can share the full deck, financial model, and detailed milestone plan.</p>
+<a class="btn" href="mailto:perezofir@gmail.com" data-es="Escribir directamente →">Email directly →</a>
+</div>
+</div>
+</section>
+
+<footer>
+<div class="container" style="padding: 0 28px;">
+<strong>Pacífico Bambu</strong> · El Azulillo, Candelaria, Oaxaca, Mexico · <a href="mailto:perezofir@gmail.com">perezofir@gmail.com</a>
+</div>
+</footer>
+
+<script>
+(function(){
+  let currentLang = 'en';
+  document.querySelectorAll('[data-es]').forEach(el => { el.dataset.en = el.innerHTML; });
+  window.toggleLang = function(){
+    currentLang = (currentLang === 'en') ? 'es' : 'en';
+    document.querySelectorAll('[data-es]').forEach(el => {
+      el.innerHTML = (currentLang === 'es') ? el.dataset.es : el.dataset.en;
+    });
+    document.getElementById('lang-toggle-label').textContent = (currentLang === 'es') ? 'EN' : 'ES';
+    document.documentElement.lang = currentLang;
+  };
+})();
+</script>
+</body>
+</html>
