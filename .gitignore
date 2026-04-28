@@ -2,3 +2,16 @@
 .claude/
 *.pyc
 __pycache__/
+
+# Private files — managed in pacifico-bambu-private repo
+# https://github.com/perezofir83/pacifico-bambu-private
+Pacifico_Bambu_Financial_Model_v2.xlsx
+Pacifico_Bambu_Gantt_2026-2032.xlsx
+Pacifico_Bambu_Pitch_Deck_v3.pptx
+Mexico_Bamboo_Competitive_Landscape.md
+Mexico_Bamboo_Competitors.xlsx
+Ecosystem_Dashboard_Design_Research.md
+CLAUDE.md
+generate_pitch_deck.py
+*.docx
+scripts/
