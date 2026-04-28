@@ -1,154 +1,408 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light scroll-smooth" lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Pacífico Bambu — Guadua angustifolia plantation in Candelaria, Oaxaca, Mexico. Coming soon." />
-  <meta name="theme-color" content="#1B4332" />
-  <meta name="robots" content="index,follow" />
-
-  <meta property="og:title" content="Pacífico Bambu" />
-  <meta property="og:description" content="Vegetal steel, grown in Oaxaca." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://pacifico-bambu.com" />
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:locale:alternate" content="es_MX" />
-
-  <title>Pacífico Bambu</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" />
-
-  <style>
-    :root {
-      --green-900: #1B4332;
-      --green-800: #2D6A4F;
-      --green-100: #F0FFF4;
-      --bg: #FAFDF8;
-      --text: #1F2937;
-      --text-soft: #4B5563;
-      --font-heading: 'Space Grotesk', system-ui, sans-serif;
-      --font-body: 'DM Sans', system-ui, sans-serif;
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pacífico Bambú</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                "colors": {
+                    "surface-dim": "#d0dbed",
+                    "on-tertiary-fixed": "#181c1a",
+                    "on-primary": "#ffffff",
+                    "inverse-surface": "#27313f",
+                    "tertiary": "#232724",
+                    "on-surface": "#121c2a",
+                    "ink-soft": "#4B5563",
+                    "on-primary-container": "#86af99",
+                    "inverse-on-surface": "#eaf1ff",
+                    "secondary-fixed": "#a1f4c8",
+                    "inverse-primary": "#a5d0b9",
+                    "green-50": "#F7FDF9",
+                    "on-background": "#121c2a",
+                    "primary-fixed": "#c1ecd4",
+                    "green-200": "#D8F3DC",
+                    "tertiary-fixed-dim": "#c4c7c3",
+                    "on-primary-fixed": "#002114",
+                    "green-800": "#2D6A4F",
+                    "background": "#f8f9ff",
+                    "outline": "#717973",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#dee9fc",
+                    "on-secondary-container": "#1b724f",
+                    "green-950": "#0F2922",
+                    "green-100": "#F0FFF4",
+                    "primary-fixed-dim": "#a5d0b9",
+                    "green-900": "#1B4332",
+                    "primary": "#012d1d",
+                    "tertiary-fixed": "#e0e3df",
+                    "surface-container-low": "#eff4ff",
+                    "surface": "#f8f9ff",
+                    "secondary": "#116c4a",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-container": "#a4a8a3",
+                    "on-surface-variant": "#414844",
+                    "on-secondary-fixed": "#002113",
+                    "on-tertiary-fixed-variant": "#444844",
+                    "surface-bright": "#f8f9ff",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "primary-container": "#1b4332",
+                    "on-error-container": "#93000a",
+                    "ink-mute": "#6B7280",
+                    "surface-container-highest": "#d9e3f6",
+                    "on-primary-fixed-variant": "#274e3d",
+                    "surface-container": "#e6eeff",
+                    "on-error": "#ffffff",
+                    "green-700": "#40916C",
+                    "secondary-fixed-dim": "#86d7ad",
+                    "outline-variant": "#c1c8c2",
+                    "surface-variant": "#d9e3f6",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#005236",
+                    "cream-50": "#FAFDF8",
+                    "tertiary-container": "#393d3a",
+                    "surface-tint": "#3f6653",
+                    "secondary-container": "#a1f4c8",
+                    "ink": "#1F2937",
+                    "green-500": "#74C69D"
+                },
+                "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+                },
+                "spacing": {
+                    "stack-sm": "1rem",
+                    "container-max": "1280px",
+                    "stack-lg": "4rem",
+                    "stack-md": "2.5rem",
+                    "section-padding": "clamp(6rem, 13vw, 10rem)",
+                    "gutter": "clamp(1.5rem, 4.5vw, 3rem)"
+                },
+                "fontFamily": {
+                    "eyebrow": ["Space Grotesk"],
+                    "h2": ["Space Grotesk"],
+                    "ui-label": ["Space Grotesk"],
+                    "h1": ["Space Grotesk"],
+                    "body": ["Be Vietnam Pro"]
+                },
+                "fontSize": {
+                    "eyebrow": ["0.75rem", { "lineHeight": "1.2", "letterSpacing": "0.22em", "fontWeight": "500" }],
+                    "h2": ["clamp(2rem, 5vw, 3rem)", { "lineHeight": "1.2", "letterSpacing": "-0.022em", "fontWeight": "600" }],
+                    "ui-label": ["0.875rem", { "lineHeight": "1", "letterSpacing": "0.16em", "fontWeight": "500" }],
+                    "h1": ["clamp(3.5rem, 8vw, 5.5rem)", { "lineHeight": "1.1", "letterSpacing": "-0.025em", "fontWeight": "600" }],
+                    "body": ["1.125rem", { "lineHeight": "1.6", "fontWeight": "400" }]
+                }
+            },
+        },
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; }
-    body {
-      font-family: var(--font-body);
-      color: var(--text);
-      background: var(--bg);
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 2rem;
-      -webkit-font-smoothing: antialiased;
-      line-height: 1.5;
+</script>
+<style>
+    body { font-family: 'Be Vietnam Pro', sans-serif; }
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     }
-    main {
-      max-width: 640px;
-      width: 100%;
-      text-align: center;
+    .hero-gradient {
+        background: linear-gradient(to bottom, rgba(250, 253, 248, 0.2) 0%, rgba(250, 253, 248, 0.8) 100%);
     }
-    .brand-mark {
-      display: inline-block;
-      font-family: var(--font-heading);
-      font-weight: 600;
-      font-size: 0.875rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--green-800);
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--green-800);
-      border-radius: 999px;
-      margin-bottom: 2.5rem;
+    .vertical-rl {
+        writing-mode: vertical-rl;
     }
-    h1 {
-      font-family: var(--font-heading);
-      font-weight: 600;
-      font-size: clamp(2.25rem, 6vw, 3.75rem);
-      line-height: 1.1;
-      color: var(--green-900);
-      margin-bottom: 1.5rem;
-      letter-spacing: -0.02em;
-    }
-    .sub {
-      font-size: clamp(1rem, 2.2vw, 1.125rem);
-      color: var(--text-soft);
-      margin-bottom: 3rem;
-      max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .meta {
-      font-family: var(--font-heading);
-      font-size: 0.8125rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-      opacity: 0.7;
-    }
-    .lang-toggle {
-      margin-top: 4rem;
-      display: inline-flex;
-      gap: 0.75rem;
-      align-items: center;
-      font-family: var(--font-heading);
-      font-size: 0.8125rem;
-      letter-spacing: 0.1em;
-      color: var(--text-soft);
-    }
-    .lang-toggle button {
-      background: none;
-      border: none;
-      color: inherit;
-      font: inherit;
-      letter-spacing: inherit;
-      cursor: pointer;
-      padding: 0.25rem 0.5rem;
-      border-radius: 4px;
-    }
-    .lang-toggle button.active {
-      color: var(--green-900);
-      font-weight: 600;
-    }
-    .lang-toggle button:hover { background: var(--green-100); }
-    .lang-toggle .sep { opacity: 0.4; }
-  </style>
+</style>
 </head>
-<body>
-  <main>
-    <span class="brand-mark">Pacífico Bambu</span>
-    <h1 data-en="Vegetal steel, grown in Oaxaca."
-        data-es="Acero vegetal, cultivado en Oaxaca.">
-      Vegetal steel, grown in Oaxaca.
-    </h1>
-    <p class="sub" data-en="A Guadua angustifolia plantation in Candelaria, Oaxaca. The full site is on its way."
-                   data-es="Una plantación de Guadua angustifolia en Candelaria, Oaxaca. El sitio completo está en camino.">
-      A Guadua angustifolia plantation in Candelaria, Oaxaca. The full site is on its way.
-    </p>
-    <p class="meta">Candelaria · Oaxaca · México</p>
+<body class="bg-cream-50 text-ink font-body selection:bg-green-200 selection:text-green-900 antialiased">
 
-    <div class="lang-toggle">
-      <button type="button" data-lang="en" class="active">EN</button>
-      <span class="sep">/</span>
-      <button type="button" data-lang="es">ES</button>
-    </div>
-  </main>
+<!-- ========================= -->
+<!-- TopNavBar (shared) -->
+<!-- ========================= -->
+<header class="fixed top-0 w-full z-50 bg-stone-50/80 dark:bg-stone-900/80 backdrop-blur-md border-b border-stone-200/50 dark:border-stone-800/50 h-20 transition-all duration-500 cubic-bezier(0.4, 0, 0.2, 1)">
+<div class="max-w-[1280px] mx-auto flex justify-between items-center px-8 h-full">
+<div class="px-4 py-1 border border-emerald-900 dark:border-emerald-50 rounded-full text-base font-bold tracking-tighter text-emerald-900 dark:text-emerald-50 font-['Space_Grotesk']">
+            PACÍFICO BAMBÚ
+        </div>
+<nav class="hidden md:flex gap-8 items-center font-['Space_Grotesk'] uppercase tracking-wider text-sm font-medium">
+<a class="text-emerald-700 dark:text-emerald-400 border-b border-emerald-700 hover:text-emerald-800 transition-colors duration-300" href="#project">THE PROJECT</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#technical">TECHNICAL</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#community">COMMUNITY</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#contact">CONTACT</a>
+</nav>
+<div class="flex items-center gap-6 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-medium">
+<div class="px-3 py-1 bg-emerald-900 text-on-primary rounded-full text-[10px] cursor-pointer">
+                EN / ES
+            </div>
+<button class="md:hidden text-emerald-900">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</div>
+</header>
 
-  <script>
-    const root = document.documentElement;
-    document.querySelectorAll('.lang-toggle button').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.dataset.lang;
-        root.setAttribute('lang', lang);
-        document.querySelectorAll('[data-en]').forEach(el => {
-          el.textContent = el.getAttribute('data-' + lang);
-        });
-        document.querySelectorAll('.lang-toggle button').forEach(b => {
-          b.classList.toggle('active', b.dataset.lang === lang);
-        });
-      });
-    });
-  </script>
+<!-- ========================= -->
+<!-- Hero Section -->
+<!-- ========================= -->
+<main class="relative min-h-screen flex flex-col pt-20 overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="High-quality Guadua angustifolia bamboo grove" class="w-full h-full object-cover grayscale-[0.2] brightness-90" data-alt="cinematic wide shot of a dense lush green guadua bamboo forest in Oaxaca with morning mist and soft dappled sunlight through the leaves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqZxJsCEWds6w2LqZmFyU8SlyrRX6rlXpH7cnlIJPqW9PItI0SqxMHZ8DkpRhwM1n1mlUGCwKwcw1I0XyCHrWbsGtmjIR4bZKOSJ2ykUloDUc1fzoRKudabZNBAFbyliFdt_QYEtqIUiDPmyE1PosW27qDHobovSOhpMEPSc40HtTVfa5p7spw_BdFuYxupZ92-dTB0ba7_KLSCyzSG3UF3az984TsfgzNmckshpi8-UyaCmbJQS3RfgQdkgyhK4gCZcl9skLHFmk"/>
+<div class="absolute inset-0 hero-gradient"></div>
+</div>
+
+<div class="absolute right-8 top-1/2 -translate-y-1/2 z-20 hidden lg:block">
+<div class="vertical-rl text-emerald-900/40 font-ui-label text-eyebrow uppercase tracking-[0.3em] flex items-center gap-4">
+<span class="w-px h-12 bg-emerald-900/20 mb-4"></span>
+            17.0833° N · 96.0667° W
+        </div>
+</div>
+
+<div class="relative z-10 max-w-[1280px] mx-auto px-8 flex-1 flex flex-col justify-center w-full">
+<div class="max-w-4xl">
+<div class="mb-8 flex items-center gap-4">
+<span class="w-8 h-px bg-emerald-900"></span>
+<p class="font-eyebrow text-eyebrow text-emerald-900 uppercase">
+                    Candelaria · Oaxaca · México · Est. 2021
+                </p>
+</div>
+<h1 class="font-h1 text-h1 text-primary mb-8 tracking-tight">
+                Vegetal <span class="italic font-light text-emerald-800">steel</span>, <br/>
+                grown in Oaxaca.
+            </h1>
+<p class="font-body text-body text-ink-soft mb-12 max-w-xl leading-relaxed">
+                A <span class="italic text-emerald-900 font-medium">Guadua angustifolia</span> plantation in the highlands of Oaxaca — built around classical agronomy and modern data intelligence.
+            </p>
+<div class="flex flex-wrap items-center gap-8">
+<a class="group relative px-10 py-5 bg-green-900 rounded-full text-on-primary font-ui-label text-ui-label uppercase flex items-center gap-3 transition-all duration-500 hover:bg-green-800 hover:pr-12 shadow-xl shadow-green-900/10" href="#contact">
+                    Get in touch
+                    <span class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="font-ui-label text-ui-label text-emerald-900 uppercase underline decoration-emerald-900/30 underline-offset-8 hover:decoration-emerald-900 transition-all" href="#">
+                    Technical Whitepaper
+                </a>
+</div>
+</div>
+</div>
+
+<div class="relative z-10 w-full bg-white/40 backdrop-blur-sm border-t border-stone-200/50">
+<div class="max-w-[1280px] mx-auto px-8 py-10 grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="flex flex-col gap-2 border-l border-stone-200 pl-6">
+<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest">Species</span>
+<span class="font-h2 text-xl text-emerald-900">G. Angustifolia Kunth</span>
+</div>
+<div class="flex flex-col gap-2 border-l border-stone-200 pl-6">
+<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest">Altitudinal Zone</span>
+<span class="font-h2 text-xl text-emerald-900">1,200m ASL</span>
+</div>
+<div class="flex flex-col gap-2 border-l border-stone-200 pl-6">
+<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest">Tensile Strength</span>
+<span class="font-h2 text-xl text-emerald-900">Up to 40 kN/cm²</span>
+</div>
+</div>
+</div>
+</main>
+
+<!-- ========================= -->
+<!-- Section 02: The Project -->
+<!-- ========================= -->
+<section id="project" class="section-padding py-section-padding">
+<div class="max-w-[1280px] mx-auto px-gutter grid grid-cols-1 md:grid-cols-12 gap-stack-lg items-center">
+<div class="md:col-span-6 flex flex-col gap-8">
+<header class="flex flex-col gap-4">
+<span class="font-eyebrow text-eyebrow uppercase text-green-700">THE PROJECT — 01</span>
+<h2 class="font-h2 text-h2 text-primary">
+                    We grow <i class="font-normal italic">Guadua angustifolia</i> — the structural king of the bamboo family — in Candelaria, Oaxaca.
+                </h2>
+</header>
+<div class="flex flex-col gap-6">
+<p class="font-body text-body text-ink-soft max-w-xl">
+                    Pacífico Bambu is a <i class="italic">Guadua angustifolia</i> plantation under construction in Candelaria, Oaxaca. We started in 2021 with a pilot. Today we're scaling toward a fully operational bamboo farm — one of the largest dedicated Guadua plantations in Mexico — combining classical agronomy with modern data tools.
+                </p>
+</div>
+<div class="pt-4">
+<a class="inline-flex items-center gap-3 text-green-800 font-ui-label uppercase group transition-all duration-300" href="#">
+                    Explore our methodology
+                    <span class="material-symbols-outlined transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<div class="md:col-span-6 flex flex-col gap-4">
+<div class="aspect-[3/4] overflow-hidden rounded-sm shadow-sm bg-stone-200">
+<img alt="Mature Guadua bamboo forest" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" data-alt="A portrait shot of towering, mature Guadua angustifolia bamboo culms in a lush Oaxacan plantation, soft dappled sunlight filtering through leaves, high contrast greens" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC_2eQG9kKWHzX8A0J52Ea3uvEzzcWcMZAmTttYWNazwbirRzJCI87TBhHauemir5pQ_PklBRaEgtRFwWOAGTfZhu0-beDHhym4IlxJsZobDZsfvJyCOR0JX-msG8uXC-sUtGjnUdKgi68EF_oLb4JYzIhNtGsasyRnaj-syVKvCEXF0RHSH8ZO122t1Ok0CK6UTPlJYL8w13nOglC_p_jD8wJu2LFb29nFNMabn13Qmfwq_KilX3tU5U0DFr7ofw6-i59bbakLQE"/>
+</div>
+<div class="flex justify-end">
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.15em] text-ink-mute italic">
+                    *Plot 03* · Candelaria, Oaxaca · 2024
+                </span>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========================= -->
+<!-- Technical Break: Statistics -->
+<!-- ========================= -->
+<section id="technical" class="bg-green-100 py-24">
+<div class="max-w-[1280px] mx-auto px-gutter">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-l border-emerald-900/10">
+<div class="pl-8 border-l border-emerald-900">
+<span class="font-eyebrow text-eyebrow text-green-700 block mb-2">SCALE</span>
+<span class="font-h2 text-4xl text-primary block">150+ Hectares</span>
+<p class="font-body text-sm text-ink-soft mt-2">Phased cultivation implementation since 2021.</p>
+</div>
+<div class="pl-8">
+<span class="font-eyebrow text-eyebrow text-green-700 block mb-2">PRECISION</span>
+<span class="font-h2 text-4xl text-primary block">Real-time Data</span>
+<p class="font-body text-sm text-ink-soft mt-2">Soil moisture and growth metrics monitored by IoT.</p>
+</div>
+<div class="pl-8">
+<span class="font-eyebrow text-eyebrow text-green-700 block mb-2">ORIGIN</span>
+<span class="font-h2 text-4xl text-primary block">Oaxaca Coast</span>
+<p class="font-body text-sm text-ink-soft mt-2">Optimal humidity and temperature for the Guadua species.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========================= -->
+<!-- Section 07: Ask Anything (Bot) -->
+<!-- ========================= -->
+<section id="community" class="bg-green-950 text-white py-section-padding px-gutter overflow-hidden relative">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<img class="w-full h-full object-cover" data-alt="close-up of organic bamboo textures and fibrous patterns with deep shadows and emerald green highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzwn6IyC8sPf5fYuetNCWdAYxl_ryri-nzKV9KbvVkwC5cZkoL3wflTaCZx-Go5SklDtmbfWMdLf4e-GVduPehkrSNH45gpxBdpajBE-k4VUekQFCLVhQkZgB1pmAfsYbjpQoqfsMpCT2RR9zg5f1Dz4IgnVMDQLBCDN9slVCHPG-9M9aSAjHz5wShsB38i4Sr91vcwn5BAwMArdjpLT94SAMkkLDFfj6-Lii-r3KtYd8LhLI8--s0b4X-kOjs_LrhJQmtuhCxD-8"/>
+</div>
+<div class="max-w-container-max mx-auto relative z-10 text-center">
+<p class="font-eyebrow text-eyebrow text-green-500 mb-stack-sm uppercase">CONCIERGE — 07</p>
+<h2 class="font-h2 text-h2 mb-stack-md max-w-2xl mx-auto">Curious? Talk to our AI guide.</h2>
+<p class="font-body text-body text-green-200/80 mb-stack-lg max-w-xl mx-auto">
+            The Pacífico Bambu AI is trained on our complete technical repository and public knowledge of Guadua angustifolia. Ask anything about investment, harvest cycles, or ecological impact.
+        </p>
+<div class="max-w-3xl mx-auto bg-green-900/40 backdrop-blur-xl border border-white/10 rounded-xl p-8 text-left shadow-2xl">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+<span class="font-ui-label text-ui-label text-green-500">LIVE SYSTEM STATUS: OPERATIONAL</span>
+</div>
+<div class="space-y-6 mb-12 min-h-[120px]">
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-full border border-green-500 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-sm text-green-500" data-icon="robot_2">robot_2</span>
+</div>
+<div class="bg-green-800/30 p-4 rounded-lg rounded-tl-none border border-white/5">
+<p class="font-body text-body text-sm text-white/90">Welcome to the digital plantation. How can I assist your inquiry today?</p>
+</div>
+</div>
+</div>
+<div class="relative group">
+<input class="w-full bg-transparent border-b-2 border-white/20 focus:border-green-500 py-4 font-body text-body outline-none transition-all placeholder:text-white/30" placeholder="Type your question about sustainability or plantation management..." type="text"/>
+<button class="absolute right-0 bottom-4 text-green-500 group-hover:translate-x-1 transition-transform">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ========================= -->
+<!-- Section 08: Contact -->
+<!-- ========================= -->
+<section id="contact" class="bg-cream-50 py-section-padding px-gutter">
+<div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
+<div class="space-y-stack-md">
+<div>
+<p class="font-eyebrow text-eyebrow text-green-800 mb-stack-sm uppercase">CONTACT — 08</p>
+<h2 class="font-h2 text-h2 text-green-900 mb-stack-sm">Let's talk.</h2>
+<p class="font-body text-body text-ink-soft max-w-md">
+                    Whether you're an institutional investor or an architect exploring sustainable materials, our team is ready to provide technical specifications and partnership details.
+                </p>
+</div>
+<div class="space-y-6 pt-stack-md border-t border-green-900/10">
+<div>
+<p class="font-ui-label text-ui-label text-ink-mute uppercase mb-2">EMAIL ENQUIRIES</p>
+<a class="font-h2 text-[2rem] text-green-800 hover:text-green-700 underline decoration-1 underline-offset-8 transition-colors" href="mailto:hello@pacificobambu.mx">hello@pacificobambu.mx</a>
+</div>
+<div>
+<p class="font-ui-label text-ui-label text-ink-mute uppercase mb-2">LOCATION</p>
+<p class="font-body text-body text-green-900">Oaxaca de Juárez, México<br/>Vía Láctea 104, San Felipe del Agua.</p>
+</div>
+</div>
+</div>
+<div class="bg-white p-12 shadow-sm border border-green-900/5">
+<form class="space-y-10">
+<div class="relative">
+<input class="peer block w-full appearance-none border-0 border-b border-green-900/20 bg-transparent py-3 px-0 text-green-900 focus:border-green-700 focus:outline-none focus:ring-0" id="name" placeholder=" " type="text"/>
+<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700" for="name">FULL NAME</label>
+</div>
+<div class="relative">
+<input class="peer block w-full appearance-none border-0 border-b border-green-900/20 bg-transparent py-3 px-0 text-green-900 focus:border-green-700 focus:outline-none focus:ring-0" id="email" placeholder=" " type="email"/>
+<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700" for="email">EMAIL ADDRESS</label>
+</div>
+<div class="relative">
+<select class="peer block w-full appearance-none border-0 border-b border-green-900/20 bg-transparent py-3 px-0 text-green-900 focus:border-green-700 focus:outline-none focus:ring-0" id="interest">
+<option disabled="" selected="" value=""></option>
+<option value="investor">Institutional Investor</option>
+<option value="architect">Architect / Developer</option>
+<option value="press">Press &amp; Media</option>
+<option value="other">Other</option>
+</select>
+<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700 uppercase" for="interest">I'M A...</label>
+</div>
+<div class="relative">
+<textarea class="peer block w-full appearance-none border-0 border-b border-green-900/20 bg-transparent py-3 px-0 text-green-900 focus:border-green-700 focus:outline-none focus:ring-0" id="message" placeholder=" " rows="4"></textarea>
+<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700 uppercase" for="message">MESSAGE</label>
+</div>
+<button class="w-full bg-green-900 text-white font-ui-label text-ui-label uppercase tracking-[0.2em] py-5 rounded-full flex items-center justify-center gap-3 hover:bg-green-800 active:scale-95 transition-all" type="submit">
+                    SEND MESSAGE
+                    <span class="material-symbols-outlined text-sm" data-icon="north_east">north_east</span>
+</button>
+</form>
+</div>
+</div>
+</section>
+
+<!-- ========================= -->
+<!-- Footer -->
+<!-- ========================= -->
+<footer class="bg-green-950 dark:bg-stone-950 py-20 border-t border-[#1B4332]/20 dark:border-white/10 text-white">
+<div class="max-w-[1280px] mx-auto px-8 grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
+<div class="space-y-10">
+<div class="font-bold text-white text-2xl font-['Space_Grotesk'] tracking-widest">
+                PACÍFICO BAMBÚ
+            </div>
+<div class="flex gap-10">
+<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#">Privacy Policy</a>
+<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#">Technical Data</a>
+<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#">Impact Report</a>
+</div>
+<p class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/40">
+                © 2024 PACÍFICO BAMBÚ — CULTIVATING THE ARCHITECTURE OF NATURE.
+            </p>
+</div>
+<div class="flex flex-col items-start md:items-end gap-10">
+<div class="flex gap-6">
+<a class="group flex items-center gap-2 font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="facebook">social_leaderboard</span>
+                    FACEBOOK
+                </a>
+<a class="group flex items-center gap-2 font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="camera">camera</span>
+                    INSTAGRAM
+                </a>
+<a class="group flex items-center gap-2 font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="twitter">retweet</span>
+                    TWITTER
+                </a>
+</div>
+<div class="text-right">
+<p class="font-['Space_Grotesk'] text-[10px] text-white/30 uppercase tracking-[0.3em] mb-2">EDITORIAL PARTNER</p>
+<p class="font-['Space_Grotesk'] font-bold text-sm text-green-500">OAXACA ARCHITECTURAL PRESS</p>
+</div>
+</div>
+</div>
+</footer>
+
 </body>
 </html>
