@@ -8,7 +8,6 @@ Mexico's first vertically integrated bamboo exporter — from plantation to the 
 
 - **Investor deck:** [perezofir83.github.io/pacifico-bambu](https://perezofir83.github.io/pacifico-bambu/)
 - **Executive summary:** [perezofir83.github.io/pacifico-bambu/executive-summary.html](https://perezofir83.github.io/pacifico-bambu/executive-summary.html)
-- **Bamboo ecosystem dashboard** (internal): [perezofir83.github.io/pacifico-bambu/ecosystem.html](https://perezofir83.github.io/pacifico-bambu/ecosystem.html)
 
 ## Repo Structure
 
