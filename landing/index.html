@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="light scroll-smooth" lang="en">
+<html class="light scroll-smooth" lang="en" data-lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
@@ -129,15 +129,15 @@
             PACÍFICO BAMBÚ
         </div>
 <nav class="hidden md:flex gap-8 items-center font-['Space_Grotesk'] uppercase tracking-wider text-sm font-medium">
-<a class="text-emerald-700 dark:text-emerald-400 border-b border-emerald-700 hover:text-emerald-800 transition-colors duration-300" href="#project">THE PROJECT</a>
-<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#technical">TECHNICAL</a>
-<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#community">COMMUNITY</a>
-<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#contact">CONTACT</a>
+<a class="text-emerald-700 dark:text-emerald-400 border-b border-emerald-700 hover:text-emerald-800 transition-colors duration-300" href="#project" data-en="THE PROJECT" data-es="EL PROYECTO">THE PROJECT</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#technical" data-en="TECHNICAL" data-es="TÉCNICO">TECHNICAL</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#community" data-en="COMMUNITY" data-es="COMUNIDAD">COMMUNITY</a>
+<a class="text-stone-600 dark:text-stone-400 hover:text-emerald-800 dark:hover:text-emerald-200 transition-colors duration-300" href="#contact" data-en="CONTACT" data-es="CONTACTO">CONTACT</a>
 </nav>
 <div class="flex items-center gap-6 font-['Space_Grotesk'] uppercase tracking-wider text-sm font-medium">
-<div class="px-3 py-1 bg-emerald-900 text-on-primary rounded-full text-[10px] cursor-pointer">
-                EN / ES
-            </div>
+<button type="button" data-lang-toggle aria-label="Toggle language" class="px-3 py-1 bg-emerald-900 text-on-primary rounded-full text-[10px] cursor-pointer hover:bg-emerald-800 transition-colors">
+<span data-lang-en class="font-bold">EN</span><span class="opacity-50 mx-1">/</span><span data-lang-es>ES</span>
+</button>
 <button class="md:hidden text-emerald-900">
 <span class="material-symbols-outlined" data-icon="menu">menu</span>
 </button>
@@ -165,23 +165,27 @@
 <div class="max-w-4xl">
 <div class="mb-8 flex items-center gap-4">
 <span class="w-8 h-px bg-emerald-900"></span>
-<p class="font-eyebrow text-eyebrow text-emerald-900 uppercase">
+<p class="font-eyebrow text-eyebrow text-emerald-900 uppercase" data-en="Candelaria · Oaxaca · México · Est. 2021" data-es="Candelaria · Oaxaca · México · Est. 2021">
                     Candelaria · Oaxaca · México · Est. 2021
                 </p>
 </div>
-<h1 class="font-h1 text-h1 text-primary mb-8 tracking-tight">
+<h1 class="font-h1 text-h1 text-primary mb-8 tracking-tight"
+    data-en="Vegetal <span class='italic font-light text-emerald-800'>steel</span>, <br/> grown in Oaxaca."
+    data-es="<span class='italic font-light text-emerald-800'>Acero</span> vegetal, <br/> cultivado en Oaxaca.">
                 Vegetal <span class="italic font-light text-emerald-800">steel</span>, <br/>
                 grown in Oaxaca.
             </h1>
-<p class="font-body text-body text-ink-soft mb-12 max-w-xl leading-relaxed">
+<p class="font-body text-body text-ink-soft mb-12 max-w-xl leading-relaxed"
+   data-en="A <span class='italic text-emerald-900 font-medium'>Guadua angustifolia</span> plantation in the highlands of Oaxaca — built around classical agronomy and modern data intelligence."
+   data-es="Una plantación de <span class='italic text-emerald-900 font-medium'>Guadua angustifolia</span> en la sierra de Oaxaca — construida alrededor de agronomía clásica y datos modernos.">
                 A <span class="italic text-emerald-900 font-medium">Guadua angustifolia</span> plantation in the highlands of Oaxaca — built around classical agronomy and modern data intelligence.
             </p>
 <div class="flex flex-wrap items-center gap-8">
 <a class="group relative px-10 py-5 bg-green-900 rounded-full text-on-primary font-ui-label text-ui-label uppercase flex items-center gap-3 transition-all duration-500 hover:bg-green-800 hover:pr-12 shadow-xl shadow-green-900/10" href="#contact">
-                    Get in touch
+                    <span data-en="Get in touch" data-es="Contáctanos">Get in touch</span>
                     <span class="material-symbols-outlined text-sm transition-transform duration-300 group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
 </a>
-<a class="font-ui-label text-ui-label text-emerald-900 uppercase underline decoration-emerald-900/30 underline-offset-8 hover:decoration-emerald-900 transition-all" href="#">
+<a class="font-ui-label text-ui-label text-emerald-900 uppercase underline decoration-emerald-900/30 underline-offset-8 hover:decoration-emerald-900 transition-all" href="#" data-en="Technical Whitepaper" data-es="Documento Técnico">
                     Technical Whitepaper
                 </a>
 </div>
@@ -191,16 +195,16 @@
 <div class="relative z-10 w-full bg-white/40 backdrop-blur-sm border-t border-stone-200/50">
 <div class="max-w-[1280px] mx-auto px-8 py-10 grid grid-cols-1 md:grid-cols-3 gap-12">
 <div class="flex flex-col gap-2 border-l border-stone-200 pl-6">
-<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest">Species</span>
+<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest" data-en="Species" data-es="Especie">Species</span>
 <span class="font-h2 text-xl text-emerald-900">G. Angustifolia Kunth</span>
 </div>
 <div class="flex flex-col gap-2 border-l border-stone-200 pl-6">
-<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest">Altitudinal Zone</span>
+<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest" data-en="Altitudinal Zone" data-es="Zona Altitudinal">Altitudinal Zone</span>
 <span class="font-h2 text-xl text-emerald-900">1,200m ASL</span>
 </div>
 <div class="flex flex-col gap-2 border-l border-stone-200 pl-6">
-<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest">Tensile Strength</span>
-<span class="font-h2 text-xl text-emerald-900">Up to 40 kN/cm²</span>
+<span class="font-eyebrow text-[10px] text-ink-mute uppercase tracking-widest" data-en="Tensile Strength" data-es="Resistencia a la Tracción">Tensile Strength</span>
+<span class="font-h2 text-xl text-emerald-900" data-en="Up to 40 kN/cm²" data-es="Hasta 40 kN/cm²">Up to 40 kN/cm²</span>
 </div>
 </div>
 </div>
@@ -213,19 +217,23 @@
 <div class="max-w-[1280px] mx-auto px-gutter grid grid-cols-1 md:grid-cols-12 gap-stack-lg items-center">
 <div class="md:col-span-6 flex flex-col gap-8">
 <header class="flex flex-col gap-4">
-<span class="font-eyebrow text-eyebrow uppercase text-green-700">THE PROJECT — 01</span>
-<h2 class="font-h2 text-h2 text-primary">
+<span class="font-eyebrow text-eyebrow uppercase text-green-700" data-en="THE PROJECT — 01" data-es="EL PROYECTO — 01">THE PROJECT — 01</span>
+<h2 class="font-h2 text-h2 text-primary"
+    data-en="We grow <i class='font-normal italic'>Guadua angustifolia</i> — the structural king of the bamboo family — in Candelaria, Oaxaca."
+    data-es="Cultivamos <i class='font-normal italic'>Guadua angustifolia</i> — el rey estructural de la familia del bambú — en Candelaria, Oaxaca.">
                     We grow <i class="font-normal italic">Guadua angustifolia</i> — the structural king of the bamboo family — in Candelaria, Oaxaca.
                 </h2>
 </header>
 <div class="flex flex-col gap-6">
-<p class="font-body text-body text-ink-soft max-w-xl">
+<p class="font-body text-body text-ink-soft max-w-xl"
+   data-en="Pacífico Bambu is a <i class='italic'>Guadua angustifolia</i> plantation under construction in Candelaria, Oaxaca. We started in 2021 with a pilot. Today we're scaling toward a fully operational bamboo farm — one of the largest dedicated Guadua plantations in Mexico — combining classical agronomy with modern data tools."
+   data-es="Pacífico Bambu es una plantación de <i class='italic'>Guadua angustifolia</i> en construcción en Candelaria, Oaxaca. Comenzamos en 2021 con un piloto. Hoy escalamos hacia una finca de bambú plenamente operativa — una de las plantaciones de Guadua dedicadas más grandes de México — combinando agronomía clásica con herramientas modernas de datos.">
                     Pacífico Bambu is a <i class="italic">Guadua angustifolia</i> plantation under construction in Candelaria, Oaxaca. We started in 2021 with a pilot. Today we're scaling toward a fully operational bamboo farm — one of the largest dedicated Guadua plantations in Mexico — combining classical agronomy with modern data tools.
                 </p>
 </div>
 <div class="pt-4">
 <a class="inline-flex items-center gap-3 text-green-800 font-ui-label uppercase group transition-all duration-300" href="#">
-                    Explore our methodology
+                    <span data-en="Explore our methodology" data-es="Conoce nuestra metodología">Explore our methodology</span>
                     <span class="material-symbols-outlined transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
 </a>
 </div>
@@ -235,7 +243,9 @@
 <img alt="Mature Guadua bamboo forest" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" data-alt="A portrait shot of towering, mature Guadua angustifolia bamboo culms in a lush Oaxacan plantation, soft dappled sunlight filtering through leaves, high contrast greens" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCC_2eQG9kKWHzX8A0J52Ea3uvEzzcWcMZAmTttYWNazwbirRzJCI87TBhHauemir5pQ_PklBRaEgtRFwWOAGTfZhu0-beDHhym4IlxJsZobDZsfvJyCOR0JX-msG8uXC-sUtGjnUdKgi68EF_oLb4JYzIhNtGsasyRnaj-syVKvCEXF0RHSH8ZO122t1Ok0CK6UTPlJYL8w13nOglC_p_jD8wJu2LFb29nFNMabn13Qmfwq_KilX3tU5U0DFr7ofw6-i59bbakLQE"/>
 </div>
 <div class="flex justify-end">
-<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.15em] text-ink-mute italic">
+<span class="font-['Space_Grotesk'] text-[10px] uppercase tracking-[0.15em] text-ink-mute italic"
+      data-en="*Plot 03* · Candelaria, Oaxaca · 2024"
+      data-es="*Parcela 03* · Candelaria, Oaxaca · 2024">
                     *Plot 03* · Candelaria, Oaxaca · 2024
                 </span>
 </div>
@@ -250,19 +260,19 @@
 <div class="max-w-[1280px] mx-auto px-gutter">
 <div class="grid grid-cols-1 md:grid-cols-3 gap-12 border-l border-emerald-900/10">
 <div class="pl-8 border-l border-emerald-900">
-<span class="font-eyebrow text-eyebrow text-green-700 block mb-2">SCALE</span>
-<span class="font-h2 text-4xl text-primary block">150+ Hectares</span>
-<p class="font-body text-sm text-ink-soft mt-2">Phased cultivation implementation since 2021.</p>
+<span class="font-eyebrow text-eyebrow text-green-700 block mb-2" data-en="SCALE" data-es="ESCALA">SCALE</span>
+<span class="font-h2 text-4xl text-primary block" data-en="150+ Hectares" data-es="150+ Hectáreas">150+ Hectares</span>
+<p class="font-body text-sm text-ink-soft mt-2" data-en="Phased cultivation implementation since 2021." data-es="Implementación de cultivo por fases desde 2021.">Phased cultivation implementation since 2021.</p>
 </div>
 <div class="pl-8">
-<span class="font-eyebrow text-eyebrow text-green-700 block mb-2">PRECISION</span>
-<span class="font-h2 text-4xl text-primary block">Real-time Data</span>
-<p class="font-body text-sm text-ink-soft mt-2">Soil moisture and growth metrics monitored by IoT.</p>
+<span class="font-eyebrow text-eyebrow text-green-700 block mb-2" data-en="PRECISION" data-es="PRECISIÓN">PRECISION</span>
+<span class="font-h2 text-4xl text-primary block" data-en="Real-time Data" data-es="Datos en Tiempo Real">Real-time Data</span>
+<p class="font-body text-sm text-ink-soft mt-2" data-en="Soil moisture and growth metrics monitored by IoT." data-es="Humedad del suelo y métricas de crecimiento monitoreadas por IoT.">Soil moisture and growth metrics monitored by IoT.</p>
 </div>
 <div class="pl-8">
-<span class="font-eyebrow text-eyebrow text-green-700 block mb-2">ORIGIN</span>
-<span class="font-h2 text-4xl text-primary block">Oaxaca Coast</span>
-<p class="font-body text-sm text-ink-soft mt-2">Optimal humidity and temperature for the Guadua species.</p>
+<span class="font-eyebrow text-eyebrow text-green-700 block mb-2" data-en="ORIGIN" data-es="ORIGEN">ORIGIN</span>
+<span class="font-h2 text-4xl text-primary block" data-en="Oaxaca Coast" data-es="Costa de Oaxaca">Oaxaca Coast</span>
+<p class="font-body text-sm text-ink-soft mt-2" data-en="Optimal humidity and temperature for the Guadua species." data-es="Humedad y temperatura óptimas para la especie Guadua.">Optimal humidity and temperature for the Guadua species.</p>
 </div>
 </div>
 </div>
@@ -276,15 +286,17 @@
 <img class="w-full h-full object-cover" data-alt="close-up of organic bamboo textures and fibrous patterns with deep shadows and emerald green highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzwn6IyC8sPf5fYuetNCWdAYxl_ryri-nzKV9KbvVkwC5cZkoL3wflTaCZx-Go5SklDtmbfWMdLf4e-GVduPehkrSNH45gpxBdpajBE-k4VUekQFCLVhQkZgB1pmAfsYbjpQoqfsMpCT2RR9zg5f1Dz4IgnVMDQLBCDN9slVCHPG-9M9aSAjHz5wShsB38i4Sr91vcwn5BAwMArdjpLT94SAMkkLDFfj6-Lii-r3KtYd8LhLI8--s0b4X-kOjs_LrhJQmtuhCxD-8"/>
 </div>
 <div class="max-w-container-max mx-auto relative z-10 text-center">
-<p class="font-eyebrow text-eyebrow text-green-500 mb-stack-sm uppercase">CONCIERGE — 07</p>
-<h2 class="font-h2 text-h2 mb-stack-md max-w-2xl mx-auto">Curious? Talk to our AI guide.</h2>
-<p class="font-body text-body text-green-200/80 mb-stack-lg max-w-xl mx-auto">
+<p class="font-eyebrow text-eyebrow text-green-500 mb-stack-sm uppercase" data-en="CONCIERGE — 07" data-es="CONCIERGE — 07">CONCIERGE — 07</p>
+<h2 class="font-h2 text-h2 mb-stack-md max-w-2xl mx-auto" data-en="Curious? Talk to our AI guide." data-es="¿Curioso? Habla con nuestra guía con IA.">Curious? Talk to our AI guide.</h2>
+<p class="font-body text-body text-green-200/80 mb-stack-lg max-w-xl mx-auto"
+   data-en="The Pacífico Bambu AI is trained on our complete technical repository and public knowledge of Guadua angustifolia. Ask anything about investment, harvest cycles, or ecological impact."
+   data-es="La IA de Pacífico Bambu está entrenada en nuestro repositorio técnico completo y el conocimiento público de la Guadua angustifolia. Pregunta lo que quieras sobre inversión, ciclos de cosecha o impacto ecológico.">
             The Pacífico Bambu AI is trained on our complete technical repository and public knowledge of Guadua angustifolia. Ask anything about investment, harvest cycles, or ecological impact.
         </p>
 <div class="max-w-3xl mx-auto bg-green-900/40 backdrop-blur-xl border border-white/10 rounded-xl p-8 text-left shadow-2xl">
 <div class="flex items-center gap-3 mb-8">
 <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-<span class="font-ui-label text-ui-label text-green-500">LIVE SYSTEM STATUS: OPERATIONAL</span>
+<span class="font-ui-label text-ui-label text-green-500" data-en="LIVE SYSTEM STATUS: OPERATIONAL" data-es="ESTADO DEL SISTEMA: OPERATIVO">LIVE SYSTEM STATUS: OPERATIONAL</span>
 </div>
 <div class="space-y-6 mb-12 min-h-[120px]">
 <div class="flex gap-4">
@@ -292,12 +304,17 @@
 <span class="material-symbols-outlined text-sm text-green-500" data-icon="robot_2">robot_2</span>
 </div>
 <div class="bg-green-800/30 p-4 rounded-lg rounded-tl-none border border-white/5">
-<p class="font-body text-body text-sm text-white/90">Welcome to the digital plantation. How can I assist your inquiry today?</p>
+<p class="font-body text-body text-sm text-white/90"
+   data-en="Welcome to the digital plantation. How can I assist your inquiry today?"
+   data-es="Bienvenido a la plantación digital. ¿Cómo puedo ayudarte hoy?">Welcome to the digital plantation. How can I assist your inquiry today?</p>
 </div>
 </div>
 </div>
 <div class="relative group">
-<input class="w-full bg-transparent border-b-2 border-white/20 focus:border-green-500 py-4 font-body text-body outline-none transition-all placeholder:text-white/30" placeholder="Type your question about sustainability or plantation management..." type="text"/>
+<input class="w-full bg-transparent border-b-2 border-white/20 focus:border-green-500 py-4 font-body text-body outline-none transition-all placeholder:text-white/30"
+       data-en-placeholder="Type your question about sustainability or plantation management..."
+       data-es-placeholder="Escribe tu pregunta sobre sostenibilidad o gestión de la plantación..."
+       placeholder="Type your question about sustainability or plantation management..." type="text"/>
 <button class="absolute right-0 bottom-4 text-green-500 group-hover:translate-x-1 transition-transform">
 <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
 </button>
@@ -313,20 +330,24 @@
 <div class="max-w-container-max mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-start">
 <div class="space-y-stack-md">
 <div>
-<p class="font-eyebrow text-eyebrow text-green-800 mb-stack-sm uppercase">CONTACT — 08</p>
-<h2 class="font-h2 text-h2 text-green-900 mb-stack-sm">Let's talk.</h2>
-<p class="font-body text-body text-ink-soft max-w-md">
+<p class="font-eyebrow text-eyebrow text-green-800 mb-stack-sm uppercase" data-en="CONTACT — 08" data-es="CONTACTO — 08">CONTACT — 08</p>
+<h2 class="font-h2 text-h2 text-green-900 mb-stack-sm" data-en="Let's talk." data-es="Hablemos.">Let's talk.</h2>
+<p class="font-body text-body text-ink-soft max-w-md"
+   data-en="Whether you're an institutional investor or an architect exploring sustainable materials, our team is ready to provide technical specifications and partnership details."
+   data-es="Ya seas inversionista institucional o arquitecto explorando materiales sostenibles, nuestro equipo está listo para brindarte especificaciones técnicas y detalles de colaboración.">
                     Whether you're an institutional investor or an architect exploring sustainable materials, our team is ready to provide technical specifications and partnership details.
                 </p>
 </div>
 <div class="space-y-6 pt-stack-md border-t border-green-900/10">
 <div>
-<p class="font-ui-label text-ui-label text-ink-mute uppercase mb-2">EMAIL ENQUIRIES</p>
+<p class="font-ui-label text-ui-label text-ink-mute uppercase mb-2" data-en="EMAIL ENQUIRIES" data-es="CORREO">EMAIL ENQUIRIES</p>
 <a class="font-h2 text-[2rem] text-green-800 hover:text-green-700 underline decoration-1 underline-offset-8 transition-colors" href="mailto:hello@pacificobambu.mx">hello@pacificobambu.mx</a>
 </div>
 <div>
-<p class="font-ui-label text-ui-label text-ink-mute uppercase mb-2">LOCATION</p>
-<p class="font-body text-body text-green-900">Oaxaca de Juárez, México<br/>Vía Láctea 104, San Felipe del Agua.</p>
+<p class="font-ui-label text-ui-label text-ink-mute uppercase mb-2" data-en="LOCATION" data-es="UBICACIÓN">LOCATION</p>
+<p class="font-body text-body text-green-900"
+   data-en="Oaxaca de Juárez, México<br/>Vía Láctea 104, San Felipe del Agua."
+   data-es="Oaxaca de Juárez, México<br/>Vía Láctea 104, San Felipe del Agua.">Oaxaca de Juárez, México<br/>Vía Láctea 104, San Felipe del Agua.</p>
 </div>
 </div>
 </div>
@@ -334,28 +355,28 @@
 <form class="space-y-10">
 <div class="relative">
 <input class="peer block w-full appearance-none border-0 border-b border-green-900/20 bg-transparent py-3 px-0 text-green-900 focus:border-green-700 focus:outline-none focus:ring-0" id="name" placeholder=" " type="text"/>
-<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700" for="name">FULL NAME</label>
+<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700" for="name" data-en="FULL NAME" data-es="NOMBRE COMPLETO">FULL NAME</label>
 </div>
 <div class="relative">
 <input class="peer block w-full appearance-none border-0 border-b border-green-900/20 bg-transparent py-3 px-0 text-green-900 focus:border-green-700 focus:outline-none focus:ring-0" id="email" placeholder=" " type="email"/>
-<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700" for="email">EMAIL ADDRESS</label>
+<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700" for="email" data-en="EMAIL ADDRESS" data-es="CORREO ELECTRÓNICO">EMAIL ADDRESS</label>
 </div>
 <div class="relative">
 <select class="peer block w-full appearance-none border-0 border-b border-green-900/20 bg-transparent py-3 px-0 text-green-900 focus:border-green-700 focus:outline-none focus:ring-0" id="interest">
 <option disabled="" selected="" value=""></option>
-<option value="investor">Institutional Investor</option>
-<option value="architect">Architect / Developer</option>
-<option value="press">Press &amp; Media</option>
-<option value="other">Other</option>
+<option value="investor" data-en="Institutional Investor" data-es="Inversionista Institucional">Institutional Investor</option>
+<option value="architect" data-en="Architect / Developer" data-es="Arquitecto / Desarrollador">Architect / Developer</option>
+<option value="press" data-en="Press &amp; Media" data-es="Prensa y Medios">Press &amp; Media</option>
+<option value="other" data-en="Other" data-es="Otro">Other</option>
 </select>
-<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700 uppercase" for="interest">I'M A...</label>
+<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700 uppercase" for="interest" data-en="I'M A..." data-es="SOY...">I'M A...</label>
 </div>
 <div class="relative">
 <textarea class="peer block w-full appearance-none border-0 border-b border-green-900/20 bg-transparent py-3 px-0 text-green-900 focus:border-green-700 focus:outline-none focus:ring-0" id="message" placeholder=" " rows="4"></textarea>
-<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700 uppercase" for="message">MESSAGE</label>
+<label class="font-ui-label text-ui-label absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-ink-mute duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-green-700 uppercase" for="message" data-en="MESSAGE" data-es="MENSAJE">MESSAGE</label>
 </div>
 <button class="w-full bg-green-900 text-white font-ui-label text-ui-label uppercase tracking-[0.2em] py-5 rounded-full flex items-center justify-center gap-3 hover:bg-green-800 active:scale-95 transition-all" type="submit">
-                    SEND MESSAGE
+                    <span data-en="SEND MESSAGE" data-es="ENVIAR MENSAJE">SEND MESSAGE</span>
                     <span class="material-symbols-outlined text-sm" data-icon="north_east">north_east</span>
 </button>
 </form>
@@ -373,11 +394,13 @@
                 PACÍFICO BAMBÚ
             </div>
 <div class="flex gap-10">
-<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#">Privacy Policy</a>
-<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#">Technical Data</a>
-<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#">Impact Report</a>
+<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#" data-en="Privacy Policy" data-es="Política de Privacidad">Privacy Policy</a>
+<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#" data-en="Technical Data" data-es="Datos Técnicos">Technical Data</a>
+<a class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/50 hover:text-white transition-opacity underline decoration-1" href="#" data-en="Impact Report" data-es="Informe de Impacto">Impact Report</a>
 </div>
-<p class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/40">
+<p class="font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/40"
+   data-en="© 2024 PACÍFICO BAMBÚ — CULTIVATING THE ARCHITECTURE OF NATURE."
+   data-es="© 2024 PACÍFICO BAMBÚ — CULTIVANDO LA ARQUITECTURA DE LA NATURALEZA.">
                 © 2024 PACÍFICO BAMBÚ — CULTIVATING THE ARCHITECTURE OF NATURE.
             </p>
 </div>
@@ -385,24 +408,75 @@
 <div class="flex gap-6">
 <a class="group flex items-center gap-2 font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors" href="#">
 <span class="material-symbols-outlined text-lg" data-icon="facebook">social_leaderboard</span>
-                    FACEBOOK
+                    <span data-en="FACEBOOK" data-es="FACEBOOK">FACEBOOK</span>
                 </a>
 <a class="group flex items-center gap-2 font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors" href="#">
 <span class="material-symbols-outlined text-lg" data-icon="camera">camera</span>
-                    INSTAGRAM
+                    <span data-en="INSTAGRAM" data-es="INSTAGRAM">INSTAGRAM</span>
                 </a>
 <a class="group flex items-center gap-2 font-['Space_Grotesk'] text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors" href="#">
 <span class="material-symbols-outlined text-lg" data-icon="twitter">retweet</span>
-                    TWITTER
+                    <span data-en="TWITTER" data-es="TWITTER">TWITTER</span>
                 </a>
 </div>
 <div class="text-right">
-<p class="font-['Space_Grotesk'] text-[10px] text-white/30 uppercase tracking-[0.3em] mb-2">EDITORIAL PARTNER</p>
-<p class="font-['Space_Grotesk'] font-bold text-sm text-green-500">OAXACA ARCHITECTURAL PRESS</p>
+<p class="font-['Space_Grotesk'] text-[10px] text-white/30 uppercase tracking-[0.3em] mb-2" data-en="EDITORIAL PARTNER" data-es="SOCIO EDITORIAL">EDITORIAL PARTNER</p>
+<p class="font-['Space_Grotesk'] font-bold text-sm text-green-500" data-en="OAXACA ARCHITECTURAL PRESS" data-es="PRENSA ARQUITECTÓNICA DE OAXACA">OAXACA ARCHITECTURAL PRESS</p>
 </div>
 </div>
 </div>
 </footer>
+
+<script>
+(function() {
+  const root = document.documentElement;
+  const langToggle = document.querySelector('[data-lang-toggle]');
+  if (!langToggle) return;
+  const enChip = langToggle.querySelector('[data-lang-en]');
+  const esChip = langToggle.querySelector('[data-lang-es]');
+
+  function setLang(lang) {
+    root.setAttribute('lang', lang);
+    root.setAttribute('data-lang', lang);
+    const attr = 'data-' + lang;
+    const placeholderAttr = 'data-' + lang + '-placeholder';
+
+    document.querySelectorAll('[data-en]').forEach(el => {
+      const v = el.getAttribute(attr);
+      if (v != null) el.innerHTML = v;
+    });
+    document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+      const v = el.getAttribute(placeholderAttr);
+      if (v != null) el.setAttribute('placeholder', v);
+    });
+
+    if (enChip) enChip.classList.toggle('font-bold', lang === 'en');
+    if (esChip) esChip.classList.toggle('font-bold', lang === 'es');
+    if (enChip) enChip.classList.toggle('opacity-50', lang !== 'en');
+    if (esChip) esChip.classList.toggle('opacity-50', lang !== 'es');
+
+    try { localStorage.setItem('pb-lang', lang); } catch (e) {}
+    const url = new URL(window.location.href);
+    if (lang === 'es') url.searchParams.set('lang', 'es');
+    else url.searchParams.delete('lang');
+    history.replaceState(null, '', url.toString());
+  }
+
+  langToggle.addEventListener('click', () => {
+    const next = root.getAttribute('data-lang') === 'es' ? 'en' : 'es';
+    setLang(next);
+  });
+
+  const urlLang = new URL(window.location.href).searchParams.get('lang');
+  let savedLang = null;
+  try { savedLang = localStorage.getItem('pb-lang'); } catch (e) {}
+  if (urlLang === 'es' || (!urlLang && savedLang === 'es')) {
+    setLang('es');
+  } else {
+    setLang('en');
+  }
+})();
+</script>
 
 </body>
 </html>
