@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pacífico Bambu — Guadua angustifolia plantation in Candelaria, Oaxaca, Mexico. Coming soon." />
+  <meta name="theme-color" content="#1B4332" />
+  <meta name="robots" content="index,follow" />
+
+  <meta property="og:title" content="Pacífico Bambu" />
+  <meta property="og:description" content="Vegetal steel, grown in Oaxaca." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pacifico-bambu.com" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:locale:alternate" content="es_MX" />
+
+  <title>Pacífico Bambu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" />
+
+  <style>
+    :root {
+      --green-900: #1B4332;
+      --green-800: #2D6A4F;
+      --green-100: #F0FFF4;
+      --bg: #FAFDF8;
+      --text: #1F2937;
+      --text-soft: #4B5563;
+      --font-heading: 'Space Grotesk', system-ui, sans-serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    main {
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+    }
+    .brand-mark {
+      display: inline-block;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.875rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--green-800);
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--green-800);
+      border-radius: 999px;
+      margin-bottom: 2.5rem;
+    }
+    h1 {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: clamp(2.25rem, 6vw, 3.75rem);
+      line-height: 1.1;
+      color: var(--green-900);
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+    .sub {
+      font-size: clamp(1rem, 2.2vw, 1.125rem);
+      color: var(--text-soft);
+      margin-bottom: 3rem;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .meta {
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      opacity: 0.7;
+    }
+    .lang-toggle {
+      margin-top: 4rem;
+      display: inline-flex;
+      gap: 0.75rem;
+      align-items: center;
+      font-family: var(--font-heading);
+      font-size: 0.8125rem;
+      letter-spacing: 0.1em;
+      color: var(--text-soft);
+    }
+    .lang-toggle button {
+      background: none;
+      border: none;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+    }
+    .lang-toggle button.active {
+      color: var(--green-900);
+      font-weight: 600;
+    }
+    .lang-toggle button:hover { background: var(--green-100); }
+    .lang-toggle .sep { opacity: 0.4; }
+  </style>
+</head>
+<body>
+  <main>
+    <span class="brand-mark">Pacífico Bambu</span>
+    <h1 data-en="Vegetal steel, grown in Oaxaca."
+        data-es="Acero vegetal, cultivado en Oaxaca.">
+      Vegetal steel, grown in Oaxaca.
+    </h1>
+    <p class="sub" data-en="A Guadua angustifolia plantation in Candelaria, Oaxaca. The full site is on its way."
+                   data-es="Una plantación de Guadua angustifolia en Candelaria, Oaxaca. El sitio completo está en camino.">
+      A Guadua angustifolia plantation in Candelaria, Oaxaca. The full site is on its way.
+    </p>
+    <p class="meta">Candelaria · Oaxaca · México</p>
+
+    <div class="lang-toggle">
+      <button type="button" data-lang="en" class="active">EN</button>
+      <span class="sep">/</span>
+      <button type="button" data-lang="es">ES</button>
+    </div>
+  </main>
+
+  <script>
+    const root = document.documentElement;
+    document.querySelectorAll('.lang-toggle button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.dataset.lang;
+        root.setAttribute('lang', lang);
+        document.querySelectorAll('[data-en]').forEach(el => {
+          el.textContent = el.getAttribute('data-' + lang);
+        });
+        document.querySelectorAll('.lang-toggle button').forEach(b => {
+          b.classList.toggle('active', b.dataset.lang === lang);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

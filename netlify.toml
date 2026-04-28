@@ -1,0 +1,27 @@
+# Netlify configuration — Pacífico Bambu
+#
+# Two separate Netlify sites use this repo:
+#   1. PUBLIC landing  → pacifico-bambu.com         (base directory: landing/)
+#   2. PRIVATE admin   → admin.pacifico-bambu.com   (base directory: admin/) — future
+#
+# This file is read by whichever site has its base directory at the repo root.
+# Each site overrides base/publish via the Netlify dashboard.
+
+[build]
+  publish = "landing"
+
+# Security headers — applied to all responses
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+# Cache static assets aggressively (videos, images)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
