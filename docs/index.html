@@ -472,6 +472,109 @@ body {
   line-height: 1.5;
 }
 
+/* Team square card (equal-grid layout) */
+.team-square {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 24px 76px;
+  position: relative;
+  min-height: 240px;
+}
+.team-square__avatar {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 4px;
+}
+.team-square__name {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  line-height: 1.1;
+}
+.team-square__role {
+  font-size: 0.85rem;
+  color: var(--green-700);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.team-square__desc {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+.team-square__linkedin {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--green-700);
+  box-shadow: 0 2px 8px rgba(45,106,79,0.25);
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+.team-square__linkedin svg {
+  width: 22px;
+  height: 22px;
+}
+.team-square__linkedin:hover {
+  background: var(--green-800);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(45,106,79,0.35);
+}
+
+/* Backed by strip */
+.team-backedby {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 24px;
+  background: var(--gray-50);
+}
+.team-backedby__label {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  flex-shrink: 0;
+}
+.team-backedby__body {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 24px;
+  justify-content: space-between;
+}
+.team-backedby__name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-right: 8px;
+}
+.team-backedby__role {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+}
+.team-backedby__note {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  text-align: right;
+  max-width: 50%;
+}
+@media (max-width: 768px) {
+  .team-backedby { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .team-backedby__body { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .team-backedby__note { text-align: left; max-width: 100%; }
+}
+
 /* Competitor row */
 .competitor-row {
   display: flex;
@@ -1933,47 +2036,31 @@ body {
 <p class="section-label" data-es="El Equipo">The Team</p>
 <h2 class="slide-title" data-es="Construido para Ejecutar">Built to Execute</h2>
 <p class="slide-subtitle" data-es="Experiencia en tierra · Construcción de bambú · Capacidad de crecimiento.">Land expertise · Bamboo construction · Growth capability.</p>
-<div class="card-grid card-grid--2 fade-in stagger">
-<div class="card card--highlight" style="--i:0">
-<div class="team-card">
-<div class="team-avatar team-avatar--green">D</div>
-<div>
-<div class="team-info__name">Diego</div>
-<div class="team-info__role" data-es="Co-Fundador y CEO">Co-Founder &amp; CEO</div>
-<div class="team-info__desc" data-es="Constructor profesional de bambú con 10 años de experiencia. Lidera la estrategia de la empresa, la infraestructura de tratamiento, el control de calidad y las relaciones con clientes.">Professional bamboo constructor with 10 years of experience. Leads company strategy, treatment infrastructure, quality control, and customer relationships.</div>
+<div class="fade-in stagger" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+<div class="card card--highlight team-square" style="--i:0;">
+<div class="team-square__avatar team-avatar team-avatar--green">D</div>
+<div class="team-square__name">Juan Diego Alvidrez</div>
+<div class="team-square__role" data-es="CEO y Co-Fundador, Pacífico Bambú">CEO &amp; Co-Founder, Pacífico Bambu</div>
+<div class="team-square__desc" data-es="Dueño y socio de una empresa de construcción en la costa con más de 15 años de experiencia, especializada en bambú. Egresado de la Bamboo U Academy (Bali, en línea). Red amplia de relaciones con clientes, constructores, empresas de construcción y desarrolladores. Propietario de un hotel boutique en la costa de Zipolite y desarrollador reconocido en el sector de la construcción.">Owner &amp; partner of a coastal construction company, 15+ years of experience specializing in bamboo. Graduate of the Bamboo U Academy (Bali, online). Deep network across clients, builders, construction companies, and developers. Owner of a boutique hotel on the Zipolite coast and a recognized developer in the regional construction scene.</div>
 </div>
+<div class="card card--highlight team-square" style="--i:1;">
+<div class="team-square__avatar team-avatar team-avatar--green">J</div>
+<div class="team-square__name">Juan Carlos Hernandez</div>
+<div class="team-square__role" data-es="Co-Fundador y Operaciones de Tierra, Pacífico Bambú">Co-Founder &amp; Land Operations, Pacífico Bambu</div>
+<div class="team-square__desc" data-es="Hijo del lugar, tercera generación de caficultores, dueño de las tierras. Dirige un negocio regional de venta de materiales de construcción (piedra ornamental local) a lo largo de la costa de Oaxaca. Lidera todas las operaciones de campo, siembra y cosecha. Tierra asegurada por arrendamiento de 40 años.">Local-born, third-generation coffee farmer, owner of the land. Runs a regional construction-materials business (specialty local stone) across the Oaxacan coast. Leads all field operations, planting, and harvest. Land secured through a 40-year lease.</div>
 </div>
+<div class="card card--highlight team-square" style="--i:2;">
+<div class="team-square__avatar team-avatar team-avatar--green">O</div>
+<div class="team-square__name">Ofir Perez Weinberg</div>
+<div class="team-square__role" data-es="Socio Director, COO y Ecosistema, Pacífico Bambú">Managing Partner, COO &amp; Ecosystem, Pacífico Bambu</div>
+<div class="team-square__desc" data-es="15 años de experiencia en marketing y ventas internacionales, trabajando con marcas locales y globales. Emprendedor, especialista en marketing y desarrollo de negocios. Hasta hace poco, socio y Head of Growth en Hat Finance, una startup de seguridad en el sector cripto: 4M USD recaudados y un equipo internacional de 13 personas bajo su gestión.">15 years of international marketing and sales experience, working with local and global brands. Entrepreneur, marketer, and business-development operator. Most recently partner &amp; Head of Growth at Hat Finance, a crypto-security startup: $4M raised and a 13-person international team under his management.</div>
+<a href="https://www.linkedin.com/in/perezofir/" target="_blank" rel="noopener" class="team-square__linkedin" aria-label="LinkedIn — Ofir Perez"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
 </div>
-<div class="card card--highlight" style="--i:1">
-<div class="team-card">
-<div class="team-avatar team-avatar--green">J</div>
-<div>
-<div class="team-info__name">Juan</div>
-<div class="team-info__role" data-es="Co-Fundador y Director de Plantación">Co-Founder &amp; Head of Plantation</div>
-<div class="team-info__desc" data-es="Vive en Candelaria. Dueño y custodio de la tierra. Dirige todas las operaciones de campo, siembra y cosecha. 5 años de cultivo práctico de Guadua. Tierra asegurada por arrendamiento de 40 años.">Lives in Candelaria. Land owner and custodian. Leads all field operations, planting, and harvest. 5 years hands-on Guadua cultivation. Land secured through 40-year lease.</div>
-</div>
-</div>
-</div>
-<div class="card card--highlight" style="--i:2">
-<div class="team-card">
-<div class="team-avatar team-avatar--green">O</div>
-<div>
-<div class="team-info__name">Ofir</div>
-<div class="team-info__role" data-es="COO y Ecosistema">COO &amp; Ecosystem</div>
-<div class="team-info__desc" data-es="Operaciones, captación de capital, relaciones con inversionistas, modelado financiero y certificaciones. Construye el ecosistema de socios (carbono, certificaciones, distribución en EE.UU.) para la hoja de ruta bridge-a-exportación.">Operations, fundraising, investor relations, financial modeling, and certifications. Builds the partner ecosystem (carbon, certifications, US distribution) for the bridge-to-export roadmap.</div>
-</div>
-</div>
-</div>
-<div class="card" style="--i:3">
-<div class="team-card">
-<div class="team-avatar team-avatar--muted">R</div>
-<div>
-<div class="team-info__name">Rick</div>
-<div class="team-info__role" style="color: var(--gray-500);">Founding Capital Partner · First Angel Investor</div>
-<div class="team-info__desc" data-es='Contribuyente fundador de capital con 20% de participación. <strong>Primer inversionista ángel</strong> — convicción desde el día uno, skin in the game antes de que entren inversionistas externos.'>Founding cash contributor with 20% equity stake. <strong>First angel investor</strong> — conviction from day one, skin in the game before external investors join.</div>
-<p style="font-size: 0.75rem; color: var(--gray-400); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--gray-100);" data-es="<strong style='color: var(--gray-500);'>Plan de escalamiento:</strong> El flujo operativo (2034+) financia un Director de Exportación y un Gerente de QC cuando se acerca ICC-ES 2037."><strong style="color: var(--gray-500);">Scaling plan:</strong> Operating cash flow (2034+) funds Export Director + QC Manager as ICC-ES 2037 approaches.</p>
-</div>
-</div>
+<div class="card card--highlight team-square" style="--i:3;">
+<div class="team-square__avatar team-avatar team-avatar--muted">R</div>
+<div class="team-square__name">Rick Coaster</div>
+<div class="team-square__role" data-es="Socio Fundador de Capital · Primer Inversionista Ángel">Founding Capital Partner · First Angel Investor</div>
+<div class="team-square__desc" data-es="Contribuyente fundador de capital con 20% de participación. <strong>Primer inversionista ángel</strong> — convicción desde el día uno, skin in the game antes de que entren inversionistas externos. <em>Plan de escalamiento:</em> el flujo operativo (2034+) financia un Director de Exportación y un Gerente de QC al acercarse ICC-ES 2037.">Founding cash contributor with a 20% equity stake. <strong>First angel investor</strong> — conviction from day one, skin in the game before external investors join. <em>Scaling plan:</em> operating cash flow (2034+) funds an Export Director + QC Manager as ICC-ES 2037 approaches.</div>
 </div>
 </div>
 <div class="slide-number">13 / 20</div>
