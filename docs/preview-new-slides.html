@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Pacífico Bambu — Investor Presentation</title>
+<!-- Fonts: Space Grotesk (headings) + DM Sans (body) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════════
+   DESIGN SYSTEM
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  /* Colors — Bamboo-inspired green palette */
+  --green-900: #1B4332;
+  --green-800: #2D6A4F;
+  --green-700: #40916C;
+  --green-600: #52B788;
+  --green-500: #74C69D;
+  --green-400: #95D5B2;
+  --green-300: #B7E4C7;
+  --green-200: #D8F3DC;
+  --green-100: #F0FFF4;
+  --green-50:  #F7FDF9;
+
+  /* Neutrals */
+  --gray-900: #111827;
+  --gray-800: #1F2937;
+  --gray-700: #374151;
+  --gray-600: #4B5563;
+  --gray-500: #6B7280;
+  --gray-400: #9CA3AF;
+  --gray-300: #D1D5DB;
+  --gray-200: #E5E7EB;
+  --gray-100: #F3F4F6;
+  --gray-50:  #F9FAFB;
+
+  /* Accents */
+  --amber: #D97706;
+  --red-soft: #EF4444;
+  --blue-soft: #3B82F6;
+
+  /* Backgrounds */
+  --bg-primary: #FAFDF8;
+  --bg-card: #FFFFFF;
+  --bg-green-subtle: #F0FFF4;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
+  --shadow-green: 0 4px 20px rgba(45,106,79,0.1);
+
+  /* Typography */
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+
+  /* Spacing */
+  --slide-padding: 80px;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--gray-800);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════
+   SLIDE FRAMEWORK
+   ═══════════════════════════════════════════════════ */
+
+.slide {
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--slide-padding);
+}
+
+.slide--white { background: var(--bg-primary); }
+.slide--green-light { background: var(--green-100); }
+.slide--green-dark { background: var(--green-900); color: #fff; }
+.slide--with-image { padding: 0; }
+
+/* Full background image with overlay */
+.slide--bg-photo {
+  padding: 0;
+}
+.slide--bg-photo .bg-photo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.slide--bg-photo .bg-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slide--bg-photo .bg-photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+.slide--bg-photo .slide-content {
+  position: relative;
+  z-index: 1;
+  padding: var(--slide-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+/* Dark overlay for readability on photos */
+.bg-photo--dark::after {
+  background: linear-gradient(135deg, rgba(27,67,50,0.88) 0%, rgba(27,67,50,0.75) 100%);
+}
+/* Light overlay — content on left, image peeks on right */
+.bg-photo--light::after {
+  background: linear-gradient(90deg, var(--bg-primary) 45%, rgba(250,253,248,0.3) 100%);
+}
+/* Green-light overlay */
+.bg-photo--green-light::after {
+  background: linear-gradient(90deg, var(--green-100) 40%, rgba(240,255,244,0.4) 100%);
+}
+
+/* Side image accent (right column image) */
+.slide-with-side-image {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  padding: 0;
+}
+.slide-with-side-image .slide-content {
+  padding: var(--slide-padding);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.slide-with-side-image .side-image {
+  position: relative;
+  overflow: hidden;
+}
+.slide-with-side-image .side-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.slide-with-side-image .side-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--bg-primary) 0%, transparent 25%);
+}
+
+
+/* ═══════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════ */
+
+.section-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--green-700);
+  margin-bottom: 12px;
+}
+
+.slide--green-dark .section-label { color: var(--green-400); }
+
+.slide-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--gray-900);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.slide--green-dark .slide-title { color: #fff; }
+
+.slide-subtitle {
+  font-size: 1.1rem;
+  color: var(--gray-500);
+  max-width: 680px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+
+.slide--green-dark .slide-subtitle { color: rgba(255,255,255,0.6); }
+
+.green-highlight { color: var(--green-700); }
+.slide--green-dark .green-highlight { color: var(--green-400); }
+
+/* ═══════════════════════════════════════════════════
+   CARDS
+   ═══════════════════════════════════════════════════ */
+
+.card-grid { display: grid; gap: 24px; }
+.card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--gray-200);
+  border-radius: 16px;
+  padding: 32px;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover { box-shadow: var(--shadow-lg); }
+
+.card--green {
+  background: var(--green-50);
+  border-color: var(--green-200);
+}
+
+.card--green-dark {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.card--green-dark:hover {
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.card--highlight {
+  border-color: var(--green-600);
+  box-shadow: var(--shadow-green);
+}
+
+.card__number {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--green-700);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.slide--green-dark .card__number { color: var(--green-400); }
+
+.card__label {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-bottom: 8px;
+}
+
+.slide--green-dark .card__label { color: #fff; }
+
+.card__text {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  line-height: 1.55;
+}
+
+.slide--green-dark .card__text { color: rgba(255,255,255,0.5); }
+
+.card__tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green-700);
+  background: var(--green-100);
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-top: 16px;
+}
+
+.slide--green-dark .card__tag {
+  color: var(--green-400);
+  background: rgba(82,183,136,0.15);
+}
+
+/* ═══════════════════════════════════════════════════
+   SPECIAL COMPONENTS
+   ═══════════════════════════════════════════════════ */
+
+.insight-box {
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
+  border-radius: 12px;
+  padding: 20px 28px;
+  margin-top: 32px;
+  font-size: 0.9rem;
+  color: var(--gray-700);
+  text-align: center;
+}
+
+.slide--green-dark .insight-box {
+  background: rgba(82,183,136,0.08);
+  border-color: rgba(82,183,136,0.2);
+  color: rgba(255,255,255,0.7);
+}
+
+.insight-box strong { color: var(--green-800); }
+.slide--green-dark .insight-box strong { color: var(--green-400); }
+
+/* Flow chain */
+.flow-chain {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 40px;
+}
+
+.flow-step {
+  flex: 1;
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.flow-step__label {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green-700);
+}
+
+.flow-step__desc {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+.flow-arrow {
+  color: var(--green-400);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+/* Progress bars */
+.progress-bar {
+  margin-bottom: 16px;
+}
+
+.progress-bar__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+}
+
+.progress-bar__label { color: var(--gray-600); }
+.progress-bar__value { color: var(--gray-800); font-weight: 600; }
+
+.progress-bar__track {
+  height: 8px;
+  background: var(--gray-100);
+  border-radius: 100px;
+  overflow: hidden;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green-600), var(--green-500));
+  border-radius: 100px;
+  transition: width 0.8s ease;
+}
+
+/* Data table */
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 0.85rem;
+}
+
+.data-row:last-child { border-bottom: none; }
+.data-row__label { color: var(--gray-500); white-space: nowrap; }
+.data-row__value { font-weight: 600; color: var(--gray-800); white-space: nowrap; }
+.data-row__value--green { color: var(--green-700); }
+.data-row__value--red { color: var(--red-soft); text-decoration: line-through; }
+
+.slide--green-dark .data-row { border-color: rgba(255,255,255,0.08); }
+.slide--green-dark .data-row__label { color: rgba(255,255,255,0.5); }
+.slide--green-dark .data-row__value { color: #fff; }
+.slide--green-dark .data-row__value--green { color: var(--green-400); }
+
+/* Equity bars */
+.equity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+}
+
+.equity-row__label { width: 180px; color: var(--gray-600); }
+.equity-row__bar { height: 14px; border-radius: 100px; }
+.equity-row__pct { font-weight: 700; color: var(--gray-800); min-width: 40px; }
+
+/* Team card */
+.team-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.team-avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.team-avatar--green { background: var(--green-700); }
+.team-avatar--muted { background: var(--gray-400); }
+
+.team-info__name {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.team-info__role {
+  font-size: 0.8rem;
+  color: var(--green-700);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.team-info__desc {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+
+/* Team square card (equal-grid layout) */
+.team-square {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 24px 76px;
+  position: relative;
+  min-height: 240px;
+}
+.team-square__avatar {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 4px;
+}
+.team-square__name {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  line-height: 1.1;
+}
+.team-square__role {
+  font-size: 0.85rem;
+  color: var(--green-700);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.team-square__desc {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+.team-square__linkedin {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 42px;
+  height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--green-700);
+  box-shadow: 0 2px 8px rgba(45,106,79,0.25);
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+.team-square__linkedin svg {
+  width: 22px;
+  height: 22px;
+}
+.team-square__linkedin:hover {
+  background: var(--green-800);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(45,106,79,0.35);
+}
+
+/* Backed by strip */
+.team-backedby {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 18px 24px;
+  background: var(--gray-50);
+}
+.team-backedby__label {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gray-500);
+  flex-shrink: 0;
+}
+.team-backedby__body {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 24px;
+  justify-content: space-between;
+}
+.team-backedby__name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-right: 8px;
+}
+.team-backedby__role {
+  font-size: 0.85rem;
+  color: var(--gray-600);
+}
+.team-backedby__note {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  text-align: right;
+  max-width: 50%;
+}
+@media (max-width: 768px) {
+  .team-backedby { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .team-backedby__body { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .team-backedby__note { text-align: left; max-width: 100%; }
+}
+
+/* Competitor row */
+.competitor-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background: var(--gray-50);
+  border: 1px solid var(--gray-100);
+  border-radius: 10px;
+  margin-bottom: 8px;
+}
+
+.competitor-row__name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--gray-800);
+}
+
+.competitor-row__detail {
+  font-size: 0.75rem;
+  color: var(--gray-400);
+}
+
+.competitor-row__note {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+}
+
+.competitor-row__note--green {
+  color: var(--green-700);
+  font-weight: 600;
+}
+
+/* Missing item */
+.missing-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+
+.missing-item__icon { font-size: 1rem; }
+.missing-item__icon--red { color: var(--red-soft); }
+.missing-item__icon--green { color: var(--green-600); }
+.missing-item--green { color: var(--green-700); font-weight: 600; }
+
+/* Problem card */
+.problem-number {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--red-soft);
+  opacity: 0.3;
+  margin-bottom: 8px;
+}
+
+/* Hero image slide */
+.hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100vh;
+}
+
+.hero-split__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--slide-padding);
+}
+
+.hero-split__image {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-split__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-split__image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--bg-primary) 0%, transparent 30%);
+}
+
+/* Stats row */
+.stat-hero {
+  text-align: center;
+}
+
+.stat-hero__number {
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--green-700);
+  line-height: 1;
+}
+
+.stat-hero__label {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  margin-top: 8px;
+}
+
+.stat-hero__desc {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-top: 4px;
+}
+
+/* Bar chart */
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 220px;
+  padding-top: 20px;
+}
+
+.bar-chart__col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.bar-chart__value {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 6px;
+}
+
+.bar-chart__value--highlight {
+  color: var(--green-700);
+  font-weight: 700;
+}
+
+.bar-chart__bar {
+  width: 100%;
+  max-width: 48px;
+  border-radius: 8px 8px 4px 4px;
+  background: linear-gradient(180deg, var(--green-500), var(--green-700));
+  transition: height 0.6s ease;
+}
+
+.bar-chart__label {
+  font-size: 0.7rem;
+  color: var(--gray-400);
+  margin-top: 8px;
+}
+
+.bar-chart__label--highlight {
+  color: var(--green-700);
+  font-weight: 600;
+}
+
+/* Scenario cards */
+.scenario-number {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+/* Milestone card */
+.milestone-card {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.milestone-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.milestone-dot--active { background: var(--green-600); }
+.milestone-dot--future { background: var(--gray-300); }
+
+.milestone-title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.milestone-desc {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  line-height: 1.5;
+}
+
+/* Closing slide */
+.closing {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.closing__pillars {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.closing__pillar { text-align: center; }
+.closing__pillar-sub { font-size: 0.75rem; color: var(--gray-400); }
+.closing__pillar-main { font-family: var(--font-heading); font-weight: 600; color: var(--gray-800); }
+.closing__divider { color: var(--gray-200); font-size: 1.5rem; }
+
+/* Two-column layout */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+/* ═══════════════════════════════════════════════════
+   ANIMATIONS (Minimal — fade in)
+   ═══════════════════════════════════════════════════ */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.stagger > * { transition-delay: calc(var(--i, 0) * 0.1s); }
+
+/* Slide number */
+.slide-number {
+  position: absolute;
+  bottom: 24px;
+  right: 32px;
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  color: var(--gray-300);
+  letter-spacing: 0.1em;
+}
+
+.slide--green-dark .slide-number { color: rgba(255,255,255,0.2); }
+
+/* Green decorative line */
+.green-line {
+  width: 48px;
+  height: 3px;
+  background: var(--green-600);
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+
+/* ═══════════════════════════════════════════════════
+   MOBILE & TABLET RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  html { font-size: 15px; }
+
+  /* Slides: allow content to grow vertically on mobile */
+  .slide {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    padding: 48px 18px 56px;
+    display: block !important;
+  }
+
+  /* Typography scales down */
+  .slide-title { font-size: clamp(1.5rem, 6vw, 2.4rem) !important; line-height: 1.15 !important; }
+  .slide-subtitle { font-size: 0.95rem; line-height: 1.4; }
+  .section-label { font-size: 0.68rem; }
+  .hero-title,
+  h1[class*="hero"],
+  .slide-title[style*="font-size"] { font-size: clamp(1.8rem, 8vw, 2.8rem) !important; line-height: 1.1 !important; }
+  .tagline { font-size: 0.95rem !important; }
+
+  /* Grids → single column, never exceed viewport */
+  .two-col,
+  .card-grid,
+  .card-grid--2,
+  .card-grid--3,
+  .card-grid--4 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 14px !important;
+  }
+  .two-col > *,
+  .card-grid > * { min-width: 0 !important; }
+
+  /* Remove inline 2-column grid overrides */
+  [style*="grid-template-columns: 1.2fr"],
+  [style*="grid-template-columns: 2fr 1fr"],
+  [style*="grid-template-columns: 1fr 1fr"],
+  [style*="grid-template-columns: repeat(2"],
+  [style*="grid-template-columns: repeat(3"],
+  [style*="grid-template-columns: repeat(4"] {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Cards can't exceed their grid cell width */
+  .card { max-width: 100%; overflow: hidden; }
+  .card .bar-chart { overflow-x: auto; }
+
+  /* Hero split (slide 1 + closing slide) — stack image below content */
+  .hero-split {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+    min-height: auto;
+  }
+  .hero-split__content {
+    padding: 48px 18px 24px !important;
+  }
+  .hero-split__image {
+    height: 240px;
+    order: 2;
+  }
+  .hero-split__image::after {
+    background: linear-gradient(0deg, transparent 60%, var(--bg-primary) 100%) !important;
+  }
+
+  /* Side-image layouts stack vertically */
+  .slide-with-side-image {
+    grid-template-columns: 1fr !important;
+    height: auto !important;
+  }
+  .slide-with-side-image .slide-content {
+    padding: 0 !important;
+  }
+  .slide-with-side-image .side-image {
+    height: 220px;
+    max-height: 260px;
+    margin: 16px -18px 0;
+    width: calc(100% + 36px);
+  }
+
+  /* Background-photo slides: reduce min-height and overlay intensity */
+  .slide--bg-photo {
+    min-height: auto;
+  }
+  .slide--bg-photo .slide-content {
+    padding: 48px 18px 56px !important;
+  }
+
+  /* Cards tighter padding */
+  .card { padding: 16px !important; }
+  .card__label { font-size: 0.72rem; }
+  .card__text { font-size: 0.88rem; }
+
+  /* Stat heroes — shrink large numbers */
+  .stat-hero__number { font-size: 2.4rem !important; }
+  .scenario-number { font-size: 2.2rem; }
+
+  /* Bar charts — horizontal scroll on narrow screens */
+  .bar-chart {
+    overflow-x: auto;
+    min-height: 180px;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .bar-chart__col { min-width: 52px; }
+
+  /* Annual Revenue vs Expenses chart — horizontal scroll (9 cols too dense) */
+  section#sexpenses .card > div[style*="grid-template-columns: repeat(9"] {
+    display: grid !important;
+    grid-template-columns: repeat(9, 60px) !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch;
+    min-width: 0;
+  }
+  section#sexpenses .card > div[style*="grid-template-columns: repeat(9"][style*="margin-bottom: 10px"] {
+    grid-template-columns: repeat(9, 70px) !important;
+  }
+
+  /* Legend above chart — stack vertically on mobile */
+  section#sexpenses .card > div[style*="justify-content: space-between"][style*="margin-bottom: 16px"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+  }
+
+  /* Annotation row below chart — stack to 2 lines */
+  section#sexpenses .card > div[style*="justify-content: space-between"][style*="padding-top: 12px"] {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  /* Summary row (4 KPIs) becomes 2x2 on mobile */
+  section#sexpenses div[style*="grid-template-columns: 1fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  /* Milestone cards stack cleanly */
+  .milestone-card { flex-direction: row; gap: 10px; }
+  .milestone-title { font-size: 0.95rem; }
+  .milestone-desc { font-size: 0.82rem; }
+
+  /* Equity rows remain readable */
+  .equity-row { flex-wrap: wrap; }
+  .equity-row__bar { max-width: 120px; }
+
+  /* Data rows: allow wrap */
+  .data-row { flex-wrap: wrap; gap: 4px; }
+  .data-row__value { font-size: 0.82rem; text-align: left !important; }
+
+  /* Slide number indicator out of the way */
+  .slide-number {
+    bottom: 12px;
+    right: 12px;
+    font-size: 0.65rem;
+  }
+
+  /* Language toggle — slightly smaller, stays accessible */
+  #lang-toggle {
+    top: 10px !important;
+    right: 10px !important;
+    padding: 6px 12px !important;
+    font-size: 0.72rem !important;
+  }
+
+  /* Insight box — tighter */
+  .insight-box { padding: 14px 16px !important; font-size: 0.88rem; }
+
+  /* Flow steps wrap */
+  .flow-step { min-width: 0; }
+
+  /* Team cards, problem cards, flow rows — allow wrap */
+  .problem-number { font-size: 1.5rem; }
+  .team-info__role { font-size: 0.8rem; }
+  .team-info__desc { font-size: 0.85rem; }
+
+  /* Closing slide pillars stack */
+  .closing__pillars { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+
+  /* Competitor rows */
+  .competitor-row { flex-wrap: wrap; gap: 8px; }
+
+  /* Ensure images don't overflow */
+  img { max-width: 100%; height: auto; }
+}
+
+@media (max-width: 480px) {
+  html { font-size: 14px; }
+  .slide { padding: 44px 12px 52px; }
+  .slide-title { font-size: clamp(1.3rem, 7vw, 1.9rem) !important; }
+  .bar-chart__col { min-width: 46px; }
+  .stat-hero__number { font-size: 2rem !important; }
+  .closing__pillars { grid-template-columns: 1fr !important; }
+  section#sexpenses div[style*="grid-template-columns: 1fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   BUSINESS-MODEL MATRIX
+   ═══════════════════════════════════════════════════ */
+.biz-matrix {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, 1fr);
+  gap: 6px;
+  margin: 20px 0 14px;
+}
+.biz-matrix__header { display: contents; }
+.biz-matrix__header > div {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--gray-700);
+  text-align: center;
+  padding: 8px 6px;
+  border-bottom: 2px solid var(--green-300);
+}
+.biz-matrix__row { display: contents; }
+.biz-matrix__label {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  padding: 10px 12px;
+  background: var(--green-50);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  line-height: 1.25;
+}
+.biz-matrix__cell {
+  font-size: 0.72rem;
+  color: var(--gray-400);
+  padding: 10px;
+  border-radius: 8px;
+  background: var(--gray-50);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.35;
+}
+.biz-matrix__cell--on {
+  background: var(--green-100);
+  color: var(--gray-800);
+  font-weight: 500;
+}
+.biz-matrix__row--prize .biz-matrix__label--prize {
+  background: var(--green-700);
+  color: #fff;
+}
+.biz-matrix__cell--prize {
+  background: var(--green-700);
+  color: #fff;
+  font-weight: 600;
+  border: 2px solid var(--green-800);
+}
+.biz-matrix__footer {
+  font-size: 0.78rem;
+  color: var(--gray-600);
+  text-align: center;
+  font-style: italic;
+  margin-top: 6px;
+}
+
+/* ═══════════════════════════════════════════════════
+   BUSINESS-MODEL TIERS (volume ladder)
+   ═══════════════════════════════════════════════════ */
+.biz-tiers {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  gap: 14px;
+  margin: 20px 0 14px;
+}
+.biz-tier {
+  background: var(--green-50);
+  border: 1px solid var(--green-200);
+  border-radius: 12px;
+  padding: 16px 16px 14px;
+  display: flex;
+  flex-direction: column;
+}
+.biz-tier--middle { background: var(--green-100); border-color: var(--green-300); }
+.biz-tier--prize { background: var(--green-700); border-color: var(--green-800); color: #fff; }
+.biz-tier__head { display: flex; align-items: baseline; gap: 8px; }
+.biz-tier__volume {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--green-800);
+  line-height: 1;
+}
+.biz-tier--prize .biz-tier__volume { color: #fff; }
+.biz-tier__unit {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+.biz-tier--prize .biz-tier__unit { color: rgba(255,255,255,0.8); }
+.biz-tier__audience {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-900);
+  margin-top: 10px;
+}
+.biz-tier--prize .biz-tier__audience { color: #fff; }
+.biz-tier__when {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--green-700);
+  letter-spacing: 0.06em;
+  margin-top: 3px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--green-200);
+}
+.biz-tier--middle .biz-tier__when { border-color: var(--green-400); }
+.biz-tier--prize .biz-tier__when {
+  color: rgba(255,255,255,0.9);
+  border-color: rgba(255,255,255,0.2);
+}
+.biz-tier__list {
+  list-style: none;
+  margin-top: 10px;
+  padding: 0;
+}
+.biz-tier__list li {
+  font-size: 0.74rem;
+  color: var(--gray-700);
+  padding: 4px 0 4px 12px;
+  line-height: 1.4;
+  position: relative;
+}
+.biz-tier__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green-600);
+}
+.biz-tier--prize .biz-tier__list li { color: rgba(255,255,255,0.92); }
+.biz-tier--prize .biz-tier__list li::before { background: var(--green-300); }
+
+.biz-capabilities {
+  background: var(--gray-50);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-top: 4px;
+}
+.biz-capabilities__title {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.biz-capabilities__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+}
+.biz-capabilities__items span {
+  font-size: 0.74rem;
+  color: var(--gray-700);
+  font-weight: 500;
+  position: relative;
+}
+.biz-capabilities__items span::after {
+  content: "·";
+  color: var(--gray-300);
+  margin-left: 14px;
+}
+.biz-capabilities__items span:last-child::after { content: ""; margin-left: 0; }
+
+/* ═══════════════════════════════════════════════════
+   UNIT ECONOMICS
+   ═══════════════════════════════════════════════════ */
+.unit-econ {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 20px;
+}
+.unit-econ__col h3 {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--green-800);
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--green-300);
+}
+.unit-econ__row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--gray-100);
+  font-size: 0.78rem;
+}
+.unit-econ__row > span:first-child {
+  color: var(--gray-700);
+  line-height: 1.35;
+}
+.unit-econ__row > span:last-child {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--gray-900);
+  white-space: nowrap;
+}
+.unit-econ__row--total {
+  background: var(--green-50);
+  margin: 6px -8px 0;
+  padding: 10px 8px;
+  border-radius: 6px;
+  border-bottom: none;
+  font-size: 0.85rem;
+}
+.unit-econ__row--total > span:last-child { color: var(--green-800); }
+.unit-econ__bottom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 18px;
+  padding: 16px;
+  background: var(--green-700);
+  border-radius: 12px;
+  color: #fff;
+}
+.unit-econ__bottom__cell { text-align: center; }
+.unit-econ__bottom__cell .num {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+.unit-econ__bottom__cell .lbl {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.75);
+  margin-top: 2px;
+}
+.unit-econ__killer {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--green-800);
+  text-align: center;
+  margin-top: 14px;
+  padding: 10px;
+  background: var(--green-50);
+  border-radius: 8px;
+}
+
+/* ═══════════════════════════════════════════════════
+   AGROTECH
+   ═══════════════════════════════════════════════════ */
+.agrotech-measures {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 18px 0;
+}
+.agrotech-measure {
+  text-align: center;
+  padding: 12px 10px;
+  background: var(--green-50);
+  border-radius: 10px;
+  border: 1px solid var(--green-200);
+}
+.agrotech-measure__icon { font-size: 1.6rem; margin-bottom: 4px; }
+.agrotech-measure__title {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+.agrotech-measure__desc {
+  font-size: 0.7rem;
+  color: var(--gray-600);
+  line-height: 1.35;
+  margin-top: 3px;
+}
+.agrotech-tiers {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+  font-size: 0.78rem;
+}
+.agrotech-tiers th, .agrotech-tiers td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid var(--gray-100);
+}
+.agrotech-tiers th {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  background: var(--gray-50);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.agrotech-tiers tr.recommended {
+  background: var(--green-50);
+}
+.agrotech-tiers tr.recommended td {
+  font-weight: 600;
+  color: var(--green-900);
+}
+.agrotech-tiers .tier-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--gray-900);
+}
+.agrotech-commit {
+  margin-top: 8px;
+}
+.agrotech-commit__cells {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 18px;
+  background: var(--green-700);
+  border-radius: 12px;
+  color: #fff;
+}
+.agrotech-commit__cell { text-align: center; }
+.agrotech-commit__cell .num {
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+.agrotech-commit__cell .lbl {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.75);
+  margin-top: 2px;
+  line-height: 1.3;
+}
+.agrotech-commit__statement {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-800);
+  text-align: center;
+  margin-top: 14px;
+  padding: 12px 18px;
+  background: var(--green-50);
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .biz-matrix { grid-template-columns: 1fr; }
+  .biz-matrix__header { display: none; }
+  .biz-matrix__cell { text-align: left; justify-content: flex-start; }
+  .biz-tiers { grid-template-columns: 1fr; gap: 10px; }
+  .unit-econ { grid-template-columns: 1fr; gap: 18px; }
+  .unit-econ__bottom { grid-template-columns: repeat(2, 1fr); }
+  .agrotech-measures { grid-template-columns: repeat(2, 1fr); }
+  .agrotech-tiers { font-size: 0.72rem; }
+  .agrotech-tiers th, .agrotech-tiers td { padding: 6px 8px; }
+  .agrotech-commit__cells { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+<section class="slide" style="background: var(--green-900); color: white; min-height: 30vh;">
+<div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 40px 20px;">
+<p style="color: var(--green-300); text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; margin-bottom: 16px;">PREVIEW MODE · 3 NEW SLIDES ONLY</p>
+<h1 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.5rem); margin-bottom: 14px;">Demand-Side Validation Slides</h1>
+<p style="color: rgba(255,255,255,0.85); font-size: 1rem; margin-bottom: 24px;">3 new slides addressing channel mix, stress test, and US market deep dive. Scroll down to view. These will be inserted as slides 12, 13, 14 of 22 in the main investor deck.</p>
+<div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px;">
+<a href="#sdiversified-revenue" style="background: var(--green-600); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">12 · Diversified Revenue</a>
+<a href="#sstress-test" style="background: var(--green-600); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">13 · Stress Test</a>
+<a href="#sus-market-deep-dive" style="background: var(--green-600); color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 600;">14 · US Market Deep Dive</a>
+</div>
+</div>
+</section>
+     SLIDE 12 — DIVERSIFIED REVENUE MODEL (CHANNEL MIX)
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="sdiversified-revenue">
+<div class="green-line"></div>
+<p class="section-label" data-es="Modelo de Ingresos Diversificado">Diversified Revenue Model</p>
+<h2 class="slide-title" data-es="No Todos los Postes se Venden a 400 MXN">Not All Poles Sell at 400 MXN</h2>
+<p class="slide-subtitle" data-es="El modelo base asume venta única a 400 MXN. La realidad: 5 canales, precios distintos, ASP mezclado ~287 MXN. Mismo costo por hectárea, ingresos diversificados, riesgo de canal único reducido.">The base model assumes single-channel sale at 400 MXN. Reality: 5 channels, different prices, blended ASP ~287 MXN. Same cost per hectare, diversified revenue, single-channel risk reduced.</p>
+<div class="unit-econ fade-in" style="grid-template-columns: 1fr;">
+<div class="unit-econ__col">
+<h3 data-es="Mezcla de Canales en Madurez (110 ha · ~130,000 postes/año)">Channel Mix at Maturity (110 ha · ~130,000 poles/yr)</h3>
+<div class="unit-econ__row"><span data-es="<strong>Arquitectura premium MX</strong> (estudios CDMX + eco-hospedaje · 25% volumen)"><strong>Mexican premium architecture</strong> (CDMX studios + eco-hospitality · 25% volume)</span><span>32,500 × 450 = <strong>14.6M</strong></span></div>
+<div class="unit-econ__row"><span data-es="<strong>Decorativo / tikki EE.UU.</strong> (Safari Thatch, Forever Bamboo wholesale · 20%)"><strong>US decorative / tikki</strong> (Safari Thatch, Forever Bamboo wholesale · 20%)</span><span>26,000 × 480 = <strong>12.5M</strong></span></div>
+<div class="unit-econ__row"><span data-es="<strong>Insumo bambú ingenierizado</strong> (offtake Lamboo / BamCore · 15%)"><strong>Engineered feedstock</strong> (Lamboo / BamCore offtake · 15%)</span><span>19,500 × 280 = <strong>5.5M</strong></span></div>
+<div class="unit-econ__row"><span data-es="<strong>Insumo grado-panel</strong> (BambooBoards / ruta IKEA FRÖJERED · 25%)"><strong>Panel-grade feedstock</strong> (BambooBoards / IKEA FRÖJERED route · 25%)</span><span>32,500 × 125 = <strong>4.1M</strong></span></div>
+<div class="unit-econ__row"><span data-es="<strong>Estacas agrícolas / biomasa</strong> (cull material, jitomate/plátano · 15%)"><strong>Agricultural stakes / biomass</strong> (cull material, tomato/banana · 15%)</span><span>19,500 × 35 = <strong>0.7M</strong></span></div>
+<div class="unit-econ__row unit-econ__row--total"><span data-es="<strong>Ingreso total al año (sin créditos de carbono)</strong>"><strong>Total annual revenue (excl. carbon credits)</strong></span><span><strong>~37.4M MXN</strong></span></div>
+<div class="unit-econ__row" style="padding-top:10px;"><span data-es="Créditos de carbono (~10 tCO₂/ha/yr × 110 ha × $10/tCO₂e × 17 MXN/USD) — sujeto a registro de metodología Verra/MEXICO2">Carbon credits (~10 tCO₂/ha/yr × 110 ha × $10/tCO₂e × 17 MXN/USD) — subject to Verra/MEXICO2 methodology registration</span><span>+0.6M / yr</span></div>
+<div class="unit-econ__row"><span data-es="<strong>Total con potencial de carbono</strong>"><strong>Total with carbon upside</strong></span><span><strong>~38.0M MXN</strong></span></div>
+</div>
+</div>
+<div class="unit-econ__bottom fade-in">
+<div class="unit-econ__bottom__cell"><div class="num">~287</div><div class="lbl" data-es="ASP mezclado (MXN/poste)">Blended ASP (MXN/pole)</div></div>
+<div class="unit-econ__bottom__cell"><div class="num">~38M</div><div class="lbl" data-es="Ingresos / 110 ha en madurez (MXN)">Revenue / 110 ha at maturity (MXN)</div></div>
+<div class="unit-econ__bottom__cell"><div class="num">~32M</div><div class="lbl" data-es="Ganancia / 110 ha (mismos costos: 54K/ha/yr × 110)">Profit / 110 ha (same costs: 54K/ha/yr × 110)</div></div>
+<div class="unit-econ__bottom__cell"><div class="num">~84%</div><div class="lbl" data-es="Margen neto en madurez (mezclado)">Net margin at maturity (blended)</div></div>
+</div>
+<div class="insight-box fade-in" data-es="<strong>Estructura de costos sin cambio:</strong> los costos por hectárea son de mantenimiento de plantación + tratamiento, no de procesamiento de producto. La mezcla de canales no altera el costo operativo de 54K MXN/ha/año. Cualquier integración hacia adelante (panelizado, carbón) requeriría capex adicional fuera del alcance del modelo actual."><strong>Cost structure unchanged:</strong> per-hectare costs are plantation maintenance + treatment, not product processing. Channel mix does not alter the 54K MXN/ha/yr operating cost. Any forward integration (panel manufacture, charcoal) would require additional capex outside the current model scope.</div>
+<p style="font-size: 0.7rem; color: var(--gray-400); margin-top: 16px;">Sources: Premium MX studios — <a href="https://bambuterra.com.mx/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Bambuterra</a> · <a href="https://qinchabambu.com/en" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Qincha</a> · <a href="https://www.tododebambu.com/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Todo de Bambú</a> · US decorative pricing — <a href="https://safarithatch.com/bamboo/guadua-bamboo/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Safari Thatch Guadua</a> · <a href="https://foreverbamboo.com/wholesale/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Forever Bamboo wholesale</a> · Engineered feedstock — <a href="https://www.lamboo.us/structure" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Lamboo Structure</a> · <a href="https://www.bamcore.com" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">BamCore</a> · Panel route — <a href="https://amp.milenio.com/negocios/bambooboards-mexico-crea-modelo-comercial-comunitario-bambu" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">BambooBoards México (IKEA FRÖJERED)</a> · <a href="https://www.ikea.com/mx/es/p/froejered-panel-lateral-bambu-claro-40441624/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">IKEA MX FRÖJERED</a> · Carbon — <a href="https://www.mexico2.com.mx/medio-ambiente.php?id=13" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">MEXICO2 voluntary market</a> · <a href="https://www.inbar.int/wp-content/uploads/2020/05/1541657603.pdf" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">INBAR bamboo carbon</a></p>
+<div class="slide-number">12 / 22</div>
+</section>
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 13 — STRESS TEST BEYOND YIELD
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="sstress-test">
+<div class="green-line"></div>
+<p class="section-label" data-es="Prueba de Estrés Avanzada">Advanced Stress Test</p>
+<h2 class="slide-title" data-es="Más Allá del Rendimiento: 4 Escenarios Adversos">Beyond Yield: 4 Adverse Scenarios</h2>
+<p class="slide-subtitle" data-es="El análisis de sensibilidad muestra que somos rentables aún a 1,000 postes/ha. Pero el rendimiento es solo una variable. Aquí modelamos shock biológico, suavizado de demanda, retraso de flujo de caja, y caso adverso combinado.">The sensitivity analysis shows profitability even at 1,000 poles/ha. But yield is only one variable. Here we model biological shock, demand softening, cashflow delay, and combined adverse case.</p>
+<div class="card-grid card-grid--2 fade-in stagger">
+<div class="card" style="--i:0; border-top: 3px solid var(--amber);">
+<div class="card__tag" data-es="Escenario 1 · Shock Biológico" style="background: #FEF3C7; color: var(--amber); margin-top: 0; margin-bottom: 14px;">Scenario 1 · Biological Shock</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-bottom: 12px;" data-es="Disparador: enfermedad fúngica documentada en <em>Guadua</em> (Bolaño-Garzón et al., SciELO Colombia) o sequía extrema. Rendimiento -50% año 5+ por 2 ciclos.">Trigger: documented Guadua fungal disease (Bolaño-Garzón et al., SciELO Colombia) or extreme drought. Yield -50% year 5+ for 2 cycles.</p>
+<div class="data-row"><span class="data-row__label" data-es="Rendimiento">Yield</span><span class="data-row__value">700 culms/ha</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Ingresos / 110 ha">Revenue / 110 ha</span><span class="data-row__value">~26M (-51%)</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Ganancia / 110 ha">Profit / 110 ha</span><span class="data-row__value">~21M (-55%)</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Aún rentable">Still profitable</span><span class="data-row__value data-row__value--green">YES</span></div>
+<p style="font-size: 0.78rem; color: var(--gray-600); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-100);" data-es="<strong>Mitigación:</strong> 5 años de I+D pilot validó 1,500 plantas sobrevivientes (de 3,000 sembradas) → fenotipo robusto. Diversidad genética + 3 especies en pilot."><strong>Mitigation:</strong> 5-year R&amp;D pilot validated 1,500 surviving plants (of 3,000) → robust phenotype. Genetic diversity + 3 species in pilot.</p>
+</div>
+<div class="card" style="--i:1; border-top: 3px solid var(--amber);">
+<div class="card__tag" data-es="Escenario 2 · Suavizado de Demanda" style="background: #FEF3C7; color: var(--amber); margin-top: 0; margin-bottom: 14px;">Scenario 2 · Demand Softening</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-bottom: 12px;" data-es="Disparador: Lamboo/BamCore no firman offtake; mercado arquitectónico premium MX se contrae. ASP cae de 400 a 250 MXN. Rendimiento sin cambio.">Trigger: Lamboo/BamCore offtake fails to materialize; MX premium architecture market contracts. ASP drops 400 → 250 MXN. Yield unchanged.</p>
+<div class="data-row"><span class="data-row__label" data-es="Rendimiento">Yield</span><span class="data-row__value">1,400 culms/ha</span></div>
+<div class="data-row"><span class="data-row__label" data-es="ASP">ASP</span><span class="data-row__value">250 MXN/pole</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Ingresos / 110 ha">Revenue / 110 ha</span><span class="data-row__value">~32.7M (-37%)</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Ganancia / 110 ha">Profit / 110 ha</span><span class="data-row__value">~26M (-44%)</span></div>
+<p style="font-size: 0.78rem; color: var(--gray-600); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-100);" data-es="<strong>Mitigación:</strong> el modelo de canales diversificados (slide 12) reabsorbe producto de menor grado en estacas/biomasa, evitando saturación de un canal único."><strong>Mitigation:</strong> the diversified channel model (slide 12) reabsorbs lower-grade product into stakes/biomass, avoiding single-channel saturation.</p>
+</div>
+<div class="card" style="--i:2; border-top: 3px solid var(--amber);">
+<div class="card__tag" data-es="Escenario 3 · Retraso de Flujo de Caja" style="background: #FEF3C7; color: var(--amber); margin-top: 0; margin-bottom: 14px;">Scenario 3 · Cashflow Delay</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-bottom: 12px;" data-es="Disparador: Ronda 2 (2028) se retrasa 12 meses; clima impide siembra de 15 ha en 2027. Madurez total se desplaza de 2038 a 2040 (+2 años).">Trigger: Round 2 (2028) delays 12 months; weather prevents 15 ha planting in 2027. Full maturity shifts from 2038 to 2040 (+2 years).</p>
+<div class="data-row"><span class="data-row__label" data-es="Madurez total">Full maturity</span><span class="data-row__value">2040 (was 2038)</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Ingresos perdidos 2026-2040">Cum. revenue lost 2026-2040</span><span class="data-row__value">~80M MXN</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Punto de equilibrio">Break-even</span><span class="data-row__value">2035 (was 2033)</span></div>
+<div class="data-row"><span class="data-row__label" data-es="ROI 40 años">40-yr ROI</span><span class="data-row__value">-12% vs base</span></div>
+<p style="font-size: 0.78rem; color: var(--gray-600); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-100);" data-es="<strong>Mitigación:</strong> apoyo PRONAFOR (CONAFOR PFC: 30% en firma + 20% en preparación + 50% post-supervivencia) cubre hasta 50% del capex de siembra. Tierra propia bajo arrendamiento de 40 años asegura continuidad."><strong>Mitigation:</strong> PRONAFOR support (CONAFOR PFC: 30% on signing + 20% on planting prep + 50% post-survival) covers up to 50% of planting capex. Own land under 40-yr lease ensures continuity.</p>
+</div>
+<div class="card card--highlight" style="--i:3; border-top: 3px solid #DC2626;">
+<div class="card__tag" data-es="Escenario 4 · Adverso Combinado (worst case)" style="background: #FEE2E2; color: #DC2626; margin-top: 0; margin-bottom: 14px;">Scenario 4 · Combined Adverse (worst case)</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-bottom: 12px;" data-es="Disparadores simultáneos: rendimiento -30%, ASP -25%, retraso 1 año. Estrés ortogonal en 3 dimensiones.">Simultaneous triggers: yield -30%, ASP -25%, 1-year delay. Orthogonal stress on 3 dimensions.</p>
+<div class="data-row"><span class="data-row__label" data-es="Rendimiento">Yield</span><span class="data-row__value">980 culms/ha</span></div>
+<div class="data-row"><span class="data-row__label" data-es="ASP">ASP</span><span class="data-row__value">300 MXN/pole</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Ingresos / 110 ha">Revenue / 110 ha</span><span class="data-row__value">~25M (-52%)</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Ganancia / 110 ha">Profit / 110 ha</span><span class="data-row__value">~20M (-57%)</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Punto de equilibrio">Break-even</span><span class="data-row__value">2036 (vs 2033)</span></div>
+<p style="font-size: 0.78rem; color: var(--gray-600); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--gray-100);" data-es="<strong>Resultado:</strong> aún rentable (~$1.18M USD/yr ganancia neta), payback se desplaza de 7 a 9 años post-inversión. La tesis no se rompe."><strong>Result:</strong> still profitable (~$1.18M USD/yr net), payback shifts from 7 to 9 years post-investment. Thesis does not break.</p>
+</div>
+</div>
+<div class="insight-box fade-in" data-es="<strong>Conclusión del estrés:</strong> incluso bajo 3 dimensiones de estrés simultáneas, el modelo es rentable. La tesis se rompería solo si <em>simultáneamente</em>: (a) las 3 especies en pilot mueren, (b) los 5 canales se cierran, (c) Ronda 2 falla por completo. Probabilidad conjunta &lt; 1%."><strong>Stress conclusion:</strong> even under 3 simultaneous stress dimensions, the model remains profitable. The thesis breaks only if <em>simultaneously</em>: (a) all 3 species in pilot die, (b) all 5 channels close, (c) Round 2 fails entirely. Joint probability &lt; 1%.</div>
+<p style="font-size: 0.7rem; color: var(--gray-400); margin-top: 16px;">Sources: Disease references — <a href="http://www.scielo.org.co/scielo.php?script=sci_arttext&amp;pid=S0121-74882020000200097" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Céspedes Prieto et al. 2020 (SciELO Colombia)</a> · Camargo NPV downside benchmark — <a href="http://www.scielo.org.co/scielo.php?script=sci_arttext&amp;pid=S0366-52322021000100186" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Rev. Fac. Nac. Agron. Medellín 2021</a> · PRONAFOR — <a href="https://www.gob.mx/conafor/acciones-y-programas/programa-de-financiamiento-a-plantaciones-forestales-comerciales" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">CONAFOR PFC</a> · 5-yr pilot data — Pacífico Bambu El Azulillo (April 2021–April 2026, internal records)</p>
+<div class="slide-number">13 / 22</div>
+</section>
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 14 — US MARKET DEEP DIVE
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="sus-market-deep-dive">
+<div class="green-line"></div>
+<p class="section-label" data-es="Análisis Profundo del Mercado EE.UU.">US Market Deep Dive</p>
+<h2 class="slide-title" data-es="Importadores, Precios, Proyección 2038, Captura Realista">Importers, Prices, 2038 Projection, Realistic Capture</h2>
+<p class="slide-subtitle" data-es="Mercado de bambú EE.UU. ~$4.2B en 2025 (MRF) creciendo a CAGR 4.18-10.2%. Aquí: quiénes son los importadores, qué pagan los consumidores, cuánta cuota podemos tomar realmente, y con qué mezcla de productos.">US bamboo market ~$4.2B in 2025 (MRF) growing at CAGR 4.18-10.2%. Here: who the importers are, what consumers pay, what share we can realistically capture, and with what product mix.</p>
+<!-- A. Top US Importers -->
+<h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--gray-800); margin: 18px 0 10px;" data-es="A · Principales Importadores EE.UU. (con país de origen)">A · Top US Importers (with sourcing country)</h3>
+<div class="card-grid card-grid--3 fade-in" style="margin-bottom: 6px;">
+<div class="card" style="border-left: 3px solid var(--green-700);">
+<div class="card__label">ReNüTeq <span style="color: var(--green-700);">★ direct comparable</span></div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="St. Louis MO · Colombia + Ecuador (Guadua) · Structural Engineered Bamboo. <strong>Único procesador EE.UU. de Guadua sudamericana.</strong>">St. Louis MO · Colombia + Ecuador (Guadua) · Structural Engineered Bamboo. <strong>Only US processor of South American Guadua.</strong></div>
+</div>
+<div class="card">
+<div class="card__label">Bamboo Living</div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="Pahoa HI · Vietnam (<em>Bambusa stenostachya</em>, NO Guadua) · 350+ casas pre-fab. Tiene el único ICC-ES ESR-1636 vigente para postes estructurales.">Pahoa HI · Vietnam (<em>Bambusa stenostachya</em>, NOT Guadua) · 350+ pre-fab homes. Holds the only active ICC-ES ESR-1636 for structural poles.</div>
+</div>
+<div class="card">
+<div class="card__label">Cali Bamboo</div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="San Diego CA · China (Anji) · pisos, terrazas, paneles, cercas. Mayor distribuidor de marca de bambú EE.UU.">San Diego CA · China (Anji) · flooring, decking, panels, fencing. Largest US bamboo branded distributor.</div>
+</div>
+<div class="card">
+<div class="card__label">Forever Bamboo</div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="San Diego CA + Orlando FL · China, Vietnam, Indonesia · postes decorativos, cercas, palapa. 17+ años importando.">San Diego CA + Orlando FL · China, Vietnam, Indonesia · decorative poles, fencing, thatch. 17+ years importing.</div>
+</div>
+<div class="card">
+<div class="card__label">BamCore</div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="Windsor CA / fábrica Ocala FL · 'Centroamérica' fuente · paneles Prime Wall híbridos bambú-madera. DrJ TER 1507-03.">Windsor CA / Ocala FL plant · 'Central America' sourced · Prime Wall hybrid bamboo-wood panels. DrJ TER 1507-03.</div>
+</div>
+<div class="card">
+<div class="card__label">Lamboo Inc.</div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="Litchfield IL · billets LVB China, acabado en IL · vigas LVB, columnas. <strong>Confirma uso de Guadua sudamericana en su web pública.</strong>">Litchfield IL · LVB billets China, finished IL · LVB beams, columns. <strong>Public website confirms South American Guadua sourcing.</strong></div>
+</div>
+<div class="card">
+<div class="card__label">Smith &amp; Fong (Plyboo)</div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="San Francisco CA · China (Moso FSC) · plywood arquitectónico, pisos, paneles muro. 100% Moso chino.">San Francisco CA · China (FSC Moso) · architectural plywood, flooring, wall panels. 100% Chinese Moso.</div>
+</div>
+<div class="card">
+<div class="card__label">Safari Thatch</div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="Florida · Colombia (Guadua) + Asia · postes Guadua 19'6\" 2-7\" diámetro · canal resort/hospitalidad.">Florida · Colombia (Guadua) + Asia · Guadua poles 19'6" 2-7" diameter · resort/hospitality channel.</div>
+</div>
+<div class="card">
+<div class="card__label">Koolbamboo (Big Bamboo Trading)</div>
+<div class="card__text" style="font-size: 0.78rem;" data-es="Florida (incorporado 2002) · Colombia (Guadua) · postes tratados grado-construcción, muebles, estructuras.">Florida (incorporated 2002) · Colombia (Guadua) · treated construction-grade poles, furniture, structures.</div>
+</div>
+</div>
+<!-- B. US Import Flows by HS Code -->
+<h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--gray-800); margin: 22px 0 10px;" data-es="B · Flujos de Importación EE.UU. por Código HS (datos duros)">B · US Import Flows by HS Code (hard data)</h3>
+<div class="unit-econ" style="grid-template-columns: 1fr;">
+<div class="unit-econ__col" style="margin: 0;">
+<div class="unit-econ__row"><span data-es="<strong>HS 1401.10</strong> · Bambú para trenzado (postes crudos)"><strong>HS 1401.10</strong> · Bamboo for plaiting (raw poles)</span><span><strong>~$13M USD/yr</strong> · 76 envíos Oct'23-Sep'24 · China 83%</span></div>
+<div class="unit-econ__row"><span data-es="<strong>HS 4418.73</strong> · Pisos ensamblados de bambú"><strong>HS 4418.73</strong> · Assembled bamboo flooring</span><span><strong>$7.49M USD</strong> (2023, OEC)</span></div>
+<div class="unit-econ__row"><span data-es="<strong>HS 9403.82</strong> · Muebles de bambú"><strong>HS 9403.82</strong> · Bamboo furniture</span><span><strong>$67M USD</strong> (2023, OEC)</span></div>
+<div class="unit-econ__row"><span data-es="<strong>HS 4402.10</strong> · Carbón de bambú"><strong>HS 4402.10</strong> · Bamboo charcoal</span><span><strong>$10.3M USD</strong> (2023, OEC)</span></div>
+<div class="unit-econ__row"><span data-es="<strong>HS 4602.11</strong> · Cestería de bambú"><strong>HS 4602.11</strong> · Bamboo basketwork</span><span>EE.UU. 53% del flujo global Oct 2024</span></div>
+<div class="unit-econ__row unit-econ__row--total"><span data-es="<strong>Total importación bambú EE.UU. (todos los HS, raw)</strong>"><strong>Total US bamboo imports (all HS, raw)</strong></span><span><strong>~$100-110M USD CIF/yr</strong></span></div>
+</div>
+</div>
+<!-- C. End-Consumer Prices -->
+<h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--gray-800); margin: 22px 0 10px;" data-es="C · Precios al Consumidor Final (validados de páginas live)">C · End-Consumer Prices (validated from live pages)</h3>
+<div class="card-grid card-grid--3 fade-in">
+<div class="card" style="background: var(--green-50);">
+<div class="card__label" data-es="Poste Guadua tratado 6m × 10cm Ø">Treated Guadua pole 6m × 10cm Ø</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-top: 8px;">FOB Colombia $8-14 · CIF US $14-22 · Wholesale $25-40 · <strong>Retail $45-90</strong></p>
+</div>
+<div class="card" style="background: var(--green-50);">
+<div class="card__label" data-es="Pisos de bambú">Bamboo flooring</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-top: 8px;"><strong>$5-8/sqft retail</strong> ($54-86/m²) · Cali Bamboo en Lowe's · Chinese Moso engineered</p>
+</div>
+<div class="card" style="background: var(--green-50);">
+<div class="card__label" data-es="Cerca de bambú 6'×16' rollo">Bamboo fencing roll 6'×16'</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-top: 8px;"><strong>$80-250 retail</strong> · Forever Bamboo · low-margin commodity</p>
+</div>
+<div class="card" style="background: var(--green-50);">
+<div class="card__label" data-es="Carbón activado de bambú">Bamboo activated charcoal</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-top: 8px;"><strong>$5-15/kg retail</strong> · biochar premium $160/t</p>
+</div>
+<div class="card" style="background: var(--green-50);">
+<div class="card__label" data-es="Mueble de bambú (unidad promedio)">Bamboo furniture (avg unit)</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-top: 8px;"><strong>$50-300 wholesale</strong> · Vietnam/China dominant · Lacey/CARB Phase II</p>
+</div>
+<div class="card" style="background: var(--green-50);">
+<div class="card__label" data-es="Bambú ingenierizado (LVB / paneles estructurales)">Engineered bamboo (LVB / structural panels)</div>
+<p style="font-size: 0.82rem; color: var(--gray-700); margin-top: 8px;">Project-priced · feedstock no público · Lamboo/BamCore</p>
+</div>
+</div>
+<!-- D. 2038 Projection -->
+<h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--gray-800); margin: 22px 0 10px;" data-es="D · Proyección 2038 (cuando inicia nuestro export · ICC-ES 2037)">D · 2038 Projection (when our export starts · ICC-ES 2037)</h3>
+<div class="unit-econ__bottom fade-in">
+<div class="unit-econ__bottom__cell"><div class="num">$7.4B</div><div class="lbl" data-es="Mercado bambú EE.UU. 2038 (CAGR 4.18% conservador, MRF)">US bamboo mkt 2038 (CAGR 4.18% conservative, MRF)</div></div>
+<div class="unit-econ__bottom__cell"><div class="num">$11B+</div><div class="lbl" data-es="Mismo mercado a CAGR 10.2% (MRF upside)">Same market at CAGR 10.2% (MRF upside)</div></div>
+<div class="unit-econ__bottom__cell"><div class="num">$25M</div><div class="lbl" data-es="Sub-segmento 'raw pole' import EE.UU. 2038 (extrapolación lineal Volza/HS 1401.10)">'Raw pole' import sub-segment 2038 (linear extrap. Volza/HS 1401.10)</div></div>
+<div class="unit-econ__bottom__cell"><div class="num">~$28K/yr</div><div class="lbl" data-es="Crédito carbono 110 ha · MEXICO2 a $10/tCO₂e">Carbon credit 110 ha · MEXICO2 at $10/tCO₂e</div></div>
+</div>
+<!-- E + F. Capture Share + Optimal Mix -->
+<h3 style="font-family: var(--font-heading); font-size: 1rem; color: var(--gray-800); margin: 22px 0 10px;" data-es="E · Cuota de Captura Realista + Mezcla Óptima de Productos para EE.UU.">E · Realistic Capture Share + Optimal US Product Mix</h3>
+<div class="card-grid card-grid--2 fade-in">
+<div class="card" style="border-left: 3px solid var(--green-700);">
+<div class="card__label" data-es="Captura Realista">Realistic Capture</div>
+<div class="data-row"><span class="data-row__label" data-es="Tasa de exportación EE.UU. de Pacífico">Pacífico US export share</span><span class="data-row__value">~30% del volumen</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Postes a EE.UU. en madurez">Poles to US at maturity</span><span class="data-row__value">~39,000 / yr</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Equivalente en mercado raw pole 2038">% of 2038 raw-pole import mkt</span><span class="data-row__value">~10-15%</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Equivalente USD ingresos">USD revenue equivalent</span><span class="data-row__value">~$2.0-2.8M / yr</span></div>
+<p style="font-size: 0.78rem; color: var(--gray-600); margin-top: 12px;" data-es="Capturar 10-15% del raw-pole subsegment + crear demanda nueva en construcción estructural post-ICC-ES = ruta defendible.">Capturing 10-15% of raw-pole subsegment + creating new demand in structural construction post-ICC-ES = defensible path.</p>
+</div>
+<div class="card" style="border-left: 3px solid var(--green-700);">
+<div class="card__label" data-es="Mezcla Óptima EE.UU.">Optimal US Mix</div>
+<div class="data-row"><span class="data-row__label" data-es="Insumo ingenierizado (Lamboo/BamCore offtake)">Engineered feedstock (Lamboo/BamCore offtake)</span><span class="data-row__value">40%</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Decorativo / tikki retail (Safari Thatch, Forever Bamboo)">Decorative / tikki retail (Safari Thatch, Forever Bamboo)</span><span class="data-row__value">35%</span></div>
+<div class="data-row"><span class="data-row__label" data-es="Estructural premium (post-ICC-ES 2037, eco-arch + resort)">Structural premium (post-ICC-ES 2037, eco-arch + resort)</span><span class="data-row__value">25%</span></div>
+<p style="font-size: 0.78rem; color: var(--gray-600); margin-top: 12px;" data-es="Mezcla balanceada entre canales con MOQ alto (engineered) y nichos premium con margen (structural). Decorativo absorbe inventario excedente."><strong>Balanced</strong> mix between high-MOQ channels (engineered) and high-margin niches (structural). Decorative absorbs surplus inventory.</p>
+</div>
+</div>
+<div class="insight-box fade-in" data-es="<strong>Implicación:</strong> el mercado bambú-EE.UU. crece a $7-11B para 2038. El subsegmento raw-pole (~$25M) es muy pequeño respecto al total, pero es exactamente donde encajamos. Capturar 10-15% es agresivo pero lograble dado: (i) ventaja USMCA vs proveedores asiáticos, (ii) cero exportador mexicano hoy, (iii) socios potenciales identificados (ReNüTeq, Lamboo, Safari Thatch)."><strong>Implication:</strong> the US bamboo market grows to $7-11B by 2038. The raw-pole subsegment (~$25M) is small relative to the total, but it's exactly where we fit. Capturing 10-15% is aggressive but achievable given: (i) USMCA advantage vs Asian suppliers, (ii) zero Mexican exporter today, (iii) identified potential partners (ReNüTeq, Lamboo, Safari Thatch).</div>
+<p style="font-size: 0.7rem; color: var(--gray-400); margin-top: 16px;">Sources: US import data — <a href="https://trendeconomy.com/data/commodity_h2/140110" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">TrendEconomy HS 1401.10</a> · <a href="https://oec.world/en/profile/hs/wood-assembled-flooring-panels-of-bamboo-or-with-at-least-the-top-layer-wear-layer-of-bamboo" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">OEC HS 4418.73</a> · <a href="https://oec.world/en/profile/hs/furniture-of-bamboo" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">OEC HS 9403.82</a> · <a href="https://oec.world/en/profile/hs/charcoal-of-bamboo-including-derivates" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">OEC HS 4402.10</a> · <a href="https://www.volza.com/p/bamboo-poles/import/import-in-united-states/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Volza US bamboo poles imports</a> · Importers — <a href="https://www.renuteq.com/technology" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">ReNüTeq</a> · <a href="https://bambooliving.com/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Bamboo Living</a> · <a href="https://www.lamboo.us/structure" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Lamboo</a> · <a href="https://www.bamcore.com" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">BamCore</a> · <a href="https://safarithatch.com/bamboo/guadua-bamboo/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Safari Thatch</a> · <a href="https://foreverbamboo.com/wholesale/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Forever Bamboo</a> · Market projections — <a href="https://www.marketresearchfuture.com/reports/us-bamboos-market-20658" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">MRF US Bamboos 20658</a> · <a href="https://www.fortunebusinessinsights.com/bamboos-market-102314" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Fortune Business Insights</a> · <a href="https://www.grandviewresearch.com/industry-analysis/bamboos-market" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Grand View Research</a> · Building code — <a href="https://www.icc-es.org/Reports/pdf_files/ESR-1636.pdf" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">ICC-ES ESR-1636</a> · <a href="https://shop.iccsafe.org/ac162-structural-bamboo-approved-march-2000-editorially-revised-april-2020-pdf-download.html" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">ICC-ES AC162</a></p>
+<div class="slide-number">14 / 22</div>
+</section>
+<!-- ═══════════════════════════════════════════════════
+</body>
+</html>
