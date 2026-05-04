@@ -1424,6 +1424,12 @@ body {
   .agrotech-tiers th, .agrotech-tiers td { padding: 6px 8px; }
   .agrotech-commit__cells { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* GTM Stress Test rows */
+.icp-row { display: grid; grid-template-columns: 130px 1fr; gap: 8px; padding: 6px 0; font-size: 0.78rem; border-bottom: 1px dashed var(--gray-100); }
+.icp-row:last-of-type { border-bottom: none; }
+.icp-row__label { color: var(--gray-500); font-weight: 600; font-family: var(--font-heading); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.icp-row__value { color: var(--gray-800); line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -1461,7 +1467,7 @@ body {
 <img alt="Bamboo forest" src="https://images.unsplash.com/photo-1565178117145-41db4d572950?w=1920&amp;q=80"/>
 </div>
 </div>
-<div class="slide-number">1 / 20</div>
+<div class="slide-number">1 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 2 — WHY BAMBOO
@@ -1497,7 +1503,7 @@ body {
 <strong>Key insight:</strong> Guadua provides a <strong>50+ year harvest cycle</strong> from a single planting.
   </div>
 <p style="font-size: 0.7rem; color: var(--gray-400); margin-top: 16px;">Sources: <a href="https://www.guaduabamboo.com/blog/guadua-angustifolia" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Guadua Bamboo: growth rates</a> · <a href="https://www.inbar.int/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">INBAR: carbon sequestration</a></p>
-<div class="slide-number">2 / 20</div>
+<div class="slide-number">2 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 3 — MARKET OPPORTUNITY
@@ -1551,10 +1557,108 @@ body {
 <div class="side-image">
 <img alt="Bamboo forest" src="https://upload.wikimedia.org/wikipedia/commons/9/97/2021_Sagano_Bamboo_forest_in_Arashiyama%2C_Kyoto%2C_Japan.jpg"/>
 </div>
-<div class="slide-number">3 / 20</div>
+<div class="slide-number">3 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
-     SLIDE 4 — WHY NOW (INTEROCEANIC CORRIDOR)
+     SLIDE 4 — THE TEAM (moved earlier)
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s10">
+<div class="green-line"></div>
+<p class="section-label" data-es="El Equipo">The Team</p>
+<h2 class="slide-title" data-es="Equipo Directivo">Management Team</h2>
+<p class="slide-subtitle" data-es="Experiencia en tierra · Construcción de bambú · Capacidad de crecimiento.">Land expertise · Bamboo construction · Growth capability.</p>
+<div class="fade-in stagger" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
+<div class="card card--highlight team-square" style="--i:0;">
+<div class="team-square__avatar team-avatar team-avatar--green">D</div>
+<div class="team-square__name">Juan Diego Alvidrez</div>
+<div class="team-square__role" data-es="CEO y Co-Fundador, Pacífico Bambú">CEO &amp; Co-Founder, Pacífico Bambu</div>
+<div class="team-square__desc" data-es="Dueño y socio de una empresa de construcción en la costa con más de 15 años de experiencia, especializada en bambú. Egresado de la Bamboo U Academy (Bali, en línea). Red amplia de relaciones con clientes, constructores, empresas de construcción y desarrolladores. Propietario de un hotel boutique en la costa de Zipolite y desarrollador reconocido en el sector de la construcción.">Owner &amp; partner of a coastal construction company, 15+ years of experience specializing in bamboo. Graduate of the Bamboo U Academy (Bali, online). Deep network across clients, builders, construction companies, and developers. Owner of a boutique hotel on the Zipolite coast and a recognized developer in the regional construction scene.</div>
+</div>
+<div class="card card--highlight team-square" style="--i:1;">
+<div class="team-square__avatar team-avatar team-avatar--green">J</div>
+<div class="team-square__name">Juan Carlos Hernandez</div>
+<div class="team-square__role" data-es="Co-Fundador y Operaciones de Tierra, Pacífico Bambú">Co-Founder &amp; Land Operations, Pacífico Bambu</div>
+<div class="team-square__desc" data-es="Hijo del lugar, tercera generación de caficultores, dueño de las tierras. Dirige un negocio regional de venta de materiales de construcción (piedra ornamental local) a lo largo de la costa de Oaxaca. Lidera todas las operaciones de campo, siembra y cosecha. Tierra asegurada por arrendamiento de 40 años.">Local-born, third-generation coffee farmer, owner of the land. Runs a regional construction-materials business (specialty local stone) across the Oaxacan coast. Leads all field operations, planting, and harvest. Land secured through a 40-year lease.</div>
+</div>
+<div class="card card--highlight team-square" style="--i:2;">
+<div class="team-square__avatar team-avatar team-avatar--green">O</div>
+<div class="team-square__name">Ofir Perez Weinberg</div>
+<div class="team-square__role" data-es="Socio Director, COO y Ecosistema, Pacífico Bambú">Managing Partner, COO &amp; Ecosystem, Pacífico Bambu</div>
+<div class="team-square__desc" data-es="15 años de experiencia en marketing y ventas internacionales, trabajando con marcas locales y globales. Emprendedor, especialista en marketing y desarrollo de negocios. Hasta hace poco, socio y Head of Growth en Hat Finance, una startup de seguridad en el sector cripto: 4M USD recaudados y un equipo internacional de 13 personas bajo su gestión.">15 years of international marketing and sales experience, working with local and global brands. Entrepreneur, marketer, and business-development operator. Most recently partner &amp; Head of Growth at Hat Finance, a crypto-security startup: $4M raised and a 13-person international team under his management.</div>
+<a href="https://www.linkedin.com/in/perezofir/" target="_blank" rel="noopener" class="team-square__linkedin" aria-label="LinkedIn: Ofir Perez"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+</div>
+<div class="card card--highlight team-square" style="--i:3;">
+<div class="team-square__avatar team-avatar team-avatar--muted">R</div>
+<div class="team-square__name">Rick Coaster</div>
+<div class="team-square__role" data-es="Socio Fundador de Capital · Primer Inversionista Ángel">Founding Capital Partner · First Angel Investor</div>
+<div class="team-square__desc" data-es="Contribuyente fundador de capital con 20% de participación. <strong>Primer inversionista ángel:</strong> convicción desde el día uno, skin in the game antes de que entren inversionistas externos. <em>Plan de escalamiento:</em> el flujo operativo (2034+) financia un Director de Exportación y un Gerente de QC al acercarse ICC-ES 2037.">Founding cash contributor with a 20% equity stake. <strong>First angel investor:</strong> conviction from day one, skin in the game before external investors join. <em>Scaling plan:</em> operating cash flow (2034+) funds an Export Director + QC Manager as ICC-ES 2037 approaches.</div>
+</div>
+</div>
+<div class="slide-number">4 / 23</div>
+</section>
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 5 — GTM STRESS TEST
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="sstress-test">
+<div class="green-line" style="background: var(--amber);"></div>
+<p class="section-label" style="color: var(--amber);" data-es="Prueba de Estrés del Plan GTM">GTM Stress Test</p>
+<h2 class="slide-title" data-es="¿Y si el plan no sale como se espera?">What if the plan doesn't go as expected?</h2>
+<p class="slide-subtitle" data-es="4 escenarios adversos sobre el modelo base (1,400 culms/ha, 400 MXN/poste). Bajo cada uno medimos: ¿sigue rentable Pacífico? ¿se rompe el plan GTM?">4 adverse scenarios over the base model (1,400 culms/ha, 400 MXN/pole). Under each we measure: is Pacífico still profitable? does the GTM plan break?</p>
+<div class="card-grid card-grid--2">
+<div class="card" style="border-top: 3px solid var(--amber);">
+<div class="card__tag" style="background: #FEF3C7; color: var(--amber);" data-es="Escenario 1 · Shock Biológico">Scenario 1 · Biological Shock</div>
+<div class="card__text" data-es="<strong>Disparador:</strong> enfermedad fúngica documentada en Guadua (Bolaño-Garzón et al., SciELO Colombia) o sequía extrema. Rendimiento -50% año 5+ por 2 ciclos."><strong>Trigger:</strong> documented Guadua fungal disease (Bolaño-Garzón et al., SciELO Colombia) or extreme drought. Yield -50% year 5+ for 2 cycles.</div>
+<div style="margin-top: 10px;">
+<div class="icp-row"><div class="icp-row__label" data-es="Rendimiento">Yield</div><div class="icp-row__value">700 culms/ha</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="ASP">ASP</div><div class="icp-row__value">400 MXN/pole</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ingresos / 110 ha">Revenue / 110 ha</div><div class="icp-row__value">~26M (-51%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ganancia / 110 ha">Profit / 110 ha</div><div class="icp-row__value">~21M (-55%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="¿Aún rentable?">Still profitable?</div><div class="icp-row__value" style="color: var(--green-700); font-weight: 700;">YES</div></div>
+</div>
+<div style="font-size: 0.74rem; color: var(--gray-600); margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--gray-200);" data-es="<strong>Mitigación GTM:</strong> los 5 años de I+D piloto validaron 1,500 plantas sobrevivientes (de 3,000 sembradas) → fenotipo robusto. Diversidad genética + 3 especies en piloto. Ventaja real vs proveedores monoespecie."><strong>GTM mitigation:</strong> 5-yr R&amp;D pilot validated 1,500 surviving plants (of 3,000) → robust phenotype. Genetic diversity + 3 species in pilot. Real edge vs single-species suppliers.</div>
+</div>
+<div class="card" style="border-top: 3px solid var(--amber);">
+<div class="card__tag" style="background: #FEF3C7; color: var(--amber);" data-es="Escenario 2 · Suavizado de Demanda">Scenario 2 · Demand Softening</div>
+<div class="card__text" data-es="<strong>Disparador:</strong> contratos offtake 2029 fallan o anchor accounts no firman. Mercado arquitectónico premium MX se contrae. ASP cae de 400 a 250 MXN. Rendimiento sin cambio."><strong>Trigger:</strong> 2029 offtake contracts fail or anchor accounts don't sign. MX premium architecture market contracts. ASP drops 400 → 250 MXN. Yield unchanged.</div>
+<div style="margin-top: 10px;">
+<div class="icp-row"><div class="icp-row__label" data-es="Rendimiento">Yield</div><div class="icp-row__value">1,400 culms/ha</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="ASP">ASP</div><div class="icp-row__value">250 MXN/pole (-37%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ingresos / 110 ha">Revenue / 110 ha</div><div class="icp-row__value">~32.7M (-37%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ganancia / 110 ha">Profit / 110 ha</div><div class="icp-row__value">~26M (-44%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="¿Aún rentable?">Still profitable?</div><div class="icp-row__value" style="color: var(--green-700); font-weight: 700;">YES</div></div>
+</div>
+<div style="font-size: 0.74rem; color: var(--gray-600); margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--gray-200);" data-es="<strong>Mitigación GTM:</strong> el modelo de canales diversificados reabsorbe producto de menor grado en estacas/biomasa/decorativo + nicho de eco-tourismo. Las personas secundarias absorben volumen incluso si los ICPs A+B fallan."><strong>GTM mitigation:</strong> diversified channel model reabsorbs lower-grade product into stakes/biomass/decorative + eco-tourism niche. Secondary personas absorb volume even if ICPs A+B fail.</div>
+</div>
+<div class="card" style="border-top: 3px solid var(--amber);">
+<div class="card__tag" style="background: #FEF3C7; color: var(--amber);" data-es="Escenario 3 · Retraso de Flujo de Caja">Scenario 3 · Cashflow Delay</div>
+<div class="card__text" data-es="<strong>Disparador:</strong> Ronda 2 (2028) se retrasa 12 meses; clima impide siembra de 15 ha en 2027. Madurez total se desplaza de 2038 a 2040 (+2 años)."><strong>Trigger:</strong> Round 2 (2028) delays 12 months; weather prevents 15 ha planting in 2027. Full maturity shifts from 2038 to 2040 (+2 years).</div>
+<div style="margin-top: 10px;">
+<div class="icp-row"><div class="icp-row__label" data-es="Madurez total">Full maturity</div><div class="icp-row__value">2040 (was 2038)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ingresos perdidos 2026-2040">Cum. revenue lost 2026-2040</div><div class="icp-row__value">~80M MXN</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Punto de equilibrio">Break-even</div><div class="icp-row__value">2035 (was 2033)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="ROI 40 años">40-yr ROI</div><div class="icp-row__value">-12% vs base</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="¿Aún rentable?">Still profitable?</div><div class="icp-row__value" style="color: var(--green-700); font-weight: 700;">YES</div></div>
+</div>
+<div style="font-size: 0.74rem; color: var(--gray-600); margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--gray-200);" data-es="<strong>Mitigación GTM:</strong> apoyo PRONAFOR (CONAFOR PFC: 30% en firma + 20% en preparación + 50% post-supervivencia) cubre hasta 50% del capex de siembra. Tierra propia bajo arrendamiento de 40 años asegura continuidad."><strong>GTM mitigation:</strong> PRONAFOR support (CONAFOR PFC: 30% on signing + 20% on planting prep + 50% post-survival) covers up to 50% of planting capex. Own land under 40-yr lease ensures continuity.</div>
+</div>
+<div class="card" style="border-top: 3px solid #DC2626;">
+<div class="card__tag" style="background: #FEE2E2; color: #DC2626;" data-es="Escenario 4 · Adverso Combinado (worst case)">Scenario 4 · Combined Adverse (worst case)</div>
+<div class="card__text" data-es="<strong>Disparadores simultáneos:</strong> rendimiento -30%, ASP -25%, retraso 1 año. Estrés ortogonal en 3 dimensiones."><strong>Simultaneous triggers:</strong> yield -30%, ASP -25%, 1-year delay. Orthogonal stress on 3 dimensions.</div>
+<div style="margin-top: 10px;">
+<div class="icp-row"><div class="icp-row__label" data-es="Rendimiento">Yield</div><div class="icp-row__value">980 culms/ha (-30%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="ASP">ASP</div><div class="icp-row__value">300 MXN/pole (-25%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ingresos / 110 ha">Revenue / 110 ha</div><div class="icp-row__value">~25M (-52%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ganancia / 110 ha">Profit / 110 ha</div><div class="icp-row__value">~20M (-57%)</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="¿Aún rentable?">Still profitable?</div><div class="icp-row__value" style="color: var(--green-700); font-weight: 700;">YES (~$1.18M USD/yr net)</div></div>
+</div>
+<div style="font-size: 0.74rem; color: var(--gray-600); margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--gray-200);" data-es="<strong>Resultado:</strong> aún rentable (~$1.18M USD/yr ganancia neta), payback se desplaza de 7 a 9 años post-inversión. La tesis no se rompe."><strong>Result:</strong> still profitable (~$1.18M USD/yr net), payback shifts from 7 to 9 years post-investment. Thesis does not break.</div>
+</div>
+</div>
+<div class="insight-box" data-es="<strong>Conclusión del estrés:</strong> incluso bajo 3 dimensiones simultáneas de estrés, el modelo es rentable. La tesis se rompería solo si <em>simultáneamente</em>: (a) las 3 especies del piloto mueren, (b) los 5 canales se cierran, (c) Ronda 2 falla por completo. Probabilidad conjunta &lt; 1%. El plan GTM tiene resiliencia incorporada por diseño: anchor offtakes 2029 + diversificación de canales + apoyo CONAFOR + 5 años I+D ya validado."><strong>Stress conclusion:</strong> even under 3 simultaneous stress dimensions, the model is profitable. The thesis breaks only if <em>simultaneously</em>: (a) all 3 pilot species die, (b) all 5 channels close, (c) Round 2 fails entirely. Joint probability &lt; 1%. The GTM plan has resilience by design: 2029 anchor offtakes + channel diversification + CONAFOR support + 5 years of validated R&amp;D.</div>
+<div class="slide-number">5 / 23</div>
+</section>
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 6 — WHY NOW (INTEROCEANIC CORRIDOR)
      ═══════════════════════════════════════════════════ -->
 <section class="slide slide--green-dark slide--bg-photo" id="s4">
 <div class="bg-photo bg-photo--dark">
@@ -1604,7 +1708,7 @@ body {
 </div>
 <p style="font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 16px;">Sources: <a href="https://www.gob.mx/ciit" style="color: rgba(255,255,255,0.6); text-decoration: underline;" target="_blank" rel="noopener">Corredor Interoceánico del Istmo de Tehuantepec (CIIT)</a> · <a href="https://pancanal.com/en/" style="color: rgba(255,255,255,0.6); text-decoration: underline;" target="_blank" rel="noopener">Panama Canal Authority (ACP)</a> · <a href="https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement" style="color: rgba(255,255,255,0.6); text-decoration: underline;" target="_blank" rel="noopener">USTR: USMCA</a></p>
 </div>
-<div class="slide-number">4 / 20</div>
+<div class="slide-number">6 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE X — CANDELARIA CONTEXT (Community Opportunity)
@@ -1695,7 +1799,7 @@ body {
 <div class="side-image">
 <img alt="Bamboo construction" src="https://upload.wikimedia.org/wikipedia/commons/b/bd/Construction_maison_bambou.jpg"/>
 </div>
-<div class="slide-number">5 / 20</div>
+<div class="slide-number">8 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 6 — THE PROBLEM
@@ -1727,7 +1831,7 @@ body {
 <div class="card__text" data-es="Los constructores de EE.UU. compran de China/Vietnam. 30-45 días de envío, incertidumbre arancelaria, preocupaciones ESG. Buscan alternativas nearshore.">US builders source from China/Vietnam. 30-45 day shipping, tariff uncertainty, ESG concerns. They want nearshore alternatives.</div>
 </div>
 </div>
-<div class="slide-number">6 / 20</div>
+<div class="slide-number">9 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 7 — COMPETITIVE LANDSCAPE
@@ -1781,7 +1885,7 @@ body {
 </div>
 </div>
 <p style="font-size: 0.7rem; color: var(--gray-400); margin-top: 16px;">Sources: <a href="https://www.tosepanbambu.com" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Tosepan Bambú</a> · <a href="https://www.vw.com.mx/es/experiencia/way-to-zero/por-amor-a-mexico/proyecto-bambu.html" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">VW Proyecto Bambú</a> · <a href="https://www.guaduaselecto.com.mx/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Guadua Selecto</a> · <a href="https://www.milenio.com/estados/puebla-all-in-bamboo-produce-bambu-pandas-chapultepec" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Milenio: All In Bamboo</a> · <a href="https://www.economia.gob.mx/datamexico/en/profile/product/bamboo" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">DataMéxico</a></p>
-<div class="slide-number">7 / 20</div>
+<div class="slide-number">10 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 8 — OUR SOLUTION
@@ -1826,7 +1930,7 @@ body {
 </div>
 </div>
 <p style="font-size: 0.7rem; color: var(--gray-400); margin-top: 16px;">Sources: <a href="https://hts.usitc.gov/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">USITC Harmonized Tariff Schedule</a> · <a href="https://ustr.gov/trade-agreements/free-trade-agreements/united-states-mexico-canada-agreement" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">USTR: USMCA Agreement</a></p>
-<div class="slide-number">8 / 20</div>
+<div class="slide-number">11 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 9 — WHAT WE HAVE TODAY (PROOF OF CONCEPT)
@@ -1875,7 +1979,7 @@ body {
 </div>
 </div>
 </div>
-<div class="slide-number">9 / 20</div>
+<div class="slide-number">12 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 10 — BUSINESS MODEL (5 STREAMS × ROADMAP)
@@ -1941,7 +2045,7 @@ body {
 </div>
 </div>
 <p style="font-size: 0.7rem; color: var(--gray-400); margin-top: 10px;">Sources: Domestic pole price (400 MXN FOB): internal model conservative base, calibrated against Mexican design studio pricing · USMCA duty-free entry: <a href="https://hts.usitc.gov/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">USITC HTS 1401.10 / 4409.21</a> · US bamboo industrial market $3.6B: <a href="https://www.grandviewresearch.com/industry-analysis/bamboos-market" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Grand View Research 2024</a> · ICC-ES AC162: <a href="https://icc-es.org/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">ICC Evaluation Service</a> · 5-year agronomic R&amp;D base: Pacífico Bambu El Azulillo pilot (April 2021 – April 2026, 6 ha, 3,000 seedlings → 1,500 validated) · 10-year construction track record: Diego's bamboo construction company (Oaxaca builder + architect network).</p>
-<div class="slide-number">10 / 20</div>
+<div class="slide-number">13 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 11 — UNIT ECONOMICS (40-YEAR LIFETIME)
@@ -1976,7 +2080,7 @@ body {
 <div class="unit-econ__bottom__cell"><div class="num">~46M</div><div class="lbl" data-es="Ganancia a 110 ha en madurez (110 × 422K)">Profit @ 110 ha at maturity (110 × 422K)</div></div>
 </div>
 <p class="unit-econ__killer" data-es="Cada hectárea genera ~422K MXN netos al año en madurez, y ~14.5M MXN durante el arrendamiento de 40 años. Estamos sembrando 110.">Each hectare returns ~422K MXN net per year at maturity, and ~14.5M MXN over its 40-year lease. We're planting 110 of them.</p>
-<div class="slide-number">11 / 20</div>
+<div class="slide-number">14 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 12 — AGROTECH LAYER (DATA-DRIVEN AGRONOMY)
@@ -2026,47 +2130,10 @@ body {
 <div class="agrotech-commit fade-in">
 <p class="agrotech-commit__statement" data-es="Despliegue en dos fases junto con el crecimiento de la plantación: piloto en 2026 con la ronda Bridge, red completa en 2031 con la Ronda 2. Costos de inversión y operación pendientes de validación con proveedores.">Deployed in two phases alongside plantation growth: pilot in 2026 with the Bridge round, full network in 2031 with Round 2. Capex and operating costs pending vendor validation.</p>
 </div>
-<div class="slide-number">12 / 20</div>
+<div class="slide-number">15 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
-     SLIDE 13 — THE TEAM
-     ═══════════════════════════════════════════════════ -->
-<section class="slide slide--white" id="s10">
-<div class="green-line"></div>
-<p class="section-label" data-es="El Equipo">The Team</p>
-<h2 class="slide-title" data-es="Equipo Directivo">Management Team</h2>
-<p class="slide-subtitle" data-es="Experiencia en tierra · Construcción de bambú · Capacidad de crecimiento.">Land expertise · Bamboo construction · Growth capability.</p>
-<div class="fade-in stagger" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;">
-<div class="card card--highlight team-square" style="--i:0;">
-<div class="team-square__avatar team-avatar team-avatar--green">D</div>
-<div class="team-square__name">Juan Diego Alvidrez</div>
-<div class="team-square__role" data-es="CEO y Co-Fundador, Pacífico Bambú">CEO &amp; Co-Founder, Pacífico Bambu</div>
-<div class="team-square__desc" data-es="Dueño y socio de una empresa de construcción en la costa con más de 15 años de experiencia, especializada en bambú. Egresado de la Bamboo U Academy (Bali, en línea). Red amplia de relaciones con clientes, constructores, empresas de construcción y desarrolladores. Propietario de un hotel boutique en la costa de Zipolite y desarrollador reconocido en el sector de la construcción.">Owner &amp; partner of a coastal construction company, 15+ years of experience specializing in bamboo. Graduate of the Bamboo U Academy (Bali, online). Deep network across clients, builders, construction companies, and developers. Owner of a boutique hotel on the Zipolite coast and a recognized developer in the regional construction scene.</div>
-</div>
-<div class="card card--highlight team-square" style="--i:1;">
-<div class="team-square__avatar team-avatar team-avatar--green">J</div>
-<div class="team-square__name">Juan Carlos Hernandez</div>
-<div class="team-square__role" data-es="Co-Fundador y Operaciones de Tierra, Pacífico Bambú">Co-Founder &amp; Land Operations, Pacífico Bambu</div>
-<div class="team-square__desc" data-es="Hijo del lugar, tercera generación de caficultores, dueño de las tierras. Dirige un negocio regional de venta de materiales de construcción (piedra ornamental local) a lo largo de la costa de Oaxaca. Lidera todas las operaciones de campo, siembra y cosecha. Tierra asegurada por arrendamiento de 40 años.">Local-born, third-generation coffee farmer, owner of the land. Runs a regional construction-materials business (specialty local stone) across the Oaxacan coast. Leads all field operations, planting, and harvest. Land secured through a 40-year lease.</div>
-</div>
-<div class="card card--highlight team-square" style="--i:2;">
-<div class="team-square__avatar team-avatar team-avatar--green">O</div>
-<div class="team-square__name">Ofir Perez Weinberg</div>
-<div class="team-square__role" data-es="Socio Director, COO y Ecosistema, Pacífico Bambú">Managing Partner, COO &amp; Ecosystem, Pacífico Bambu</div>
-<div class="team-square__desc" data-es="15 años de experiencia en marketing y ventas internacionales, trabajando con marcas locales y globales. Emprendedor, especialista en marketing y desarrollo de negocios. Hasta hace poco, socio y Head of Growth en Hat Finance, una startup de seguridad en el sector cripto: 4M USD recaudados y un equipo internacional de 13 personas bajo su gestión.">15 years of international marketing and sales experience, working with local and global brands. Entrepreneur, marketer, and business-development operator. Most recently partner &amp; Head of Growth at Hat Finance, a crypto-security startup: $4M raised and a 13-person international team under his management.</div>
-<a href="https://www.linkedin.com/in/perezofir/" target="_blank" rel="noopener" class="team-square__linkedin" aria-label="LinkedIn: Ofir Perez"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
-</div>
-<div class="card card--highlight team-square" style="--i:3;">
-<div class="team-square__avatar team-avatar team-avatar--muted">R</div>
-<div class="team-square__name">Rick Coaster</div>
-<div class="team-square__role" data-es="Socio Fundador de Capital · Primer Inversionista Ángel">Founding Capital Partner · First Angel Investor</div>
-<div class="team-square__desc" data-es="Contribuyente fundador de capital con 20% de participación. <strong>Primer inversionista ángel:</strong> convicción desde el día uno, skin in the game antes de que entren inversionistas externos. <em>Plan de escalamiento:</em> el flujo operativo (2034+) financia un Director de Exportación y un Gerente de QC al acercarse ICC-ES 2037.">Founding cash contributor with a 20% equity stake. <strong>First angel investor:</strong> conviction from day one, skin in the game before external investors join. <em>Scaling plan:</em> operating cash flow (2034+) funds an Export Director + QC Manager as ICC-ES 2037 approaches.</div>
-</div>
-</div>
-<div class="slide-number">13 / 20</div>
-</section>
-<!-- ═══════════════════════════════════════════════════
-     SLIDE 11 — FINANCIAL PROJECTIONS
+     SLIDE 16 — FINANCIAL PROJECTIONS
      ═══════════════════════════════════════════════════ -->
 <section class="slide slide--white" id="s11">
 <div class="green-line"></div>
@@ -2105,7 +2172,7 @@ body {
 </div>
 </div>
 </div>
-<div class="slide-number">14 / 20</div>
+<div class="slide-number">16 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE X — EXPENSE BREAKDOWN & MILESTONE-BASED INVESTMENT
@@ -2277,7 +2344,7 @@ body {
 <strong>CONSERVATIVE BASE: 1,400 poles/ha</strong> · 400 MXN/pole · 15% waste · 110 ha (50 own + 60 leased). Only yield per hectare varies across scenarios.
   </div>
 <p style="font-size: 0.7rem; color: var(--gray-400); margin-top: 16px;">Yield benchmark: peer-reviewed Colombian Guadua field studies: <a href="https://link.springer.com/article/10.1007/s10342-006-0129-3" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">European Journal of Forest Research</a> · <a href="https://www.guaduabamboo.com/cultivation/" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Guadua Bamboo cultivation</a></p>
-<div class="slide-number">15 / 20</div>
+<div class="slide-number">18 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 13 — THE ASK
@@ -2355,7 +2422,7 @@ body {
 </div>
 </div>
 </div>
-<div class="slide-number">16 / 20</div>
+<div class="slide-number">19 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 14 — NEXT RAISE
@@ -2396,7 +2463,7 @@ body {
 </div>
 </div>
 </div>
-<div class="slide-number">17 / 20</div>
+<div class="slide-number">20 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE X — EXPORT ROADMAP: REQUIRED vs STRATEGIC
@@ -2541,7 +2608,7 @@ body {
 <div class="milestone-card"><div class="milestone-dot milestone-dot--future"></div><div><div class="milestone-title" data-es="2033-2038: Madurez Total">2033-2038: Full Maturity</div><div class="milestone-desc" data-es="Las 110 ha en producción. Ingresos escalan 11M → 53M MXN (caso base). Bodega grande 2034. ICC-ES 2037 (1 año antes de madurez total).">All 110 ha producing. Revenue scales 11M → 53M MXN (base case). Big bodega 2034. ICC-ES 2037 (1yr before full maturity).</div></div></div>
 </div>
 </div>
-<div class="slide-number">18 / 20</div>
+<div class="slide-number">22 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
      SLIDE 16 — VISION / CLOSE
@@ -2574,7 +2641,7 @@ body {
 </div>
 </div>
 </div>
-<div class="slide-number">19 / 20</div>
+<div class="slide-number">23 / 23</div>
 </section>
 <!-- ═══════════════════════════════════════════════════
    JAVASCRIPT — Fade-in on scroll
