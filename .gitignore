@@ -16,3 +16,4 @@ generate_pitch_deck.py
 *.docx
 scripts/
 docs/ecosystem.html
+docs/study/
