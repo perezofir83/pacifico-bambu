@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bambu 2037</title>
+<meta name="description" content=""/>
+<meta name="robots" content="noindex, nofollow"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&amp;display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --green-900:#1B4332; --green-800:#2D6A4F; --green-700:#40916C; --green-600:#52B788;
+  --green-500:#74C69D; --green-400:#95D5B2; --green-300:#B7E4C7; --green-200:#D8F3DC;
+  --green-100:#F0FFF4; --green-50:#F7FDF9;
+  --gray-900:#111827; --gray-800:#1F2937; --gray-700:#374151; --gray-600:#4B5563;
+  --gray-500:#6B7280; --gray-400:#9CA3AF; --gray-300:#D1D5DB; --gray-200:#E5E7EB;
+  --gray-100:#F3F4F6; --gray-50:#F9FAFB;
+  --amber:#D97706; --amber-light:#FEF3C7;
+  --blue-soft:#3B82F6; --blue-light:#DBEAFE;
+  --bg-primary:#FAFDF8; --bg-card:#FFFFFF;
+  --shadow-md:0 4px 12px rgba(0,0,0,0.06); --shadow-lg:0 8px 30px rgba(0,0,0,0.08);
+  --shadow-green:0 4px 20px rgba(45,106,79,0.1);
+  --font-heading:'Space Grotesk', system-ui, sans-serif;
+  --font-body:'DM Sans', system-ui, sans-serif;
+  --slide-padding:64px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 15.5px; scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+body { font-family: var(--font-body); color: var(--gray-800); background: var(--bg-primary); -webkit-font-smoothing: antialiased; line-height: 1.55; }
+.slide { width: 100vw; min-height: 100vh; scroll-snap-align: start; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: center; padding: var(--slide-padding); }
+.slide--white { background: var(--bg-primary); }
+.slide--green-light { background: var(--green-100); }
+.slide--green-dark { background: var(--green-900); color: #fff; }
+.slide--amber-tint { background: #FFFBEB; }
+.green-line { width: 48px; height: 3px; background: var(--green-700); margin-bottom: 16px; border-radius: 2px; }
+.section-label { font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green-700); margin-bottom: 8px; }
+.slide--green-dark .section-label { color: var(--green-400); }
+.slide-title { font-family: var(--font-heading); font-size: clamp(1.5rem, 2.8vw, 2.2rem); font-weight: 700; line-height: 1.15; color: var(--gray-900); margin-bottom: 10px; letter-spacing: -0.02em; }
+.slide--green-dark .slide-title { color: #fff; }
+.slide-subtitle { font-size: 0.92rem; color: var(--gray-500); max-width: 940px; line-height: 1.55; margin-bottom: 22px; }
+.slide--green-dark .slide-subtitle { color: rgba(255,255,255,0.6); }
+.green-highlight { color: var(--green-700); }
+.slide--green-dark .green-highlight { color: var(--green-400); }
+.amber-highlight { color: var(--amber); }
+
+.card-grid { display: grid; gap: 14px; }
+.card-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.card-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid--4 { grid-template-columns: repeat(4, 1fr); }
+.card { background: var(--bg-card); border: 1px solid var(--gray-200); border-radius: 12px; padding: 18px; transition: box-shadow 0.3s ease; }
+.card:hover { box-shadow: var(--shadow-lg); }
+.card--green { background: var(--green-50); border-color: var(--green-200); }
+.card--amber { background: var(--amber-light); border-color: #FCD34D; }
+.card--highlight { border-color: var(--green-600); box-shadow: var(--shadow-green); }
+.card__tag { display: inline-block; font-family: var(--font-heading); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green-700); background: var(--green-100); padding: 3px 9px; border-radius: 100px; margin-bottom: 10px; }
+.card__label { font-family: var(--font-heading); font-size: 0.92rem; font-weight: 600; color: var(--gray-800); margin-bottom: 6px; }
+.card__text { font-size: 0.82rem; color: var(--gray-600); line-height: 1.55; }
+
+.insight-box { background: var(--green-50); border: 1px solid var(--green-200); border-radius: 10px; padding: 14px 18px; margin-top: 18px; font-size: 0.85rem; color: var(--gray-700); }
+.insight-box strong { color: var(--green-800); }
+.amber-box { background: var(--amber-light); border: 1px solid #FCD34D; border-radius: 10px; padding: 14px 18px; margin-top: 18px; font-size: 0.85rem; color: var(--gray-800); }
+.amber-box strong { color: var(--amber); }
+
+.timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 12px; border-radius: 12px; overflow: hidden; border: 1px solid var(--gray-200); }
+.timeline__phase { padding: 18px 22px; }
+.timeline__phase--1 { background: var(--green-100); }
+.timeline__phase--2 { background: var(--green-200); }
+.timeline__phase--3 { background: var(--green-300); }
+.timeline__years { font-family: var(--font-heading); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green-800); margin-bottom: 6px; }
+.timeline__title { font-family: var(--font-heading); font-size: 1rem; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+.timeline__desc { font-size: 0.78rem; color: var(--gray-700); line-height: 1.5; }
+
+/* ICP Deep Dive */
+.icp-card { background: var(--bg-card); border: 1.5px solid var(--green-600); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-green); }
+.icp-card__header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+.icp-card__id { font-family: var(--font-heading); font-size: 1.6rem; font-weight: 700; color: var(--green-700); }
+.icp-card__title { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; color: var(--gray-900); }
+.icp-card__profile { font-size: 0.82rem; color: var(--gray-600); margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--gray-200); line-height: 1.55; }
+.icp-row { display: grid; grid-template-columns: 130px 1fr; gap: 8px; padding: 6px 0; font-size: 0.78rem; border-bottom: 1px dashed var(--gray-100); }
+.icp-row:last-of-type { border-bottom: none; }
+.icp-row__label { color: var(--gray-500); font-weight: 600; font-family: var(--font-heading); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.icp-row__value { color: var(--gray-800); line-height: 1.5; }
+
+/* Persona compact */
+.persona { background: var(--bg-card); border: 1px solid var(--gray-200); border-radius: 10px; padding: 14px; }
+.persona__id { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--green-700); }
+.persona__title { font-family: var(--font-heading); font-size: 0.88rem; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+.persona__row { display: flex; justify-content: space-between; gap: 8px; font-size: 0.74rem; padding: 3px 0; color: var(--gray-700); border-bottom: 1px dashed var(--gray-100); }
+.persona__row:last-child { border-bottom: none; }
+.persona__row span:first-child { color: var(--gray-500); }
+.persona__row span:last-child { font-weight: 600; text-align: right; }
+
+/* Channel × persona fit matrix */
+.fit-matrix { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 14px; }
+.fit-matrix th, .fit-matrix td { border-bottom: 1px solid var(--gray-200); padding: 10px 8px; vertical-align: middle; }
+.fit-matrix thead th { background: var(--green-700); color: #fff; font-family: var(--font-heading); font-weight: 600; font-size: 0.66rem; letter-spacing: 0.04em; text-transform: uppercase; text-align: center; line-height: 1.25; }
+.fit-matrix thead th:first-child { text-align: left; }
+.fit-matrix tbody tr:nth-child(even) td { background: var(--gray-50); }
+.fit-matrix .channel-cell { font-family: var(--font-heading); font-weight: 700; color: var(--gray-900); font-size: 0.82rem; }
+.fit-matrix .channel-meta { display: block; font-family: var(--font-body); font-weight: 400; font-size: 0.66rem; color: var(--gray-500); margin-top: 2px; letter-spacing: 0; text-transform: none; }
+.fit-matrix .dot { display: inline-block; width: 14px; height: 14px; border-radius: 50%; line-height: 1; }
+.fit-matrix .dot--primary { background: var(--green-700); }
+.fit-matrix .dot--secondary { background: transparent; border: 1.5px solid var(--green-600); }
+.fit-matrix td.cell { text-align: center; }
+.fit-matrix .legend { font-size: 0.7rem; color: var(--gray-600); margin-top: 10px; display: flex; gap: 20px; align-items: center; }
+.fit-matrix .legend .dot { vertical-align: middle; margin-right: 6px; }
+
+/* All-personas summary table */
+.persona-summary { width: 100%; border-collapse: collapse; font-size: 0.76rem; margin-top: 14px; }
+.persona-summary th, .persona-summary td { padding: 9px 10px; border-bottom: 1px solid var(--gray-200); text-align: left; vertical-align: top; }
+.persona-summary thead th { background: var(--green-700); color: #fff; font-family: var(--font-heading); font-weight: 600; font-size: 0.64rem; letter-spacing: 0.05em; text-transform: uppercase; }
+.persona-summary tbody tr:nth-child(even) td { background: var(--gray-50); }
+.persona-summary tbody tr.primary td { background: var(--green-50); }
+.persona-summary tbody tr.primary td:first-child { border-left: 3px solid var(--green-700); }
+.persona-summary .id-cell { font-family: var(--font-heading); font-weight: 700; color: var(--green-700); font-size: 0.95rem; width: 36px; text-align: center; }
+.persona-summary .name-cell { font-family: var(--font-heading); font-weight: 700; color: var(--gray-900); font-size: 0.82rem; }
+.persona-summary .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Current focus pill */
+.focus-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--green-700); color: #fff; padding: 6px 12px; border-radius: 100px; font-family: var(--font-heading); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+.focus-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--green-300); box-shadow: 0 0 0 3px rgba(149,213,178,0.35); }
+.focus-line { font-size: 0.86rem; color: var(--gray-700); margin-bottom: 14px; max-width: 880px; line-height: 1.55; }
+.focus-line strong { color: var(--green-800); }
+
+/* Slim era-strip (replaces 3-phase timeline grid on slide 3) */
+.era-strip { display: flex; width: 100%; height: 56px; border-radius: 10px; overflow: hidden; border: 1px solid var(--gray-200); margin-top: 12px; }
+.era-strip__band { flex: 1; padding: 10px 14px; display: flex; flex-direction: column; justify-content: center; }
+.era-strip__band--1 { background: var(--green-100); flex: 3; }
+.era-strip__band--2 { background: var(--green-200); flex: 8; }
+.era-strip__band--3 { background: var(--green-300); flex: 4; }
+.era-strip__years { font-family: var(--font-heading); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--green-800); }
+.era-strip__name { font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: var(--gray-900); }
+
+/* Funnel */
+.funnel { max-width: 760px; margin: 12px auto 0; }
+.funnel__stage { background: var(--bg-card); border: 1px solid var(--green-300); margin: 0 auto 4px; padding: 12px 18px; position: relative; transition: border-color 0.2s; }
+.funnel__stage:hover { border-color: var(--green-700); }
+.funnel__row { display: grid; grid-template-columns: 60px 1fr 100px 90px 100px; gap: 12px; align-items: center; }
+.funnel__num { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: var(--green-700); }
+.funnel__name { font-family: var(--font-heading); font-weight: 700; color: var(--gray-900); font-size: 0.9rem; }
+.funnel__desc { font-size: 0.75rem; color: var(--gray-600); margin-top: 2px; }
+.funnel__metric { font-size: 0.72rem; color: var(--gray-700); text-align: right; }
+.funnel__metric strong { display: block; color: var(--green-700); font-family: var(--font-heading); font-size: 0.95rem; }
+.funnel__owner { font-family: var(--font-heading); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 8px; border-radius: 4px; text-align: center; }
+.funnel__owner--ofir { background: var(--green-100); color: var(--green-800); }
+.funnel__owner--diego { background: var(--amber-light); color: var(--amber); }
+.funnel__owner--both { background: var(--blue-light); color: var(--blue-soft); }
+.funnel__stage--1 { width: 100%; }
+.funnel__stage--2 { width: 88%; }
+.funnel__stage--3 { width: 70%; }
+.funnel__stage--4 { width: 52%; }
+.funnel__stage--5 { width: 38%; background: var(--green-700); color: #fff; border-color: var(--green-700); }
+.funnel__stage--5 .funnel__num,
+.funnel__stage--5 .funnel__name,
+.funnel__stage--5 .funnel__metric strong { color: #fff; }
+.funnel__stage--5 .funnel__desc,
+.funnel__stage--5 .funnel__metric { color: rgba(255,255,255,0.85); }
+
+.year-block { background: var(--bg-card); border: 1px solid var(--gray-200); border-radius: 10px; padding: 14px 18px; margin-bottom: 10px; }
+.year-block__year { font-family: var(--font-heading); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--green-700); margin-bottom: 4px; }
+.year-block__title { font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700; color: var(--gray-900); margin-bottom: 6px; }
+.year-block__bullets { font-size: 0.8rem; color: var(--gray-700); line-height: 1.6; }
+.year-block__bullets li { margin-left: 18px; padding-left: 2px; }
+
+table.gtm-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+table.gtm-table th { background: var(--green-700); color: #fff; padding: 8px 12px; text-align: left; font-family: var(--font-heading); font-weight: 600; font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; }
+table.gtm-table td { padding: 8px 12px; border-bottom: 1px solid var(--gray-200); vertical-align: top; }
+table.gtm-table tr:nth-child(even) td { background: var(--gray-50); }
+table.gtm-table .num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+table.gtm-table .center { text-align: center; }
+.stars { color: var(--amber); letter-spacing: 1px; font-size: 0.85rem; }
+
+.budget-grid { display: grid; grid-template-columns: 1.5fr repeat(7, 1fr); gap: 0; font-size: 0.7rem; border: 1px solid var(--gray-200); border-radius: 8px; overflow: hidden; }
+.budget-grid > div { padding: 7px 10px; border-bottom: 1px solid var(--gray-100); border-right: 1px solid var(--gray-100); }
+.budget-grid .header { background: var(--green-700); color: #fff; font-family: var(--font-heading); font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.05em; }
+.budget-grid .label { background: var(--gray-50); color: var(--gray-700); }
+.budget-grid .num { text-align: right; font-variant-numeric: tabular-nums; }
+.budget-grid .total { background: var(--green-100); font-weight: 700; color: var(--green-900); }
+
+.checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 22px; font-size: 0.78rem; color: var(--gray-700); margin-top: 8px; }
+.checklist__item::before { content: "☐ "; color: var(--amber); margin-right: 4px; font-weight: 700; }
+
+.kpi-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 14px; }
+.kpi { background: var(--green-50); border: 1px solid var(--green-200); border-radius: 10px; padding: 14px; text-align: center; }
+.kpi__num { font-family: var(--font-heading); font-size: 1.5rem; font-weight: 700; color: var(--green-700); line-height: 1.1; }
+.kpi__lbl { font-size: 0.72rem; color: var(--gray-600); margin-top: 4px; line-height: 1.4; }
+
+.slide-number { position: absolute; bottom: 20px; right: 28px; font-family: var(--font-heading); font-size: 0.7rem; color: var(--gray-400); letter-spacing: 0.1em; }
+.slide--green-dark .slide-number { color: rgba(255,255,255,0.4); }
+
+.confidential-tag { position: fixed; top: 14px; left: 14px; z-index: 9998; background: var(--amber); color: #fff; padding: 4px 10px; border-radius: 4px; font-family: var(--font-heading); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+
+#lang-toggle { position: fixed; top: 14px; right: 14px; z-index: 9999; background: #166534; color: #fff; border: none; padding: 7px 13px; border-radius: 20px; font-family: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); letter-spacing: 0.05em; }
+
+@media (max-width: 1100px) {
+  :root { --slide-padding: 32px; }
+  .card-grid--3, .card-grid--4 { grid-template-columns: 1fr; }
+  .timeline { grid-template-columns: 1fr; }
+  .budget-grid { font-size: 0.6rem; }
+  .checklist { grid-template-columns: 1fr; }
+  .kpi-row { grid-template-columns: 1fr; }
+  .funnel__stage { width: 100% !important; }
+  .funnel__row { grid-template-columns: 40px 1fr; gap: 8px; }
+  .funnel__metric, .funnel__owner { display: none; }
+  .fit-matrix { font-size: 0.66rem; }
+  .fit-matrix th, .fit-matrix td { padding: 6px 4px; }
+  .persona-summary { font-size: 0.66rem; }
+  .persona-summary th, .persona-summary td { padding: 6px 5px; }
+  .era-strip { height: auto; flex-direction: column; }
+}
+
+@media print {
+  html { font-size: 12px; scroll-snap-type: none; }
+  body { background: #fff; }
+  #lang-toggle, .confidential-tag { display: none !important; }
+  .slide { width: 100%; min-height: auto; height: auto; padding: 28px 36px; page-break-after: always; break-after: page; scroll-snap-align: none; display: block; }
+  .slide:last-of-type { page-break-after: auto; }
+  .slide--green-dark { background: var(--green-900) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide--green-light { background: var(--green-100) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide--amber-tint { background: #FFFBEB !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .card, .icp-card, .persona, .year-block, .insight-box, .amber-box, .kpi { box-shadow: none !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .fit-matrix thead th, .persona-summary thead th, table.gtm-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .slide-number { color: var(--gray-500) !important; }
+  @page { size: letter landscape; margin: 0; }
+}
+/* Password gate */
+.gate { position: fixed; inset: 0; background: var(--green-900); z-index: 99999; display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 20px; }
+.gate__inner { max-width: 360px; width: 100%; text-align: center; }
+.gate__mark { font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.25em; text-transform: uppercase; color: var(--green-400); margin-bottom: 18px; }
+.gate__title { font-family: var(--font-heading); font-size: 2.2rem; font-weight: 700; color: #fff; letter-spacing: -0.02em; margin-bottom: 6px; }
+.gate__hint { font-size: 0.85rem; color: rgba(255,255,255,0.55); margin-bottom: 26px; }
+.gate__form { display: flex; gap: 8px; }
+.gate__input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); color: #fff; padding: 12px 14px; border-radius: 8px; font-family: var(--font-body); font-size: 0.95rem; outline: none; }
+.gate__input:focus { border-color: var(--green-400); background: rgba(255,255,255,0.12); }
+.gate__input::placeholder { color: rgba(255,255,255,0.4); }
+.gate__btn { background: var(--green-400); color: var(--green-900); border: none; padding: 12px 20px; border-radius: 8px; font-family: var(--font-heading); font-weight: 700; font-size: 0.9rem; cursor: pointer; letter-spacing: 0.02em; }
+.gate__btn:hover { background: var(--green-300); }
+.gate__error { color: #FCA5A5; font-size: 0.78rem; margin-top: 10px; min-height: 1em; }
+body.locked { overflow: hidden; }
+body.locked > *:not(.gate) { visibility: hidden; }
+@media print { .gate { display: none !important; } body.locked > *:not(.gate) { visibility: visible !important; } }
+</style>
+</head>
+<body class="locked">
+<div class="gate" id="gate">
+<div class="gate__inner">
+<div class="gate__mark">Bambu</div>
+<h1 class="gate__title">2037</h1>
+<p class="gate__hint">Access code required.</p>
+<form class="gate__form" id="gateForm" autocomplete="off">
+<input class="gate__input" id="gateInput" type="password" placeholder="Code" autofocus aria-label="Access code"/>
+<button class="gate__btn" type="submit">Enter</button>
+</form>
+<div class="gate__error" id="gateError"></div>
+</div>
+</div>
+<script>
+(function(){
+  const HASH = '84dbaa1800fb6e208c16d6e07a084beae40a2ed3e2a64965736722984f06fa52';
+  const form = document.getElementById('gateForm');
+  const input = document.getElementById('gateInput');
+  const err = document.getElementById('gateError');
+  const gate = document.getElementById('gate');
+  async function sha256(s){
+    const buf = new TextEncoder().encode(s);
+    const h = await crypto.subtle.digest('SHA-256', buf);
+    return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function unlock(){
+    document.body.classList.remove('locked');
+    gate.style.display = 'none';
+    try { sessionStorage.setItem('b2037', '1'); } catch(e) {}
+  }
+  try { if (sessionStorage.getItem('b2037') === '1') unlock(); } catch(e) {}
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    err.textContent = '';
+    const v = input.value.trim().toLowerCase();
+    if (!v) return;
+    const h = await sha256(v);
+    if (h === HASH) { unlock(); }
+    else { err.textContent = 'Incorrect code.'; input.value = ''; input.focus(); }
+  });
+})();
+</script>
+<div class="confidential-tag">Internal — Strategic</div>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 1 — COVER
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--green-dark" id="s1">
+<div class="green-line" style="background: var(--green-400);"></div>
+<p class="section-label" data-es="Plan Go-To-Market 2026-2040">Go-To-Market Plan 2026-2040</p>
+<h1 class="slide-title" style="font-size: clamp(2.4rem, 5vw, 4rem); max-width: 900px;" data-es="Local. Nacional. Exportación.">Local. National. Export.</h1>
+<p class="slide-subtitle" style="font-size: 1.1rem; max-width: 780px;" data-es="Cómo Pacífico Bambu llega a 50,000 postes/año en México antes de 2036, y a la exportación a EE.UU. después.">How Pacífico Bambu reaches 50,000 poles/year in Mexico by 2036, and US export after.</p>
+<div class="card-grid card-grid--3" style="max-width: 980px; margin-top: 24px;">
+<div class="card" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12);">
+<div style="color: var(--green-400); font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;" data-es="Fase 1 · 2026-2028">Phase 1 · 2026-2028</div>
+<div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: #fff; margin: 8px 0;" data-es="Local">Local</div>
+<div style="font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.55;" data-es="Construir confianza trabajando con proveedores en la costa, entrega rápida, inventario listo, y ventas en la costa.">Build trust by working with coastal suppliers, fast delivery, ready inventory, and selling on the coast.</div>
+</div>
+<div class="card" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12);">
+<div style="color: var(--green-400); font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;" data-es="Fase 2 · 2029-2036">Phase 2 · 2029-2036</div>
+<div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: #fff; margin: 8px 0;" data-es="Nacional">National</div>
+<div style="font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.55;" data-es="Firmar contratos offtake en 2029 a precio fijo + cláusula de Índice de Precios al Consumidor. Cosecha cumple 2031-2036.">Sign 2029 offtakes at locked price + Consumer Price Index clause. Harvest delivers 2031-2036.</div>
+</div>
+<div class="card" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12);">
+<div style="color: var(--green-400); font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;" data-es="Fase 3 · 2037+">Phase 3 · 2037+</div>
+<div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 700; color: #fff; margin: 8px 0;" data-es="Exportación">Export</div>
+<div style="font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.55;" data-es="ICC-ES en 2037. Primer contenedor a EE.UU. con relaciones ya cultivadas desde 2030.">ICC-ES in 2037. First US container with relationships already built since 2030.</div>
+</div>
+</div>
+<p style="font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 32px;">Pacífico Bambu · El Azulillo, Candelaria, Oaxaca · Internal strategy doc · v3 May 2026</p>
+<div class="slide-number">1 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 2 — THE THESIS
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s2">
+<div class="green-line"></div>
+<p class="section-label" data-es="La Tesis">The Thesis</p>
+<h2 class="slide-title" data-es="México compra la base. Exportación es upside.">Mexico buys the base. Export is upside.</h2>
+<p class="slide-subtitle" data-es="Demanda mexicana ~217K postes/año, fragmentada y mal abastecida — ahí está nuestro lugar. Exportación EE.UU. deja de ser un requisito y se vuelve el siguiente paso.">Mexican demand ~217K poles/yr, split up and badly supplied — that's our spot. US export stops being a must-have and becomes the next step.</p>
+<div class="card-grid card-grid--3">
+<div class="card card--green">
+<div class="card__tag" data-es="El Problema">The Problem</div>
+<div class="card__text" data-es="El mercado existe pero está fragmentado. Hay varios productores con hectáreas reales en México, pero ninguno junta finca + tratamiento + logística + ficha técnica + ventas a clientes premium en una misma empresa. Compradores en Quintana Roo, Querétaro y CDMX terminan comprando a Colombia o moviendo postes entre estados sin garantía de suministro continuo.">The market exists but it's split up. Several producers in Mexico have real hectares, but none put together farm + treatment + logistics + spec sheet + sales to premium clients in one company. Buyers in Quintana Roo, Querétaro and CDMX end up buying from Colombia or moving poles between states with no guarantee of steady supply.</div>
+</div>
+<div class="card card--green">
+<div class="card__tag" data-es="La Oportunidad">The Opportunity</div>
+<div class="card__text" data-es="Demanda total México ~217K postes/año. Direccionable a Pacífico ~95-100K. Captura realista (escenario stretch, ver XLSX Tab 9): ~64K postes/año, ~36M MXN/año — sin depender de exportación. Quintana Roo es el premio: ~85K postes/año concentrados, todos llegan de fuera del estado.">Total MX demand ~217K poles/yr. Addressable to Pacífico ~95-100K. Realistic capture (stretch scenario, see XLSX Tab 9): ~64K poles/yr, ~36M MXN/yr — no US export dependency. Quintana Roo is the prize: ~85K poles/yr concentrated, all arriving from outside the state.</div>
+</div>
+<div class="card card--green">
+<div class="card__tag" data-es="La Ejecución">The Execution</div>
+<div class="card__text" data-es="3 fases. 2026-2028 construye confianza con presencia costera, distribución activa y propuestas a proyectos gubernamentales de construcción con bambú. 2029 firma contratos offtake a precio fijo + cláusula de Índice de Precios al Consumidor antes de la subida proyectada del bambú. 2031-2036 la cosecha cumple. 2037+ canal EE.UU. abre con 7 años de relación ya hechos.">3 phases. 2026-2028 builds trust through coastal presence, active distribution, and bids on government bamboo-construction projects. 2029 signs offtake contracts at locked price + Consumer Price Index clause before the projected bamboo price rise. 2031-2036 harvest comes in. 2037+ US channel opens with 7 years of relationship already built.</div>
+</div>
+</div>
+<div class="insight-box" data-es="<strong>Investigación de soporte:</strong> Mexico_Bamboo_Demand_Ecosystem.xlsx (11 tabs, 73 fuentes, validado 2026-05-03). Cubre 32 estados, ecosistema de paneles + textil + 13 nichos adyacentes, comparación de precios bambú vs maderas tropicales, modelo de captura 50K postes/año."><strong>Underlying research:</strong> Mexico_Bamboo_Demand_Ecosystem.xlsx (11 tabs, 73 sources, validated 2026-05-03). Covers 32 states, panel + textile + 13 adjacent-niche ecosystems, bamboo vs tropical-hardwood pricing, 50K-pole capture model.</div>
+<div class="slide-number">2 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 3 — TIMELINE + INTEGRATION GAP
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s3">
+<div class="green-line"></div>
+<p class="section-label" data-es="El Hueco que Llenamos">The Slot We Fill</p>
+<h2 class="slide-title" data-es="México tiene hectáreas. No tiene una empresa que junte todo.">Mexico has hectares. It doesn't have one company that puts it all together.</h2>
+<p class="slide-subtitle" data-es="La cosecha biológica fija el ritmo de 15 años. Lo que abre la ventana competitiva no es el ritmo — es lo que ningún productor mexicano combina hoy bajo una sola operación.">The 15-year rhythm is set by biology. What opens the competitive window isn't the rhythm — it's what no Mexican producer combines today under a single operation.</p>
+<div class="era-strip" aria-hidden="true">
+<div class="era-strip__band era-strip__band--1">
+<div class="era-strip__years">2026 — 2028</div>
+<div class="era-strip__name" data-es="Local">Local</div>
+</div>
+<div class="era-strip__band era-strip__band--2">
+<div class="era-strip__years">2029 — 2036</div>
+<div class="era-strip__name" data-es="Nacional">National</div>
+</div>
+<div class="era-strip__band era-strip__band--3">
+<div class="era-strip__years">2037 — 2040+</div>
+<div class="era-strip__name" data-es="Exportación">Export</div>
+</div>
+</div>
+<div class="card-grid card-grid--4" style="margin-top: 18px;">
+<div class="card card--green"><div class="card__tag">1</div><div class="card__label" data-es="Finca propia escalable">Scalable own farm</div><div class="card__text" data-es="40-yr lease + 110 ha plan + 5 yrs de piloto validado.">40-yr lease + 110 ha plan + 5 yrs validated pilot.</div></div>
+<div class="card card--green"><div class="card__tag">2</div><div class="card__label" data-es="Tratamiento consistente">Consistent treatment</div><div class="card__text" data-es="Boro propio con QC documentado. No subcontratado.">Own boron line with documented QC. Not subcontracted.</div></div>
+<div class="card card--green"><div class="card__tag">3</div><div class="card__label" data-es="Logística a 3+ ciudades">Logistics to 3+ cities</div><div class="card__text" data-es="Salina Cruz a 150 km · ruta MX-CDMX-QR establecida.">Salina Cruz 150 km away · MX-CDMX-QR route established.</div></div>
+<div class="card card--green"><div class="card__tag">4</div><div class="card__label" data-es="Ficha técnica + B2B premium">Spec sheet + premium B2B</div><div class="card__text" data-es="Hoja técnica calidad-ICC-ES, inglés profesional, dashboard de datos en vivo.">ICC-ES-grade spec, professional English, live data dashboard.</div></div>
+</div>
+<div class="amber-box">
+<strong data-es="LA TESIS:">THE THESIS:</strong>
+<span data-es=" Pacífico no es 'el primer productor' de Guadua en México — es la primera empresa que junta todo en un solo lugar. Hectáreas existen (Tosepan 450, VW 350). Lo que falta es juntar todos los pasos en una empresa enfocada en clientes premium y exportación."> Pacífico isn't "the first Guadua producer" in Mexico — it's the first company that puts it all in one place. Hectares exist (Tosepan 450, VW 350). What's missing is putting all the steps together in one company focused on premium clients and export.</span>
+</div>
+<div class="slide-number">3 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 4 — ICP DEEP DIVE (2 primary)
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s4">
+<div class="green-line"></div>
+<p class="section-label" data-es="Perfil de Cliente Ideal">Ideal Customer Profile (ICP)</p>
+<h2 class="slide-title" data-es="Quién es exactamente nuestro cliente">Who exactly our customer is</h2>
+<p class="slide-subtitle" data-es="2 perfiles primarios capturan ~70% del volumen 2036. Economía, dolor, ciclo y canales distintos para cada uno — no vendemos 'a arquitectos', vendemos a estos perfiles.">2 primary profiles capture ~70% of 2036 volume. Distinct economics, pain, cycle and channels for each — we don't sell "to architects", we sell to these profiles.</p>
+<div class="card-grid card-grid--2">
+<div class="icp-card">
+<div class="icp-card__header">
+<div class="icp-card__id">A</div>
+<div class="icp-card__title" data-es="Desarrollador Boutique Hospitality">Boutique Hospitality Developer</div>
+</div>
+<div class="icp-card__profile" data-es="Eco-resort de 8-30 llaves, owner-operator, posicionamiento premium. Construye su propiedad como obra de arte/marca, no commodity. Trabaja con arquitecto de firma + contratista local. Cliente final: huésped de $400-1,500 USD/noche.">8-30 keys eco-resort, owner-operator, premium positioning. Builds the property as an art piece/brand, not commodity. Works with signature architect + local contractor. End customer: $400-1,500 USD/night guest.</div>
+<div class="icp-row"><div class="icp-row__label" data-es="Geografía">Geography</div><div class="icp-row__value" data-es="Tulum corridor, Bacalar, Sayulita-San Pancho, Mazunte/Zipolite, Costa Alegre, Holbox, Punta Mita.">Tulum corridor, Bacalar, Sayulita-San Pancho, Mazunte/Zipolite, Costa Alegre, Holbox, Punta Mita.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Volumen">Volume</div><div class="icp-row__value" data-es="5,000-30,000 postes/año por desarrollador, según expansión.">5,000-30,000 poles/yr per developer, depending on expansion pipeline.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Precio">Price</div><div class="icp-row__value">800-1,500 MXN / pole</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Tamaño deal">Deal size</div><div class="icp-row__value">2-15M MXN / yr · multi-year offtake</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ciclo venta">Sales cycle</div><div class="icp-row__value">12-24 months intro → first PO</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Decisor">Decision-maker</div><div class="icp-row__value" data-es="Owner / arquitecto socio principal. El CFO solo aprueba.">Owner / lead architect partner. CFO only approves.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Resolvemos">We solve</div><div class="icp-row__value" data-es="Suministro continuo grado-A · origen documentado · historia ESG para huéspedes · respuesta rápida a cambios de spec en obra.">Steady A-grade supply · documented origin · ESG story for guests · fast response to spec changes during construction.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="No resolvemos">We don't solve</div><div class="icp-row__value" data-es="Pedidos one-off pequeños · marcas de turismo masivo · price shoppers.">One-off small orders · mass-tourism brands · price shoppers.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Triggers">Decision triggers</div><div class="icp-row__value" data-es="Falla de proveedor previo (Colombia delayed shipment) · nuevo proyecto en pre-construcción · presión ESG de inversores hoteleros.">Prior-supplier failure (Colombia delayed shipment) · new project in pre-construction · ESG pressure from hotel investors.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Buscan en Google">They Google</div><div class="icp-row__value">"structural Guadua Mexico FSC" · "bamboo treatment Mexico" · "sustainable resort architecture supplier"</div></div>
+</div>
+<div class="icp-card">
+<div class="icp-card__header">
+<div class="icp-card__id">B</div>
+<div class="icp-card__title" data-es="Procesador Industrial de Bambú Ingenierizado">Industrial Engineered-Bamboo Processor</div>
+</div>
+<div class="icp-card__profile" data-es="Fabricante B2B de paneles/slats/vigas LVB que vende a retail (tipo IKEA) o a arquitecto/contratista grande. 11-100 empleados. Necesita materia prima continua y de grado predecible.">B2B manufacturer of panels/slats/LVB beams that sells to retail (IKEA-tier) or large architect/contractor. 11-100 employees. Needs steady, predictable-grade raw material.</div>
+<div class="icp-row"><div class="icp-row__label" data-es="Geografía">Geography</div><div class="icp-row__value" data-es="Cluster Puebla (líder nacional), CDMX-adjacent, posibles Veracruz/Edomex.">Puebla cluster (national leader), CDMX-adjacent, possible Veracruz/Edomex.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Volumen">Volume</div><div class="icp-row__value" data-es="8,000-20,000 postes raw/año, creciendo. Mensualidad predecible.">8,000-20,000 poles raw/yr, growing. Monthly predictable.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Precio">Price</div><div class="icp-row__value">280-350 MXN raw · 450-650 MXN slat-grade</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Tamaño deal">Deal size</div><div class="icp-row__value">3-7M MXN / yr · 5-7 yr offtake</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Ciclo venta">Sales cycle</div><div class="icp-row__value">18-36 months including spec validation</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Decisor">Decision-maker</div><div class="icp-row__value" data-es="Director procurement + co-fundador. Engineering valida spec primero.">Procurement Director + co-founder. Engineering validates spec first.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Resolvemos">We solve</div><div class="icp-row__value" data-es="Suministro continuo de materia prima · historia MX-grown ESG para clientes tipo IKEA · slat-grade post-2030 · cadena de custodia FSC.">Steady raw-material supply · MX-grown ESG story for IKEA-tier clients · slat-grade post-2030 · FSC chain-of-custody.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="No resolvemos">We don't solve</div><div class="icp-row__value" data-es="Lotes pequeños · servicio retail premium · pedidos urgentes &lt;30 días.">Tiny lots · premium retail service · rush orders &lt;30 days.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Triggers">Decision triggers</div><div class="icp-row__value" data-es="Ampliación de planta · nuevo cliente downstream que pide ESG · falla de cooperativa actual de productores.">Plant expansion · new downstream client requiring ESG · current producer-coop reliability failure.</div></div>
+<div class="icp-row"><div class="icp-row__label" data-es="Buscan en Google">They Google</div><div class="icp-row__value">"Mexican Guadua slats supplier" · "FSC bamboo feedstock LATAM" · "bamboo billet manufacturer Mexico"</div></div>
+</div>
+</div>
+<div class="insight-box" data-es="<strong>Por qué solo 2 ICPs:</strong> ambos compran volumen grande, ambos firman contratos plurianuales, ambos pagan ciclo de venta largo. Cualquier otro segmento (ver siguiente slide) es persona secundaria — base recurrente, no pilar."><strong>Why only 2 ICPs:</strong> both buy large volume, both sign multi-year contracts, both tolerate long sales cycles. Any other segment (next slide) is a secondary persona — recurring base, not pillar.</div>
+<div class="slide-number">4 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 5 — SECONDARY PERSONAS (4)
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s5">
+<div class="green-line"></div>
+<p class="section-label" data-es="Personas Secundarias">Secondary Buyer Personas</p>
+<h2 class="slide-title" data-es="La base recurrente: 4 perfiles que pagan las cuentas">The recurring base: 4 profiles that pay the bills</h2>
+<p class="slide-subtitle" data-es="No son ICP — no firman offtake plurianual ni compran volumen grande. Pero son el flujo continuo de pedidos que mantiene la operación viva mientras los key accounts maduran. ~30% del volumen 2036.">Not ICPs — they don't sign multi-year offtakes or buy large volume. But they're the continuous order flow that keeps operations alive while key accounts mature. ~30% of 2036 volume.</p>
+<div class="card-grid card-grid--2">
+<div class="persona">
+<div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px;">
+<span class="persona__id">①</span>
+<span class="persona__title" data-es="Arquitecto Especialista (Eco-luxury)">Specialist Architect (Eco-luxury)</span>
+</div>
+<div style="font-size: 0.74rem; color: var(--gray-500); margin-bottom: 8px; line-height: 1.45;" data-es="Estudio firma 5-15 personas, especializado en bambú estructural. Trabaja con desarrolladores hospitality y residenciales premium. Busca certificación + spec engineering-grade.">Signature studio of 5-15 people, structural bamboo specialist. Works with hospitality developers and premium residentials. Needs certification + engineering-grade spec.</div>
+<div class="persona__row"><span data-es="Volumen">Volume</span><span>3,000-9,000 / yr</span></div>
+<div class="persona__row"><span data-es="Precio">Price</span><span>500-1,000 MXN</span></div>
+<div class="persona__row"><span data-es="Tamaño deal">Deal</span><span>1.5-9M MXN / yr</span></div>
+<div class="persona__row"><span data-es="Ciclo">Cycle</span><span>6-18 months</span></div>
+<div class="persona__row"><span data-es="Lo que quieren">Wants</span><span data-es="Spec sheet · cert estructural · trazabilidad">Spec · structural cert · traceability</span></div>
+<div class="persona__row"><span data-es="Decisor">Decision</span><span data-es="Principal architect / partner">Principal/partner</span></div>
+</div>
+<div class="persona">
+<div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px;">
+<span class="persona__id">②</span>
+<span class="persona__title" data-es="Estudio Diseño-Construcción">Design-Build Studio</span>
+</div>
+<div style="font-size: 0.74rem; color: var(--gray-500); margin-bottom: 8px; line-height: 1.45;" data-es="Estudio mediano (3-10 personas) que diseña y construye proyectos boutique de tamaño medio: pérgolas, residencias eco, instalaciones culturales. Recurrente, no spectacular.">Mid-size studio (3-10 people) that designs and builds boutique mid-size projects: pergolas, eco-residences, cultural installations. Recurring, not spectacular.</div>
+<div class="persona__row"><span data-es="Volumen">Volume</span><span>800-4,000 / yr</span></div>
+<div class="persona__row"><span data-es="Precio">Price</span><span>350-500 MXN</span></div>
+<div class="persona__row"><span data-es="Tamaño deal">Deal</span><span>300K-2M MXN / yr</span></div>
+<div class="persona__row"><span data-es="Ciclo">Cycle</span><span>3-9 months</span></div>
+<div class="persona__row"><span data-es="Lo que quieren">Wants</span><span data-es="Tratado · recto · poco taper · entrega rápida">Treated · straight · low taper · fast</span></div>
+<div class="persona__row"><span data-es="Decisor">Decision</span><span data-es="Founder / lead designer">Founder/lead designer</span></div>
+</div>
+<div class="persona">
+<div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px;">
+<span class="persona__id">③</span>
+<span class="persona__title" data-es="Distribuidor Nacional">National Distributor</span>
+</div>
+<div style="font-size: 0.74rem; color: var(--gray-500); margin-bottom: 8px; line-height: 1.45;" data-es="Distribuidor establecido (15+ años) que sirve mercados regionales: CDMX/Bajío, Norte, Costa. Compra wholesale y revende. Margen menor pero alcance multiplicado.">Established distributor (15+ yrs) serving regional markets: CDMX/Bajío, North, Coast. Buys wholesale, resells. Lower margin but multiplied reach.</div>
+<div class="persona__row"><span data-es="Volumen">Volume</span><span>3,000-10,000 / yr</span></div>
+<div class="persona__row"><span data-es="Precio">Price</span><span>200-320 MXN wholesale</span></div>
+<div class="persona__row"><span data-es="Tamaño deal">Deal</span><span>700K-3M MXN / yr</span></div>
+<div class="persona__row"><span data-es="Ciclo">Cycle</span><span>3-12 months</span></div>
+<div class="persona__row"><span data-es="Lo que quieren">Wants</span><span data-es="Continuidad mensual · grado mixto · precio mejor que importación">Monthly continuity · mixed grade · better than import</span></div>
+<div class="persona__row"><span data-es="Decisor">Decision</span><span data-es="Owner / procurement manager">Owner/procurement</span></div>
+</div>
+<div class="persona">
+<div style="display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px;">
+<span class="persona__id">④</span>
+<span class="persona__title" data-es="Contratista Construcción (Cinturón Palapa)">Construction Contractor (Palapa Belt)</span>
+</div>
+<div style="font-size: 0.74rem; color: var(--gray-500); margin-bottom: 8px; line-height: 1.45;" data-es="Contratista local de palapa/cabaña en Yucatán-QR-Tabasco-Veracruz costa. Cuadrillas pequeñas de 3-12 personas. Compra por proyecto, paga al contado o factura corta.">Local palapa/cabin contractor in Yucatán-QR-Tabasco-Veracruz coast. Small crews of 3-12. Buys by project, pays cash or short-term invoice.</div>
+<div class="persona__row"><span data-es="Volumen">Volume</span><span>1,000-3,000 / yr</span></div>
+<div class="persona__row"><span data-es="Precio">Price</span><span>250-400 MXN</span></div>
+<div class="persona__row"><span data-es="Tamaño deal">Deal</span><span>250K-1.2M MXN / yr</span></div>
+<div class="persona__row"><span data-es="Ciclo">Cycle</span><span>1-4 months</span></div>
+<div class="persona__row"><span data-es="Lo que quieren">Wants</span><span data-es="Disponibilidad inmediata · poste largo · compatible con palma">Immediate avail · long pole · palm-compatible</span></div>
+<div class="persona__row"><span data-es="Decisor">Decision</span><span data-es="Maestro contratista">Lead contractor</span></div>
+</div>
+</div>
+<div class="insight-box" data-es="<strong>Volumen y rol:</strong> los 4 perfiles secundarios suman ~10-25K postes/año en madurez. Son el flujo de caja base — pedidos chicos pero predecibles que mantienen la operación viva mientras los ICPs A+B firman y maduran. No invertimos esfuerzo grande de ventas aquí; llegan a través de los canales (slide 7)."><strong>Volume and role:</strong> the 4 secondary profiles together total ~10-25K poles/yr at maturity. They're the steady cash-flow base — small but predictable orders that keep the business alive while ICPs A+B sign and mature. We don't put big sales effort here; they come in through channels (slide 7).</div>
+<div class="slide-number">5 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 6 — ALL 6 PERSONAS · OPERATOR SUMMARY
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--green-light" id="s6">
+<div class="green-line"></div>
+<p class="section-label" data-es="Resumen Operativo · 6 Perfiles">Operator Summary · 6 Profiles</p>
+<h2 class="slide-title" data-es="Todos los compradores en una página">Every buyer on one page</h2>
+<p class="slide-subtitle" data-es="Vista de referencia diaria. Slides 4 y 5 son el deep-dive — esta es la versión scaneable que vive pegada a la pared.">Daily reference view. Slides 4 and 5 are the deep dive — this is the scannable version that lives pinned to the wall.</p>
+<table class="persona-summary">
+<thead>
+<tr>
+<th>ID</th>
+<th data-es="Perfil">Profile</th>
+<th data-es="Tipo">Tier</th>
+<th data-es="Volumen / año">Volume / yr</th>
+<th data-es="Precio MXN">Price MXN</th>
+<th data-es="Tamaño deal">Deal size</th>
+<th data-es="Ciclo">Cycle</th>
+<th data-es="Decisor">Decision-maker</th>
+<th data-es="Canal principal">Primary channel</th>
+<th data-es="Dueño">Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="primary">
+<td class="id-cell">A</td>
+<td class="name-cell" data-es="Boutique Hospitality Developer">Boutique Hospitality Developer</td>
+<td data-es="ICP primario">Primary ICP</td>
+<td class="num">5K-30K</td>
+<td class="num">800-1,500</td>
+<td class="num">2-15M</td>
+<td>12-24 mo</td>
+<td data-es="Owner / lead arch.">Owner / lead arch.</td>
+<td data-es="Proyectos publicados + outbound + referral">Published projects + outbound + referral</td>
+<td>Ofir</td>
+</tr>
+<tr class="primary">
+<td class="id-cell">B</td>
+<td class="name-cell" data-es="Industrial Engineered-Bamboo Processor">Industrial Engineered-Bamboo Processor</td>
+<td data-es="ICP primario">Primary ICP</td>
+<td class="num">8K-20K</td>
+<td class="num">280-650</td>
+<td class="num">3-7M</td>
+<td>18-36 mo</td>
+<td data-es="Procurement + co-fund.">Procurement + co-fund.</td>
+<td data-es="Outbound + partner intros + booth">Outbound + partner intros + booth</td>
+<td>Ofir</td>
+</tr>
+<tr>
+<td class="id-cell">①</td>
+<td class="name-cell" data-es="Specialist Architect (Eco-luxury)">Specialist Architect (Eco-luxury)</td>
+<td data-es="Secundario">Secondary</td>
+<td class="num">3K-9K</td>
+<td class="num">500-1,000</td>
+<td class="num">1.5-9M</td>
+<td>6-18 mo</td>
+<td data-es="Principal / partner">Principal / partner</td>
+<td data-es="Proyectos publicados + dashboard + word-of-mouth">Published projects + dashboard + word-of-mouth</td>
+<td>Ofir</td>
+</tr>
+<tr>
+<td class="id-cell">②</td>
+<td class="name-cell" data-es="Design-Build Studio">Design-Build Studio</td>
+<td data-es="Secundario">Secondary</td>
+<td class="num">800-4K</td>
+<td class="num">350-500</td>
+<td class="num">300K-2M</td>
+<td>3-9 mo</td>
+<td data-es="Founder / lead design.">Founder / lead design.</td>
+<td data-es="Dashboard + WoM + distrib.">Dashboard + WoM + distrib.</td>
+<td>Both</td>
+</tr>
+<tr>
+<td class="id-cell">③</td>
+<td class="name-cell" data-es="National Distributor">National Distributor</td>
+<td data-es="Secundario">Secondary</td>
+<td class="num">3K-10K</td>
+<td class="num">200-320</td>
+<td class="num">700K-3M</td>
+<td>3-12 mo</td>
+<td data-es="Owner / procurement">Owner / procurement</td>
+<td data-es="Outbound + booth">Outbound + booth</td>
+<td>Ofir</td>
+</tr>
+<tr>
+<td class="id-cell">④</td>
+<td class="name-cell" data-es="Construction Contractor (Palapa Belt)">Construction Contractor (Palapa Belt)</td>
+<td data-es="Secundario">Secondary</td>
+<td class="num">1K-3K</td>
+<td class="num">250-400</td>
+<td class="num">250K-1.2M</td>
+<td>1-4 mo</td>
+<td data-es="Maestro contratista">Lead contractor</td>
+<td data-es="Distribuidor + WoM">Distributor + WoM</td>
+<td>Diego</td>
+</tr>
+</tbody>
+</table>
+<div class="insight-box" data-es="<strong>Reparto:</strong> Ofir lleva A, B, ①, ③ (relación premium + B2B inglés). Diego lleva ④ (palapa belt, español de campo). Estudio diseño-construcción es co-llevado por valor de la relación arquitecto + ejecución técnica."><strong>Split:</strong> Ofir owns A, B, ①, ③ (premium relationship + English B2B). Diego owns ④ (palapa belt, field Spanish). Design-Build studio is jointly owned for architect-relationship value + technical execution.</div>
+<div class="slide-number">6 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 7 — ACQUISITION CHANNELS (fit matrix)
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s7">
+<div class="green-line"></div>
+<p class="section-label" data-es="Canales de Adquisición">Acquisition Channels</p>
+<h2 class="slide-title" data-es="Cómo nos encuentran (y cómo los encontramos)">How they find us (and how we find them)</h2>
+<p class="slide-subtitle" data-es="7 canales × 6 perfiles. ● = canal principal. ○ = canal secundario. Vacío = no aplica.">7 channels × 6 profiles. ● = primary channel. ○ = secondary channel. Blank = not used.</p>
+<table class="fit-matrix">
+<thead>
+<tr>
+<th data-es="Canal · Costo · Fase">Channel · Cost · Phase</th>
+<th>A<br/><span style="font-weight:400; opacity:0.85;" data-es="Hospitality">Hospitality</span></th>
+<th>B<br/><span style="font-weight:400; opacity:0.85;" data-es="Procesador">Processor</span></th>
+<th>①<br/><span style="font-weight:400; opacity:0.85;" data-es="Arquitecto">Architect</span></th>
+<th>②<br/><span style="font-weight:400; opacity:0.85;" data-es="Diseño-Build">Design-Build</span></th>
+<th>③<br/><span style="font-weight:400; opacity:0.85;" data-es="Distribuidor">Distributor</span></th>
+<th>④<br/><span style="font-weight:400; opacity:0.85;" data-es="Contratista">Contractor</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="channel-cell" data-es="Outbound directo">Direct outbound</span><span class="channel-meta" data-es="LinkedIn + email · Costo bajo · Tiempo alto · Fase 1+">LinkedIn + email · Low cost · High time · Phase 1+</span></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"></td>
+</tr>
+<tr>
+<td><span class="channel-cell" data-es="Stand propio en feria de la industria">Own booth at industry trade show</span><span class="channel-meta" data-es="Asistir a la feria + rentar espacio de exhibición · Costo alto · Tiempo alto · Fase 2+">Attend the trade show + rent an exhibitor stand · High cost · High time · Phase 2+</span></td>
+<td class="cell"><span class="dot dot--secondary" title="Secondary"></span></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"><span class="dot dot--secondary" title="Secondary"></span></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"></td>
+</tr>
+<tr>
+<td><span class="channel-cell" data-es="Portafolio de proyectos publicados">Published-project portfolio</span><span class="channel-meta" data-es="Casos de proyectos premium en Instagram + ArchDaily + Designboom · su prestigio nos da credibilidad · Costo bajo · Tiempo medio · Fase 1+">Premium project case studies on Instagram + ArchDaily + Designboom · their prestige gives us credibility · Low cost · Med time · Phase 1+</span></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"><span class="dot dot--secondary" title="Secondary"></span></td>
+<td class="cell"></td>
+<td class="cell"></td>
+</tr>
+<tr>
+<td><span class="channel-cell" data-es="Referrals de distribuidor">Distributor referral</span><span class="channel-meta" data-es="Costo cero · Tiempo bajo · Fase 2+">Zero cost · Low time · Phase 2+</span></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+</tr>
+<tr>
+<td><span class="channel-cell" data-es="Dashboard de datos en vivo">Live data dashboard</span><span class="channel-meta" data-es="Supabase · Costo medio · Tiempo bajo · Fase 1+">Supabase · Med cost · Low time · Phase 1+</span></td>
+<td class="cell"><span class="dot dot--secondary" title="Secondary"></span></td>
+<td class="cell"><span class="dot dot--secondary" title="Secondary"></span></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"></td>
+<td class="cell"></td>
+</tr>
+<tr>
+<td><span class="channel-cell" data-es="Boca a boca de proyectos faro">Word-of-mouth (lighthouse projects)</span><span class="channel-meta" data-es="Costo cero · Tiempo bajo · Fase 2+">Zero cost · Low time · Phase 2+</span></td>
+<td class="cell"><span class="dot dot--secondary" title="Secondary"></span></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+</tr>
+<tr>
+<td><span class="channel-cell" data-es="Intros de partners">Partner intros</span><span class="channel-meta" data-es="AHEC + INBAR + FSC · Costo bajo · Tiempo medio · Fase 2+">AHEC + INBAR + FSC · Low cost · Med time · Phase 2+</span></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--primary" title="Primary"></span></td>
+<td class="cell"><span class="dot dot--secondary" title="Secondary"></span></td>
+<td class="cell"></td>
+<td class="cell"><span class="dot dot--secondary" title="Secondary"></span></td>
+<td class="cell"></td>
+</tr>
+</tbody>
+</table>
+<div class="legend">
+<span><span class="dot dot--primary"></span><span data-es="Canal principal">Primary channel</span></span>
+<span><span class="dot dot--secondary"></span><span data-es="Canal secundario / refuerzo">Secondary / reinforcement</span></span>
+</div>
+<div class="insight-box" data-es="<strong>Lectura:</strong> El portafolio de proyectos publicados + el dashboard de datos son canales casi gratuitos que escalan a 4 perfiles. Stand propio en feria de la industria es caro pero único acceso a B (procesador) y distribuidor. Word-of-mouth desbloquea los 3 perfiles secundarios sin overhead de ventas."><strong>Read:</strong> The published-project portfolio + data dashboard are near-free channels that scale to 4 profiles. Own booth at an industry trade show is expensive but the only real access to B (processor) and distributor. Word-of-mouth unlocks the 3 secondary profiles without sales overhead.</div>
+<div class="slide-number">7 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 7 — SALES FUNNEL & CONVERSION
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s8">
+<div class="green-line"></div>
+<p class="section-label" data-es="Embudo de Ventas">Sales Funnel & Conversion</p>
+<h2 class="slide-title" data-es="De awareness a contrato firmado">From awareness to signed contract</h2>
+<p class="slide-subtitle" data-es="5 etapas con conversion rate asumido para ICP A+B (más conservador para B). Dueño y material por etapa.">5 stages with assumed conversion rate for ICP A+B (more conservative for B). Owner and material per stage.</p>
+<div class="funnel">
+<div class="funnel__stage funnel__stage--1">
+<div class="funnel__row">
+<div class="funnel__num">01</div>
+<div>
+<div class="funnel__name" data-es="Awareness">Awareness</div>
+<div class="funnel__desc" data-es="Conferencia, prensa, referral, búsqueda en Google. Material: video 60s + LinkedIn post + spec sheet.">Conference, press, referral, Google search. Material: 60s video + LinkedIn post + spec sheet.</div>
+</div>
+<div class="funnel__metric"><strong>100%</strong><span data-es="prospectos identificados/yr">prospects identified/yr</span></div>
+<div class="funnel__owner funnel__owner--ofir">Ofir</div>
+<div class="funnel__metric" style="text-align:left;"><strong>~200</strong><span data-es="leads/yr Phase 2">leads/yr Ph 2</span></div>
+</div>
+</div>
+<div class="funnel__stage funnel__stage--2">
+<div class="funnel__row">
+<div class="funnel__num">02</div>
+<div>
+<div class="funnel__name" data-es="Interés">Interest</div>
+<div class="funnel__desc" data-es="Visita web, descarga ficha técnica, responde email. Material: case studies + portfolio fotográfico.">Visits website, downloads spec sheet, replies to email. Material: case studies + photo portfolio.</div>
+</div>
+<div class="funnel__metric"><strong>40%</strong><span data-es="conversión">conversion</span></div>
+<div class="funnel__owner funnel__owner--ofir">Ofir</div>
+<div class="funnel__metric" style="text-align:left;"><strong>~80</strong><span>qualified leads</span></div>
+</div>
+</div>
+<div class="funnel__stage funnel__stage--3">
+<div class="funnel__row">
+<div class="funnel__num">03</div>
+<div>
+<div class="funnel__name" data-es="Evaluación">Evaluation</div>
+<div class="funnel__desc" data-es="Envío de muestra física + visita a la finca + video call con Diego. Material: dashboard de datos en vivo + sesión técnica.">Sample shipment + farm visit + video call with Diego. Material: live data dashboard + technical session.</div>
+</div>
+<div class="funnel__metric"><strong>35%</strong><span data-es="conversión">conversion</span></div>
+<div class="funnel__owner funnel__owner--both">Both</div>
+<div class="funnel__metric" style="text-align:left;"><strong>~28</strong><span>evaluations</span></div>
+</div>
+</div>
+<div class="funnel__stage funnel__stage--4">
+<div class="funnel__row">
+<div class="funnel__num">04</div>
+<div>
+<div class="funnel__name" data-es="Negociación">Negotiation</div>
+<div class="funnel__desc" data-es="Discusión de precio, términos, cronograma de entrega. Material: plantilla de offtake + propuesta personalizada.">Price, terms, delivery schedule discussion. Material: offtake template + custom proposal.</div>
+</div>
+<div class="funnel__metric"><strong>50%</strong><span data-es="conversión">conversion</span></div>
+<div class="funnel__owner funnel__owner--both">Ofir + Diego</div>
+<div class="funnel__metric" style="text-align:left;"><strong>~14</strong><span>active negotiations</span></div>
+</div>
+</div>
+<div class="funnel__stage funnel__stage--5">
+<div class="funnel__row">
+<div class="funnel__num">05</div>
+<div>
+<div class="funnel__name" data-es="Cierre">Close</div>
+<div class="funnel__desc" data-es="LOI → contrato → primer PO. Material: LOI + contrato firmado + cronograma de entrega Q1.">LOI → contract → first PO. Material: LOI + signed contract + Q1 delivery schedule.</div>
+</div>
+<div class="funnel__metric"><strong>50%</strong><span data-es="conversión">conversion</span></div>
+<div class="funnel__owner funnel__owner--both">Ofir + Diego</div>
+<div class="funnel__metric" style="text-align:left;"><strong>~7</strong><span>closed/yr Ph 2</span></div>
+</div>
+</div>
+</div>
+<div class="insight-box" data-es="<strong>Tiempo total:</strong> Awareness → Close = 12-24 meses (A), 18-36 meses (B), 1-9 meses (secundarias). Para firmar 4-7 contratos en 2029, necesitamos ~50-60 prospectos en Awareness desde 2027 Q3."><strong>Total time:</strong> Awareness → Close = 12-24 months (A), 18-36 months (B), 1-9 months (secondary). To sign 4-7 contracts in 2029, we need ~50-60 prospects in Awareness from 2027 Q3.</div>
+<div class="slide-number">8 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 9 — PHASE 2
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s9">
+<div class="green-line"></div>
+<p class="section-label" data-es="Fase 2 · 2029-2036">Phase 2 · 2029-2036</p>
+<h2 class="slide-title" data-es="De confianza a contratos: 50,000 postes/año">From trust to contracts: 50,000 poles/yr</h2>
+<div class="focus-pill" data-es="Próximo · 2029 año clave">Next · 2029 key year</div>
+<p class="focus-line" data-es="<strong>El año clave:</strong> firmar 4-7 contratos offtake a precio fijo + Índice de Precios al Consumidor antes de la subida proyectada del bambú. La cosecha grande llega en 2031."><strong>The key year:</strong> sign 4-7 offtake contracts at locked price + Consumer Price Index before the expected bamboo price rise. Big harvest arrives in 2031.</p>
+<p class="slide-subtitle" data-es="La cuenta sube de 5,500 a 50,000 postes/año cumpliendo contratos, no buscando nuevos clientes.">The number scales from 5,500 to 50,000 poles/yr by fulfilling contracts, not hunting new clients.</p>
+<div class="card-grid card-grid--3">
+<div class="card card--highlight">
+<div class="card__tag" data-es="① Estructura del offtake">① Offtake structure</div>
+<div class="card__label" data-es="4-7 contratos · precio fijo + Índice de Precios al Consumidor">4-7 contracts · locked price + Consumer Price Index</div>
+<div class="card__text" data-es="Categorías: 1-2 desarrollador hospitality boutique (10-15K postes/año), 1 procesador industrial (8-12K raw), 1-2 arquitectos especialistas (3-5K cada uno), 1 distribuidor nacional (3-5K), 1 cluster diseño-construcción (2-3K). Precio promedio ~480 MXN. Cláusulas: precio sube con Índice de Precios al Consumidor de México + boro indexado a química importada · piso de volumen anual · cronograma de entrega trimestral · spec de calidad (longitud, diámetro, taper, % humedad) · force majeure · termination 90 días con causa.">Categories: 1-2 boutique hospitality developer (10-15K poles/yr), 1 industrial processor (8-12K raw), 1-2 specialist architects (3-5K each), 1 national distributor (3-5K), 1 design-build cluster (2-3K). Avg price ~480 MXN. Clauses: price moves with Mexican Consumer Price Index + boron indexed to imported chemistry · annual volume floor · quarterly delivery schedule · quality spec (length, diameter, taper, moisture %) · force majeure · 90-day termination with cause.</div>
+</div>
+<div class="card card--highlight">
+<div class="card__tag" data-es="② Hitos de producción">② Production milestones</div>
+<div class="card__label" data-es="2031 cash-positive · 2033 break-even">2031 cash-positive · 2033 break-even</div>
+<div class="card__text" data-es="2029-2030: 5,500-7,000 postes/año (mezcla de cosecha propia + distribución). 2031: 14,000 postes propios — cash-positive. 2033-2034: ~35K postes/año, break-even acumulado, dividendos comienzan. 2035-2036: 50,000 postes/año, 110 ha en madurez total. Métricas de éxito por cliente clave: % entrega a tiempo, NPS bianual, recompra >70%.">2029-2030: 5,500-7,000 poles/yr (own harvest + distribution mix). 2031: 14,000 own poles — cash-positive. 2033-2034: ~35K poles/yr, cumulative break-even, dividends begin. 2035-2036: 50,000 poles/yr, 110 ha at full maturity. Per-key-account success metrics: % on-time delivery, biannual NPS, repeat order >70%.</div>
+</div>
+<div class="card card--highlight">
+<div class="card__tag" data-es="③ Capacidades industriales">③ Industrial capabilities</div>
+<div class="card__label" data-es="Slats 2030 · FSC 2031 · Showroom 2032">Slats 2030 · FSC 2031 · Showroom 2032</div>
+<div class="card__text" data-es="2030: línea de procesamiento de slats (capex Round 2) — habilita el offtake del procesador industrial. 2031: FSC chain-of-custody completa. 2032: showroom comercial + oficinas. 2034: bodega grande junto a la carretera para escala. Dashboard de datos en vivo escala a multi-cliente: cada cliente clave tiene su propio login para ver su pipeline.">2030: slat processing line (Round 2 capex) — unlocks the industrial-processor offtake. 2031: FSC chain-of-custody complete. 2032: commercial showroom + offices. 2034: big roadside bodega for scale. Live data dashboard scales to multi-client: each key account gets its own login to see its pipeline.</div>
+</div>
+</div>
+<div class="kpi-row">
+<div class="kpi"><div class="kpi__num">50,000</div><div class="kpi__lbl" data-es="Postes/año en 2036">Poles/yr by 2036</div></div>
+<div class="kpi"><div class="kpi__num">~109M</div><div class="kpi__lbl" data-es="MXN ingresos acumulados 2029-2036">MXN cumulative revenue 2029-2036</div></div>
+<div class="kpi"><div class="kpi__num">4-7</div><div class="kpi__lbl" data-es="Contratos offtake firmados 2029">Offtake contracts signed 2029</div></div>
+</div>
+<div class="slide-number">9 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 10 — PHASE 3
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--green-light" id="s10">
+<div class="green-line"></div>
+<p class="section-label" data-es="Fase 3 · 2037+">Phase 3 · 2037+</p>
+<h2 class="slide-title" data-es="EE.UU. con 7 años de relación ya hechos">US channel with 7 years of relationship already built</h2>
+<div class="focus-pill" data-es="A largo plazo · 2030 empezamos a sembrar relaciones">Long term · 2030 we start building relationships</div>
+<p class="focus-line" data-es="<strong>Hito clave:</strong> ICC-ES AC162 cierra a finales de 2036. El primer contenedor 2037 aterriza con un comprador que nos visita y recibe muestras desde 2030."><strong>Key milestone:</strong> ICC-ES AC162 closes late 2036. The first 2037 container lands with a buyer who's been visiting and receiving samples since 2030.</p>
+<p class="slide-subtitle" data-es="La escalera de productos sube por nivel de certificación: decorativo (2037) → insumo ingenierizado (2038-39) → estructural premium (2040+).">The product ladder climbs by certification level: decorative (2037) → engineered feedstock (2038-39) → structural premium (2040+).</p>
+<div class="card-grid card-grid--3">
+<div class="card card--highlight">
+<div class="card__tag" data-es="① Decorativo (2037)">① Decorative (2037)</div>
+<div class="card__label" data-es="No requiere certificación estructural">No structural cert required</div>
+<div class="card__text" data-es="Categorías de comprador: importadores resort/hospitalidad EE.UU. y distribuidores decorativos. Compran Guadua para tikki, palapa, decorativo. Spec: postes 4-7m × 8-14cm Ø, tratado boro, no estructural. Ventaja USMCA = 0% arancel vs Colombia. Año 1: ~4 contenedores (40 TEU equiv), ~2,400 postes, ~$80-120K USD.">Buyer categories: US resort/hospitality importers and decorative distributors. Buy Guadua for tiki, palapa, decorative. Spec: 4-7m × 8-14cm Ø poles, boron-treated, non-structural. USMCA edge = 0% tariff vs Colombia. Year 1: ~4 containers (40 TEU equiv), ~2,400 poles, ~$80-120K USD.</div>
+</div>
+<div class="card card--highlight">
+<div class="card__tag" data-es="② Insumo ingenierizado (2038-2039)">② Engineered feedstock (2038-2039)</div>
+<div class="card__label" data-es="Procesadores LVB · paneles estructurales">LVB processors · structural panels</div>
+<div class="card__text" data-es="Categorías: procesadores LVB (vigas laminadas) y fabricantes de paneles híbridos. Compran billets + slats. Spec: slats 1m × 2cm × 0.6cm o billets 2m × 6×6cm. Pacífico = nearshore mexicano-grown vs el Guadua sudamericano que importan hoy. Año 2-3: 6-9 contenedores, ~$140-340K USD.">Categories: LVB (laminated-veneer-bamboo) processors and hybrid panel makers. Buy billets + slats. Spec: 1m × 2cm × 0.6cm slats or 2m × 6×6cm billets. Pacífico = nearshore Mexican-grown vs the South American Guadua they import today. Year 2-3: 6-9 containers, ~$140-340K USD.</div>
+</div>
+<div class="card card--highlight">
+<div class="card__tag" data-es="③ Estructural premium (2040+)">③ Structural premium (2040+)</div>
+<div class="card__label" data-es="Post-ICC-ES · arquitectos eco-luxury">Post-ICC-ES · eco-luxury architects</div>
+<div class="card__text" data-es="Categorías: arquitectos eco-luxury California/Florida/Hawaii + cadenas hotel boutique tier alto. Spec: postes estructurales 6m × 10-14cm Ø clase A1, ICC-ES + ESR. Habilita uso estructural en código IBC. Pacífico entra como segundo proveedor con ventaja USMCA. 12+ contenedores/año, ~$280-450K+ USD.">Categories: eco-luxury architects in California/Florida/Hawaii + high-end boutique hotel chains. Spec: structural poles 6m × 10-14cm Ø class A1, ICC-ES + ESR. Unlocks structural use under IBC code. Pacífico enters as second supplier with USMCA edge. 12+ containers/yr, ~$280-450K+ USD.</div>
+</div>
+</div>
+<div class="card-grid card-grid--3" style="margin-top: 12px;">
+<div class="card">
+<div class="card__label" data-es="Setup logístico EE.UU.">US logistics setup</div>
+<div class="card__text" data-es="Salina Cruz puerto a 150 km de la finca = ventaja real. Customs broker MX + US assignado. Aseguradora cargo. Pack 1 setup (SEMARNAT + Padrón + APHIS) ~140K MXN una vez en 2036. Por contenedor ~25K MXN (phyto + heat treatment + broker + freight share).">Salina Cruz port 150 km from farm = real edge. MX + US customs broker assigned. Cargo insurance. Pack 1 setup (SEMARNAT + Padrón + APHIS) ~140K MXN one-time in 2036. Per container ~25K MXN (phyto + heat treatment + broker + freight share).</div>
+</div>
+<div class="card">
+<div class="card__label" data-es="Pricing FX-hedged">FX-hedged pricing</div>
+<div class="card__text" data-es="Contratos USD denominados pero costo es MXN. Cláusula de FX adjustment trimestral si MXN/USD se mueve >5% del baseline. Forwards de FX a 90-180 días para grandes pedidos. Margen target: 35-45% en USD después de logística.">Contracts denominated in USD but cost is MXN. Quarterly FX adjustment clause if MXN/USD moves >5% from baseline. 90-180 day FX forwards for large orders. Target margin: 35-45% in USD after logistics.</div>
+</div>
+<div class="card">
+<div class="card__label" data-es="Construcción de relación 2030-2036">Relationship-build 2030-2036</div>
+<div class="card__text" data-es="1 viaje EE.UU./año (Ofir) durante 2030-2034. Visita-no-venta. Conferencias clave (AIA, Greenbuild). Muestras enviadas al primer subset de prospectos en 2031. ICC-ES pre-application meetings 2034-2036.">1 US trip/yr (Ofir) during 2030-2034. Non-sales visit. Key conferences (AIA, Greenbuild). Samples shipped to first prospect subset in 2031. ICC-ES pre-application meetings 2034-2036.</div>
+</div>
+</div>
+<div class="slide-number">10 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 11 — STRESS TEST (resilience)
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--amber-tint" id="s11">
+<div class="green-line" style="background: var(--amber);"></div>
+<p class="section-label" style="color: var(--amber);" data-es="Prueba de Estrés del Plan GTM">GTM Stress Test</p>
+<h2 class="slide-title" data-es="¿Qué pasa si el plan no sale como esperamos?">What if the plan doesn't go as expected?</h2>
+<p class="slide-subtitle" data-es="4 escenarios adversos sobre el base (1,400 culms/ha, 400 MXN/poste). Bajo cada uno: ¿sigue rentable? ¿se rompe el plan GTM?">4 adverse scenarios over base (1,400 culms/ha, 400 MXN/pole). Under each: still profitable? does the GTM plan break?</p>
+<table class="gtm-table">
+<thead>
+<tr>
+<th data-es="Escenario">Scenario</th>
+<th data-es="Disparador">Trigger</th>
+<th class="num">Yield</th>
+<th class="num">ASP</th>
+<th class="num" data-es="Ingresos / 110 ha">Revenue / 110 ha</th>
+<th class="center" data-es="¿Rentable?">Profitable?</th>
+<th data-es="Mitigación GTM">GTM mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong data-es="1 · Shock Biológico">1 · Biological Shock</strong></td>
+<td data-es="Enfermedad fúngica Guadua (Bolaño-Garzón et al.) o sequía extrema · -50% rendimiento por 2 ciclos">Documented Guadua fungal disease (Bolaño-Garzón et al.) or extreme drought · -50% yield for 2 cycles</td>
+<td class="num">700</td>
+<td class="num">400</td>
+<td class="num">~26M (-51%)</td>
+<td class="center" style="color: var(--green-700); font-weight: 700;">YES</td>
+<td data-es="5 yrs piloto · 1,500 plantas sobrevivientes de 3,000 · diversidad genética + 3 especies">5 yrs pilot · 1,500 plants surviving of 3,000 · genetic diversity + 3 species</td>
+</tr>
+<tr>
+<td><strong data-es="2 · Suavizado Demanda">2 · Demand Softening</strong></td>
+<td data-es="Offtakes 2029 fallan o clientes clave no firman · ASP 400→250 MXN">2029 offtakes fail or key accounts don't sign · ASP 400→250 MXN</td>
+<td class="num">1,400</td>
+<td class="num">250 (-37%)</td>
+<td class="num">~32.7M (-37%)</td>
+<td class="center" style="color: var(--green-700); font-weight: 700;">YES</td>
+<td data-es="Canales diversificados redirigen a estacas / biomasa / decorativo · personas secundarias compran el volumen">Diversified channels redirect into stakes / biomass / decorative · secondary personas buy the volume</td>
+</tr>
+<tr>
+<td><strong data-es="3 · Retraso Flujo Caja">3 · Cashflow Delay</strong></td>
+<td data-es="Ronda 2 retrasa 12 meses; clima impide siembra 15 ha 2027 · madurez 2038→2040">Round 2 delays 12 mo; weather blocks 15 ha planting 2027 · maturity 2038→2040</td>
+<td class="num" data-es="sin cambio">no change</td>
+<td class="num" data-es="sin cambio">no change</td>
+<td class="num" data-es="-80M MXN acum.">-80M MXN cum.</td>
+<td class="center" style="color: var(--green-700); font-weight: 700;">YES</td>
+<td data-es="PRONAFOR PFC 30+20+50% cubre hasta 50% del capex siembra · 40-yr lease asegura continuidad">PRONAFOR PFC 30+20+50% covers up to 50% of planting capex · 40-yr lease ensures continuity</td>
+</tr>
+<tr style="background: #FEE2E2;">
+<td><strong style="color: #DC2626;" data-es="4 · Adverso Combinado">4 · Combined Adverse</strong></td>
+<td data-es="3 estrés simultáneos: yield -30%, ASP -25%, retraso 1 año">3 simultaneous: yield -30%, ASP -25%, 1-yr delay</td>
+<td class="num">980 (-30%)</td>
+<td class="num">300 (-25%)</td>
+<td class="num">~25M (-52%)</td>
+<td class="center" style="color: var(--green-700); font-weight: 700;">YES</td>
+<td data-es="~$1.18M USD/yr neto · payback 7→9 años · tesis no se rompe">~$1.18M USD/yr net · payback 7→9 yrs · thesis intact</td>
+</tr>
+</tbody>
+</table>
+<div class="insight-box" data-es="<strong>Conclusión:</strong> incluso bajo 3 estrés simultáneos, el modelo es rentable. La tesis se rompería solo si <em>simultáneamente</em>: (a) las 3 especies mueren, (b) los 5 canales se cierran, (c) Ronda 2 falla. Probabilidad conjunta &lt; 1%. Resiliencia por diseño: key offtakes 2029 + diversificación + CONAFOR + 5 años I+D validado."><strong>Conclusion:</strong> even under 3 simultaneous stresses, the model is profitable. The thesis breaks only if <em>simultaneously</em>: (a) all 3 pilot species die, (b) all 5 channels close, (c) Round 2 fails. Joint probability &lt; 1%. Resilience by design: 2029 key offtakes + diversification + CONAFOR + 5 yrs validated R&amp;D.</div>
+<p style="font-size: 0.7rem; color: var(--gray-500); margin-top: 12px;">Sources: <a href="http://www.scielo.org.co/scielo.php?script=sci_arttext&amp;pid=S0121-74882020000200097" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Céspedes Prieto et al. 2020 (SciELO Colombia)</a> · <a href="http://www.scielo.org.co/scielo.php?script=sci_arttext&amp;pid=S0366-52322021000100186" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Camargo NPV 2021</a> · <a href="https://www.gob.mx/conafor/acciones-y-programas/programa-de-financiamiento-a-plantaciones-forestales-comerciales" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">CONAFOR PFC</a> · 5-yr pilot data — Pacífico Bambu El Azulillo (April 2021–April 2026, internal)</p>
+<div class="slide-number">11 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 12 — CONFERENCES
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--white" id="s12">
+<div class="green-line"></div>
+<p class="section-label" data-es="Conferencias y Presencia">Conferences & Industry Presence</p>
+<h2 class="slide-title" data-es="Lista mínima de eventos: qué, cuándo, importancia">Minimal event list: what, when, importance</h2>
+<p class="slide-subtitle" data-es="Ofir + Diego asisten a un subconjunto cada año. ★ = visitar si hay capacidad · ★★ = anual · ★★★ = imprescindible.">Ofir + Diego attend a subset each year. ★ = visit if capacity · ★★ = annual · ★★★ = must-attend.</p>
+<table class="gtm-table">
+<thead>
+<tr><th>Event</th><th>Region</th><th>Month</th><th>From year</th><th class="center">Importance</th></tr>
+</thead>
+<tbody>
+<tr><td>BFM — Encuentro Internacional de Bambú (Veracruz)</td><td>MX</td><td>Q1</td><td>2026</td><td class="center"><span class="stars">★★★</span></td></tr>
+<tr><td>Expo CIHAC (CDMX)</td><td>MX</td><td>Q3 (October)</td><td>2026 visit · 2028 booth</td><td class="center"><span class="stars">★★★</span></td></tr>
+<tr><td>Tianguis Turístico (rotates)</td><td>MX</td><td>Q1</td><td>2026</td><td class="center"><span class="stars">★★</span></td></tr>
+<tr><td>Festival del Bambú Tepoztlán</td><td>MX</td><td>Q2</td><td>2027</td><td class="center"><span class="stars">★★</span></td></tr>
+<tr><td>AHEC México events</td><td>MX</td><td>Q4</td><td>2027</td><td class="center"><span class="stars">★</span></td></tr>
+<tr><td>Encuentro Tosepan (Cuetzalan)</td><td>MX</td><td>Q4</td><td>2026</td><td class="center"><span class="stars">★</span></td></tr>
+<tr><td>Congreso Mundial del Bambú (Colombia)</td><td>LatAm</td><td>biennial</td><td>2030</td><td class="center"><span class="stars">★★</span></td></tr>
+<tr><td>World Bamboo Congress (rotates)</td><td>Global</td><td>every 4 yrs</td><td>2032</td><td class="center"><span class="stars">★★</span></td></tr>
+<tr><td>AIA Conference on Architecture</td><td>US</td><td>May/June</td><td>2030 visit · 2034 booth</td><td class="center"><span class="stars">★★★</span></td></tr>
+<tr><td>Greenbuild International</td><td>US</td><td>Q4</td><td>2030 visit · 2034 booth</td><td class="center"><span class="stars">★★★</span></td></tr>
+<tr><td>Hospitality Design Expo (Las Vegas)</td><td>US</td><td>May</td><td>2034</td><td class="center"><span class="stars">★★★</span></td></tr>
+<tr><td>NeoCon (Chicago)</td><td>US</td><td>June</td><td>2032</td><td class="center"><span class="stars">★★</span></td></tr>
+<tr><td>International Builders' Show (Las Vegas)</td><td>US</td><td>January</td><td>2035</td><td class="center"><span class="stars">★</span></td></tr>
+<tr><td>ICC-ES technical events</td><td>US</td><td>multiple</td><td>2034</td><td class="center"><span class="stars">★★★</span></td></tr>
+</tbody>
+</table>
+<div class="insight-box" data-es="<strong>Reparto:</strong> Diego cubre técnicos MX (idioma + campo). Ofir cubre premium MX + todos EE.UU. (inglés + visa B1/B2). Decisión año a año según capacidad de working capital."><strong>Split:</strong> Diego covers MX technical (language + field). Ofir covers premium MX + all US (English + B1/B2 visa). Year-by-year decision based on working-capital capacity.</div>
+<div class="slide-number">12 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 13 — MARKETING BUDGET
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--amber-tint" id="s13">
+<div class="green-line" style="background: var(--amber);"></div>
+<p class="section-label" style="color: var(--amber);" data-es="Presupuesto Marketing — Hueco Identificado">Marketing Budget — Gap Identified</p>
+<h2 class="slide-title" data-es="El modelo financiero v2 no tiene línea de marketing">Financial model v2 has zero marketing line</h2>
+<p class="slide-subtitle" data-es="SG&A actual cubre solo phone + legal + accountant. Cero línea para conferencias, viajes, muestras o IA. Estructura propuesta in-house (Ofir + Diego + IA, sin agencias).">Current SG&A covers only phone + legal + accountant. Zero line for conferences, travel, samples, or AI. Proposed structure is in-house (Ofir + Diego + AI, no agencies).</p>
+<div class="budget-grid" style="margin-bottom: 14px;">
+<div class="header">Cost line (MXN, in-house)</div>
+<div class="header num">2027</div>
+<div class="header num">2028</div>
+<div class="header num">2029</div>
+<div class="header num">2030</div>
+<div class="header num">'31-'32 avg</div>
+<div class="header num">'33-'36 avg</div>
+<div class="header num">'37+ avg</div>
+
+<div class="label">Conference reg + booth (MX)</div>
+<div class="num">15,000</div><div class="num">25,000</div><div class="num">40,000</div><div class="num">50,000</div><div class="num">60,000</div><div class="num">70,000</div><div class="num">80,000</div>
+
+<div class="label">Conference reg + booth (US)</div>
+<div class="num">0</div><div class="num">0</div><div class="num">0</div><div class="num">25,000</div><div class="num">40,000</div><div class="num">120,000</div><div class="num">300,000</div>
+
+<div class="label">Flights MX domestic</div>
+<div class="num">15,000</div><div class="num">25,000</div><div class="num">40,000</div><div class="num">50,000</div><div class="num">60,000</div><div class="num">70,000</div><div class="num">70,000</div>
+
+<div class="label">Flights US international</div>
+<div class="num">0</div><div class="num">0</div><div class="num">0</div><div class="num">25,000</div><div class="num">35,000</div><div class="num">100,000</div><div class="num">220,000</div>
+
+<div class="label">Hotels + lodging</div>
+<div class="num">10,000</div><div class="num">18,000</div><div class="num">30,000</div><div class="num">55,000</div><div class="num">75,000</div><div class="num">130,000</div><div class="num">200,000</div>
+
+<div class="label">Meals + prospect dinners</div>
+<div class="num">8,000</div><div class="num">15,000</div><div class="num">25,000</div><div class="num">40,000</div><div class="num">55,000</div><div class="num">90,000</div><div class="num">140,000</div>
+
+<div class="label">Local transport / Uber / fuel</div>
+<div class="num">5,000</div><div class="num">8,000</div><div class="num">15,000</div><div class="num">25,000</div><div class="num">35,000</div><div class="num">50,000</div><div class="num">70,000</div>
+
+<div class="label">Sample shipping (MX + US)</div>
+<div class="num">5,000</div><div class="num">10,000</div><div class="num">15,000</div><div class="num">25,000</div><div class="num">35,000</div><div class="num">60,000</div><div class="num">100,000</div>
+
+<div class="label">AI tools (Claude, image, video)</div>
+<div class="num">8,000</div><div class="num">10,000</div><div class="num">12,000</div><div class="num">15,000</div><div class="num">18,000</div><div class="num">22,000</div><div class="num">25,000</div>
+
+<div class="label">Visa renewals + business docs</div>
+<div class="num">3,000</div><div class="num">3,000</div><div class="num">5,000</div><div class="num">10,000</div><div class="num">10,000</div><div class="num">15,000</div><div class="num">20,000</div>
+
+<div class="label total">TOTAL MXN / YR</div>
+<div class="num total">69,000</div><div class="num total">114,000</div><div class="num total">182,000</div><div class="num total">320,000</div><div class="num total">423,000</div><div class="num total">727,000</div><div class="num total">1,225,000</div>
+</div>
+<div class="amber-box">
+<strong data-es="Datos a recolectar antes de meter al modelo:">Data to collect before adding to financial model:</strong>
+<div class="checklist" style="margin-top: 6px;">
+<div class="checklist__item" data-es="Tarifa de registración por conferencia (BFM, CIHAC, AIA, Greenbuild, NeoCon)">Registration fee per conference (BFM, CIHAC, AIA, Greenbuild, NeoCon)</div>
+<div class="checklist__item" data-es="Costo booth pequeño (3×3m) vs grande (6×6m)">Booth cost small (3×3m) vs large (6×6m)</div>
+<div class="checklist__item" data-es="Vuelo promedio CDMX→Cancún, CDMX→US gateways">Avg flight CDMX→Cancún, CDMX→US gateways</div>
+<div class="checklist__item" data-es="Noche de hotel promedio por ciudad (CDMX, Tulum, Vegas, NYC)">Avg hotel night per city (CDMX, Tulum, Vegas, NYC)</div>
+<div class="checklist__item" data-es="Costo envío de muestra MX + EE.UU.">Sample shipping cost MX + US</div>
+<div class="checklist__item" data-es="Visa B1/B2 + renovación">B1/B2 visa cost + renewal</div>
+<div class="checklist__item" data-es="Subscripciones IA gen-imagen + video">AI subscriptions image-gen + video</div>
+<div class="checklist__item" data-es="Costo logística contenedor desde Salina Cruz">Container logistics from Salina Cruz</div>
+</div>
+</div>
+<p style="font-size: 0.76rem; color: var(--gray-600); margin-top: 10px;" data-es="<strong>Acción:</strong> NO modificamos el modelo financiero ahora. A partir de 2027 agregar línea Marketing & Sales con valor inicial conservador. Recolectar datos reales 2026-Q3/Q4. Total acumulado 13 años (2027-2040): ~7-9M MXN, ~5-6% de ingresos acumulados — debajo del benchmark B2B clásico de 8-12%, defensible para empresa agri en bootstrap."><strong>Action:</strong> NOT modifying the financial model now. From 2027 add a Marketing & Sales line with conservative initial value. Collect real data Q3-Q4 2026. 13-year cumulative (2027-2040): ~7-9M MXN, ~5-6% of cumulative revenue — below B2B classic benchmark of 8-12%, defensible for bootstrap agri.</p>
+<div class="slide-number">13 / 14</div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     SLIDE 14 — CLOSING
+     ═══════════════════════════════════════════════════ -->
+<section class="slide slide--green-dark" id="s14">
+<div class="green-line" style="background: var(--green-400);"></div>
+<p class="section-label" data-es="Cierre">Closing</p>
+<h2 class="slide-title" style="font-size: clamp(2rem, 4vw, 3rem); max-width: 900px;" data-es="3 números. 3 hitos. 3 riesgos.">3 numbers. 3 milestones. 3 risks.</h2>
+<p class="slide-subtitle" style="max-width: 760px;" data-es="Lo que hay que recordar de este plan, en una página.">What to remember from this plan, in one page.</p>
+<div class="card-grid card-grid--3" style="margin-top: 14px;">
+<div class="card" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12);">
+<div style="color: var(--green-400); font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;" data-es="3 números">3 numbers</div>
+<div style="margin-top: 14px;">
+<div style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 700; color: var(--green-400);">50,000</div>
+<div style="font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-bottom: 14px;" data-es="postes/año MX en 2036">poles/yr MX by 2036</div>
+<div style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 700; color: var(--green-400);">~64,000</div>
+<div style="font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-bottom: 14px;" data-es="postes/año captura stretch">poles/yr stretch capture</div>
+<div style="font-family: var(--font-heading); font-size: 1.7rem; font-weight: 700; color: var(--green-400);">~7-9M</div>
+<div style="font-size: 0.8rem; color: rgba(255,255,255,0.65);" data-es="MXN marketing acumulado 2027-2040">MXN marketing cumulative 2027-2040</div>
+</div>
+</div>
+<div class="card" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12);">
+<div style="color: var(--green-400); font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;" data-es="3 hitos">3 milestones</div>
+<div style="color: rgba(255,255,255,0.7); margin-top: 14px; font-size: 0.86rem; line-height: 1.65;">
+<strong style="color:#fff;" data-es="Fin de 2028:">End of 2028:</strong>
+<span data-es=" 3 key leads warm para 2029, 50-60 prospectos en Awareness, primeras propuestas a proyectos gubernamentales de construcción con bambú entregadas."> 3 key leads warm for 2029, 50-60 prospects in Awareness, first government bamboo-construction project bids submitted.</span>
+<br/><br/>
+<strong style="color:#fff;" data-es="2029:">2029:</strong>
+<span data-es=" 4-7 contratos offtake firmados con precio fijo + cláusula de Índice de Precios al Consumidor para entrega 2031-2038."> 4-7 offtake contracts signed at locked price + Consumer Price Index clause for 2031-2038 delivery.</span>
+<br/><br/>
+<strong style="color:#fff;" data-es="Q1 2037:">Q1 2037:</strong>
+<span data-es=" Primer contenedor a EE.UU. con 7 años de relaciones ya cultivadas."> First US container with 7 years of relationship already built.</span>
+</div>
+</div>
+<div class="card" style="background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.12);">
+<div style="color: var(--amber); font-family: var(--font-heading); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;" data-es="3 riesgos">3 risks</div>
+<div style="color: rgba(255,255,255,0.7); margin-top: 14px; font-size: 0.86rem; line-height: 1.65;">
+<strong style="color:#fff;" data-es="Riesgo 1:">Risk 1:</strong>
+<span data-es=" Los clientes clave no esperan hasta 2031. Mitigación: distribución activa 2027-2030 comprando a otros productores bajo marca Pacífico."> Key accounts don't wait until 2031. Mitigation: active distribution 2027-2030 buying from other producers under Pacífico brand.</span>
+<br/><br/>
+<strong style="color:#fff;" data-es="Riesgo 2:">Risk 2:</strong>
+<span data-es=" ICC-ES se atrasa más de 12 meses, 2037 export se pospone. Mitigación: 50K postes/año base MX no depende de exportación."> ICC-ES delays more than 12 months, 2037 export slips. Mitigation: 50K poles/yr MX base is export-independent.</span>
+<br/><br/>
+<strong style="color:#fff;" data-es="Riesgo 3:">Risk 3:</strong>
+<span data-es=" Modelo financiero sin línea de marketing causa squeeze cuando empezamos a viajar. Mitigación: actualizar modelo Q4 2026 con datos verificados (slide 12)."> Financial model with no marketing line causes a squeeze when travel starts. Mitigation: update model Q4 2026 with verified data (slide 12).</span>
+</div>
+</div>
+</div>
+<p style="font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 28px; max-width: 720px;" data-es="Documento estratégico interno · Pacífico Bambu · El Azulillo, Candelaria, Oaxaca · v3 Mayo 2026 · Para mover a pacifico-bambu-private al final de revisión.">Internal strategic document · Pacífico Bambu · El Azulillo, Candelaria, Oaxaca · v3 May 2026 · To move to pacifico-bambu-private after review.</p>
+<div class="slide-number">14 / 14</div>
+</section>
+
+<script>
+document.addEventListener('keydown', function(e) {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const current = slides.findIndex(s => {
+    const r = s.getBoundingClientRect();
+    return r.top >= -window.innerHeight / 2 && r.top < window.innerHeight / 2;
+  });
+  if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'PageDown') {
+    e.preventDefault();
+    if (current < slides.length - 1) slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+  } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+    e.preventDefault();
+    if (current > 0) slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+  }
+});
+</script>
+<button id="lang-toggle" onclick="toggleLang()">
+<span id="lang-toggle-label">ES</span>
+</button>
+<script>
+(function(){
+  let currentLang = 'en';
+  document.querySelectorAll('[data-es]').forEach(el => { el.dataset.en = el.innerHTML; });
+  window.toggleLang = function(){
+    currentLang = (currentLang === 'en') ? 'es' : 'en';
+    document.querySelectorAll('[data-es]').forEach(el => {
+      el.innerHTML = (currentLang === 'es') ? el.dataset.es : el.dataset.en;
+    });
+    document.getElementById('lang-toggle-label').textContent = (currentLang === 'es') ? 'EN' : 'ES';
+    document.documentElement.lang = currentLang;
+  };
+})();
+</script>
+</body>
+</html>
