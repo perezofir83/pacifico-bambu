@@ -194,6 +194,9 @@ table.gtm-table .center { text-align: center; }
 
 #lang-toggle { position: fixed; top: 14px; right: 14px; z-index: 9999; background: #166534; color: #fff; border: none; padding: 7px 13px; border-radius: 20px; font-family: inherit; font-size: 0.78rem; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.15); letter-spacing: 0.05em; }
 
+.table-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-scroll > table, .table-scroll > .budget-grid { min-width: 100%; }
+
 @media (max-width: 1100px) {
   :root { --slide-padding: 32px; }
   .card-grid--3, .card-grid--4 { grid-template-columns: 1fr; }
@@ -209,6 +212,42 @@ table.gtm-table .center { text-align: center; }
   .persona-summary { font-size: 0.66rem; }
   .persona-summary th, .persona-summary td { padding: 6px 5px; }
   .era-strip { height: auto; flex-direction: column; }
+}
+
+@media (max-width: 640px) {
+  :root { --slide-padding: 20px; }
+  .slide { padding: 24px 18px 60px; }
+  .slide-title { font-size: clamp(1.2rem, 5vw, 1.6rem); }
+  .slide-subtitle { font-size: 0.84rem; }
+  .card-grid--2 { grid-template-columns: 1fr; }
+  .icp-card { padding: 16px; }
+  .icp-card__id { font-size: 1.3rem; }
+  .icp-card__title { font-size: 0.95rem; }
+  .icp-row { grid-template-columns: 92px 1fr; gap: 6px; font-size: 0.72rem; }
+  .icp-row__label { font-size: 0.62rem; }
+  .persona { padding: 12px; }
+  .persona__id { font-size: 1rem; }
+  .persona__title { font-size: 0.82rem; }
+  .focus-pill { font-size: 0.6rem; padding: 5px 10px; }
+  .focus-line { font-size: 0.78rem; }
+  .year-block { padding: 12px 14px; }
+  .year-block__title { font-size: 0.86rem; }
+  .year-block__bullets { font-size: 0.74rem; }
+  .insight-box, .amber-box { padding: 12px 14px; font-size: 0.78rem; }
+  /* Wide tables: enable horizontal scroll inside their wrapper */
+  .table-scroll { border: 1px solid var(--gray-200); border-radius: 8px; }
+  .table-scroll > table, .table-scroll > .budget-grid { border: none; border-radius: 0; }
+  .fit-matrix { min-width: 540px; font-size: 0.7rem; }
+  .persona-summary { min-width: 700px; }
+  table.gtm-table { min-width: 600px; font-size: 0.74rem; }
+  .budget-grid { min-width: 640px; font-size: 0.62rem; }
+  /* Funnel — already collapsed at 1100px */
+  .funnel__stage { padding: 10px 14px; }
+  .funnel__name { font-size: 0.84rem; }
+  .funnel__desc { font-size: 0.7rem; }
+  /* Cover slide cards */
+  .gate__title { font-size: 1.7rem; }
+  .gate__inner { max-width: 300px; }
 }
 
 @media print {
@@ -499,7 +538,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <p class="section-label" data-es="Resumen Operativo · 6 Perfiles">Operator Summary · 6 Profiles</p>
 <h2 class="slide-title" data-es="Todos los compradores en una página">Every buyer on one page</h2>
 <p class="slide-subtitle" data-es="Vista de referencia diaria. Slides 4 y 5 son el deep-dive — esta es la versión scaneable que vive pegada a la pared.">Daily reference view. Slides 4 and 5 are the deep dive — this is the scannable version that lives pinned to the wall.</p>
-<table class="persona-summary">
+<div class="table-scroll"><table class="persona-summary">
 <thead>
 <tr>
 <th>ID</th>
@@ -588,7 +627,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <td>Diego</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <div class="insight-box" data-es="<strong>Reparto:</strong> Ofir lleva A, B, ①, ③ (relación premium + B2B inglés). Diego lleva ④ (palapa belt, español de campo). Estudio diseño-construcción es co-llevado por valor de la relación arquitecto + ejecución técnica."><strong>Split:</strong> Ofir owns A, B, ①, ③ (premium relationship + English B2B). Diego owns ④ (palapa belt, field Spanish). Design-Build studio is jointly owned for architect-relationship value + technical execution.</div>
 <div class="slide-number">6 / 14</div>
 </section>
@@ -601,7 +640,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <p class="section-label" data-es="Canales de Adquisición">Acquisition Channels</p>
 <h2 class="slide-title" data-es="Cómo nos encuentran (y cómo los encontramos)">How they find us (and how we find them)</h2>
 <p class="slide-subtitle" data-es="7 canales × 6 perfiles. ● = canal principal. ○ = canal secundario. Vacío = no aplica.">7 channels × 6 profiles. ● = primary channel. ○ = secondary channel. Blank = not used.</p>
-<table class="fit-matrix">
+<div class="table-scroll"><table class="fit-matrix">
 <thead>
 <tr>
 <th data-es="Canal · Costo · Fase">Channel · Cost · Phase</th>
@@ -678,7 +717,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <td class="cell"></td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <div class="legend">
 <span><span class="dot dot--primary"></span><span data-es="Canal principal">Primary channel</span></span>
 <span><span class="dot dot--secondary"></span><span data-es="Canal secundario / refuerzo">Secondary / reinforcement</span></span>
@@ -848,7 +887,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <p class="section-label" style="color: var(--amber);" data-es="Prueba de Estrés del Plan GTM">GTM Stress Test</p>
 <h2 class="slide-title" data-es="¿Qué pasa si el plan no sale como esperamos?">What if the plan doesn't go as expected?</h2>
 <p class="slide-subtitle" data-es="4 escenarios adversos sobre el base (1,400 culms/ha, 400 MXN/poste). Bajo cada uno: ¿sigue rentable? ¿se rompe el plan GTM?">4 adverse scenarios over base (1,400 culms/ha, 400 MXN/pole). Under each: still profitable? does the GTM plan break?</p>
-<table class="gtm-table">
+<div class="table-scroll"><table class="gtm-table">
 <thead>
 <tr>
 <th data-es="Escenario">Scenario</th>
@@ -898,7 +937,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <td data-es="~$1.18M USD/yr neto · payback 7→9 años · tesis no se rompe">~$1.18M USD/yr net · payback 7→9 yrs · thesis intact</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <div class="insight-box" data-es="<strong>Conclusión:</strong> incluso bajo 3 estrés simultáneos, el modelo es rentable. La tesis se rompería solo si <em>simultáneamente</em>: (a) las 3 especies mueren, (b) los 5 canales se cierran, (c) Ronda 2 falla. Probabilidad conjunta &lt; 1%. Resiliencia por diseño: key offtakes 2029 + diversificación + CONAFOR + 5 años I+D validado."><strong>Conclusion:</strong> even under 3 simultaneous stresses, the model is profitable. The thesis breaks only if <em>simultaneously</em>: (a) all 3 pilot species die, (b) all 5 channels close, (c) Round 2 fails. Joint probability &lt; 1%. Resilience by design: 2029 key offtakes + diversification + CONAFOR + 5 yrs validated R&amp;D.</div>
 <p style="font-size: 0.7rem; color: var(--gray-500); margin-top: 12px;">Sources: <a href="http://www.scielo.org.co/scielo.php?script=sci_arttext&amp;pid=S0121-74882020000200097" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Céspedes Prieto et al. 2020 (SciELO Colombia)</a> · <a href="http://www.scielo.org.co/scielo.php?script=sci_arttext&amp;pid=S0366-52322021000100186" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">Camargo NPV 2021</a> · <a href="https://www.gob.mx/conafor/acciones-y-programas/programa-de-financiamiento-a-plantaciones-forestales-comerciales" style="color: var(--gray-500); text-decoration: underline;" target="_blank" rel="noopener">CONAFOR PFC</a> · 5-yr pilot data — Pacífico Bambu El Azulillo (April 2021–April 2026, internal)</p>
 <div class="slide-number">11 / 14</div>
@@ -912,7 +951,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <p class="section-label" data-es="Conferencias y Presencia">Conferences & Industry Presence</p>
 <h2 class="slide-title" data-es="Lista mínima de eventos: qué, cuándo, importancia">Minimal event list: what, when, importance</h2>
 <p class="slide-subtitle" data-es="Ofir + Diego asisten a un subconjunto cada año. ★ = visitar si hay capacidad · ★★ = anual · ★★★ = imprescindible.">Ofir + Diego attend a subset each year. ★ = visit if capacity · ★★ = annual · ★★★ = must-attend.</p>
-<table class="gtm-table">
+<div class="table-scroll"><table class="gtm-table">
 <thead>
 <tr><th>Event</th><th>Region</th><th>Month</th><th>From year</th><th class="center">Importance</th></tr>
 </thead>
@@ -932,7 +971,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <tr><td>International Builders' Show (Las Vegas)</td><td>US</td><td>January</td><td>2035</td><td class="center"><span class="stars">★</span></td></tr>
 <tr><td>ICC-ES technical events</td><td>US</td><td>multiple</td><td>2034</td><td class="center"><span class="stars">★★★</span></td></tr>
 </tbody>
-</table>
+</table></div>
 <div class="insight-box" data-es="<strong>Reparto:</strong> Diego cubre técnicos MX (idioma + campo). Ofir cubre premium MX + todos EE.UU. (inglés + visa B1/B2). Decisión año a año según capacidad de working capital."><strong>Split:</strong> Diego covers MX technical (language + field). Ofir covers premium MX + all US (English + B1/B2 visa). Year-by-year decision based on working-capital capacity.</div>
 <div class="slide-number">12 / 14</div>
 </section>
@@ -945,7 +984,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 <p class="section-label" style="color: var(--amber);" data-es="Presupuesto Marketing — Hueco Identificado">Marketing Budget — Gap Identified</p>
 <h2 class="slide-title" data-es="El modelo financiero v2 no tiene línea de marketing">Financial model v2 has zero marketing line</h2>
 <p class="slide-subtitle" data-es="SG&A actual cubre solo phone + legal + accountant. Cero línea para conferencias, viajes, muestras o IA. Estructura propuesta in-house (Ofir + Diego + IA, sin agencias).">Current SG&A covers only phone + legal + accountant. Zero line for conferences, travel, samples, or AI. Proposed structure is in-house (Ofir + Diego + AI, no agencies).</p>
-<div class="budget-grid" style="margin-bottom: 14px;">
+<div class="table-scroll" style="margin-bottom: 14px;"><div class="budget-grid">
 <div class="header">Cost line (MXN, in-house)</div>
 <div class="header num">2027</div>
 <div class="header num">2028</div>
@@ -987,7 +1026,7 @@ body.locked > *:not(.gate) { visibility: hidden; }
 
 <div class="label total">TOTAL MXN / YR</div>
 <div class="num total">69,000</div><div class="num total">114,000</div><div class="num total">182,000</div><div class="num total">320,000</div><div class="num total">423,000</div><div class="num total">727,000</div><div class="num total">1,225,000</div>
-</div>
+</div></div>
 <div class="amber-box">
 <strong data-es="Datos a recolectar antes de meter al modelo:">Data to collect before adding to financial model:</strong>
 <div class="checklist" style="margin-top: 6px;">
