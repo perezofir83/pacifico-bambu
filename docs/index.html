@@ -104,6 +104,17 @@ body {
 .slide--green-dark { background: var(--green-900); color: #fff; }
 .slide--with-image { padding: 0; }
 
+/* Tall slides — content overflows 100vh; allow them to grow vertically.
+   Used by content-dense slides (s11 financial timeline, sstress-test 4 scenarios). */
+.slide--tall {
+  height: auto;
+  min-height: 100vh;
+  justify-content: flex-start;
+  overflow: visible;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
 /* Full background image with overlay */
 .slide--bg-photo {
   padding: 0;
@@ -2073,7 +2084,7 @@ body {
 <!-- ═══════════════════════════════════════════════════
      SLIDE 16 — FINANCIAL PROJECTIONS
      ═══════════════════════════════════════════════════ -->
-<section class="slide slide--white" id="s11">
+<section class="slide slide--white slide--tall" id="s11">
 <div class="green-line"></div>
 <p class="section-label" data-es="Proyecciones Financieras">Financial Projections</p>
 <h2 class="slide-title" data-es="Proyecciones Financieras">Financial Projections</h2>
@@ -2197,7 +2208,7 @@ body {
 <!-- ═══════════════════════════════════════════════════
      SLIDE 5 — GTM STRESS TEST
      ═══════════════════════════════════════════════════ -->
-<section class="slide slide--white" id="sstress-test">
+<section class="slide slide--white slide--tall" id="sstress-test">
 <div class="green-line" style="background: var(--amber);"></div>
 <p class="section-label" style="color: var(--amber);" data-es="Prueba de Estrés del Plan GTM">GTM Stress Test</p>
 <h2 class="slide-title" data-es="¿Y si el plan no sale como se espera?">What if the plan doesn't go as expected?</h2>
