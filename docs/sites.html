@@ -1,576 +1,482 @@
 <!DOCTYPE html>
-<html class="light scroll-smooth" lang="en" data-lang="en">
+<html class="light" lang="en" data-lang="en">
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Pacífico Bambú — Field Analysis</title>
-<meta name="description" data-en="Satellite-derived field analysis for Pacífico Bambú's Guadua plantation sites in Candelaria, Oaxaca." data-es="Análisis satelital de los campos de Guadua de Pacífico Bambú en Candelaria, Oaxaca." content="Satellite-derived field analysis for Pacífico Bambú's Guadua plantation sites in Candelaria, Oaxaca."/>
+<title>Pacífico Bambú — Field Data</title>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Be+Vietnam+Pro:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        primary: "#012d1d",
-        secondary: "#116c4a",
-        "green-50": "#F7FDF9",
-        "green-100": "#F0FFF4",
-        "green-200": "#D8F3DC",
-        "green-500": "#74C69D",
-        "green-700": "#40916C",
-        "green-800": "#2D6A4F",
-        "green-900": "#1B4332",
-        "green-950": "#0F2922",
-        "cream-50": "#FAFDF8",
-        background: "#f8f9ff",
-        surface: "#f8f9ff",
-        ink: "#1F2937",
-        "ink-soft": "#4B5563",
-        "ink-mute": "#6B7280",
-      },
-      fontFamily: {
-        sans: ['"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
-        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
-      },
-    },
-  },
+  theme: { extend: { colors: {
+    primary: "#012d1d", secondary: "#116c4a",
+    "green-50": "#F7FDF9", "green-100": "#F0FFF4", "green-200": "#D8F3DC",
+    "green-500": "#74C69D", "green-700": "#40916C", "green-800": "#2D6A4F",
+    "green-900": "#1B4332", "green-950": "#0F2922",
+    "cream-50": "#FAFDF8", background: "#f8f9ff", surface: "#f8f9ff",
+    ink: "#1F2937", "ink-soft": "#4B5563", "ink-mute": "#6B7280",
+  }, fontFamily: {
+    sans: ['"Be Vietnam Pro"', 'system-ui', 'sans-serif'],
+    display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+    mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+  }}}
 };
 </script>
 <style>
 html { font-family: "Be Vietnam Pro", system-ui, sans-serif; }
 .font-display { font-family: "Space Grotesk", system-ui, sans-serif; }
+.font-mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
 .font-eyebrow { font-family: "Space Grotesk", system-ui, sans-serif; letter-spacing: 0.18em; }
-#map, #map2 { height: 480px; width: 100%; border-radius: 4px; }
+#map { height: 480px; width: 100%; }
 .leaflet-container { background: #0F2922; font-family: "Be Vietnam Pro", sans-serif; }
-.metric-label { font-family: "Space Grotesk", sans-serif; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #6B7280; }
-.metric-value { font-family: "Space Grotesk", sans-serif; font-size: 1.5rem; font-weight: 500; color: #012d1d; line-height: 1.1; }
-.metric-unit { font-size: 0.75rem; color: #4B5563; margin-left: 2px; font-weight: 400; }
-.divider { border-color: rgba(27, 67, 50, 0.12); }
-.section-pad { padding-top: 5rem; padding-bottom: 5rem; }
-@media (max-width: 768px) { .section-pad { padding-top: 3rem; padding-bottom: 3rem; } #map, #map2 { height: 360px; } }
+table.data { width: 100%; border-collapse: collapse; font-size: 13px; }
+table.data th, table.data td { padding: 8px 12px; text-align: left; border-bottom: 1px solid rgba(27,67,50,0.08); }
+table.data th { font-family: "Space Grotesk"; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #6B7280; background: #F7FDF9; font-weight: 500; }
+table.data td { font-family: "JetBrains Mono"; font-variant-numeric: tabular-nums; color: #1F2937; }
+table.data td.label { font-family: "Be Vietnam Pro"; color: #4B5563; font-weight: normal; }
+table.data td.unit { color: #6B7280; font-size: 11px; }
+table.data tr:hover td { background: #F7FDF9; }
+.section-pad { padding-top: 4rem; padding-bottom: 4rem; }
+@media (max-width: 768px) { .section-pad { padding-top: 2.5rem; padding-bottom: 2.5rem; } #map { height: 360px; } table.data { font-size: 12px; } table.data th, table.data td { padding: 6px 8px; } }
+.legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
 </style>
 </head>
-<body class="bg-background text-ink antialiased">
+<body class="bg-background text-ink">
 
-<!-- HEADER -->
-<header class="fixed top-0 w-full z-50 bg-cream-50/85 backdrop-blur-md border-b border-green-900/10 h-16">
+<header class="sticky top-0 z-50 bg-cream-50/95 backdrop-blur-md border-b border-green-900/10 h-14">
   <div class="max-w-7xl mx-auto h-full px-6 lg:px-12 flex items-center justify-between">
-    <span class="font-display text-lg font-medium text-green-900 tracking-tight">
-      Pacífico Bambú
-    </span>
-    <nav class="hidden md:flex items-center gap-8 font-display text-xs uppercase tracking-widest">
-      <span class="text-green-900 border-b border-green-900" data-en="Field Analysis" data-es="Análisis de Campos">Field Analysis</span>
-      <a href="#map-section" class="text-ink-soft hover:text-green-900 transition-colors" data-en="Sites" data-es="Campos">Sites</a>
-      <a href="#climate" class="text-ink-soft hover:text-green-900 transition-colors" data-en="Climate" data-es="Clima">Climate</a>
-    </nav>
-    <button data-lang-toggle class="font-display text-xs tracking-widest text-green-900 hover:opacity-70">
-      <span data-lang-en class="font-bold">EN</span><span class="opacity-50 mx-1">/</span><span data-lang-es>ES</span>
-    </button>
+    <div>
+      <span class="font-display text-base font-medium text-green-900">Pacífico Bambú</span>
+      <span class="text-ink-mute font-display text-xs uppercase tracking-widest ml-3 hidden sm:inline" data-en="Field Data" data-es="Datos de Campo">Field Data</span>
+    </div>
+    <div class="flex items-center gap-6 text-xs">
+      <span class="font-mono text-ink-mute hidden md:inline">15.879°N · 96.512°W</span>
+      <button data-lang-toggle class="font-display tracking-widest text-green-900 hover:opacity-70">
+        <span data-lang-en class="font-bold">EN</span><span class="opacity-50 mx-1">/</span><span data-lang-es>ES</span>
+      </button>
+    </div>
   </div>
 </header>
 
-<!-- HERO -->
-<section class="pt-32 pb-16 px-6 lg:px-12 max-w-7xl mx-auto">
-  <p class="font-eyebrow text-[10px] text-green-700 uppercase mb-4"
-     data-en="Candelaria · Oaxaca · México · 15.879°N 96.512°W"
-     data-es="Candelaria · Oaxaca · México · 15.879°N 96.512°W">
-    Candelaria · Oaxaca · México · 15.879°N 96.512°W
-  </p>
-  <h1 class="font-display text-4xl md:text-6xl font-light text-green-950 leading-[1.05] mb-6 max-w-4xl"
-      data-en="The land, <span class='italic text-green-800'>measured</span> from space."
-      data-es="La tierra, <span class='italic text-green-800'>medida</span> desde el espacio.">
-    The land, <span class="italic text-green-800">measured</span> from space.
-  </h1>
-  <p class="text-lg md:text-xl text-ink-soft max-w-3xl leading-relaxed"
-     data-en="Two <i class='italic'>Guadua angustifolia</i> blocks in the highlands of Oaxaca, profiled across topography, rainfall, and vegetation health using ten years of public satellite data."
-     data-es="Dos bloques de <i class='italic'>Guadua angustifolia</i> en la sierra de Oaxaca, perfilados en topografía, lluvia y salud vegetal con diez años de datos satelitales públicos.">
-    Two <i class="italic">Guadua angustifolia</i> blocks in the highlands of Oaxaca, profiled across topography, rainfall, and vegetation health using ten years of public satellite data.
-  </p>
-  <div class="mt-8 flex flex-wrap gap-4 text-xs font-display uppercase tracking-widest text-ink-mute">
-    <span data-en="Copernicus DEM 30m" data-es="Copernicus DEM 30m">Copernicus DEM 30m</span>
-    <span class="text-green-700">·</span>
-    <span data-en="CHIRPS 2016–2025" data-es="CHIRPS 2016–2025">CHIRPS 2016–2025</span>
-    <span class="text-green-700">·</span>
-    <span data-en="Sentinel-2 L2A 10m" data-es="Sentinel-2 L2A 10m">Sentinel-2 L2A 10m</span>
+<section class="bg-green-100/40 border-b border-green-900/10 py-4 px-6 lg:px-12">
+  <div class="max-w-7xl mx-auto flex flex-wrap items-baseline gap-x-8 gap-y-2 text-xs">
+    <span class="font-eyebrow text-green-700 uppercase">Candelaria · Oaxaca · México</span>
+    <span class="text-ink-mute font-mono">Generated: <span id="gen-date">—</span></span>
+    <span class="text-ink-mute font-mono" data-en="Datasets: 7" data-es="Fuentes: 7">Datasets: 7</span>
   </div>
 </section>
 
-<!-- MAP -->
-<section id="map-section" class="px-6 lg:px-12 max-w-7xl mx-auto">
-  <div class="flex items-end justify-between mb-6 flex-wrap gap-4">
-    <div>
-      <span class="font-eyebrow text-[10px] text-green-700 uppercase" data-en="01 — The Sites" data-es="01 — Los Campos">01 — The Sites</span>
-      <h2 class="font-display text-2xl md:text-3xl text-green-950 mt-2 font-medium" data-en="Field 1 and Field 2 — adjacent blocks, different scales." data-es="Campo 1 y Campo 2 — bloques adyacentes, escalas distintas.">
-        Field 1 and Field 2 — adjacent blocks, different scales.
-      </h2>
-    </div>
-    <div class="flex gap-4 items-center text-xs font-display uppercase tracking-widest">
-      <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-green-500"></span><span data-en="Field 1 · Pilot" data-es="Campo 1 · Piloto">Field 1 · Pilot</span></span>
-      <span class="flex items-center gap-2"><span class="w-3 h-3 rounded-full" style="background:#FFB347"></span><span data-en="Field 2 · Production" data-es="Campo 2 · Producción">Field 2 · Production</span></span>
+<section class="px-6 lg:px-12 max-w-7xl mx-auto pt-8">
+  <div class="flex items-end justify-between mb-3 flex-wrap gap-2">
+    <h2 class="font-display text-lg text-green-950 font-medium" data-en="01 · Field perimeters" data-es="01 · Perímetros de campo">01 · Field perimeters</h2>
+    <div class="flex gap-4 items-center text-xs font-mono">
+      <span><span class="legend-dot" style="background:#74C69D"></span>Field 1</span>
+      <span><span class="legend-dot" style="background:#FFB347"></span>Field 2</span>
     </div>
   </div>
-  <div id="map" class="shadow-lg border border-green-900/10"></div>
-  <p class="text-xs text-ink-mute mt-3 font-display tracking-wide" data-en="Satellite imagery: Esri World Imagery. Polygons digitised from on-site GPS perimeter walks." data-es="Imagen satelital: Esri World Imagery. Polígonos digitalizados a partir de recorridos GPS perimetrales en sitio.">
-    Satellite imagery: Esri World Imagery. Polygons digitised from on-site GPS perimeter walks.
-  </p>
+  <div id="map" class="border border-green-900/10"></div>
+  <p class="text-[11px] text-ink-mute mt-2 font-mono">Basemap: Esri World Imagery. Polygons: on-site GPS perimeter walks.</p>
 </section>
 
-<!-- FIELD CARDS -->
 <section class="section-pad px-6 lg:px-12 max-w-7xl mx-auto">
-  <div class="grid md:grid-cols-2 gap-8">
-
-    <!-- FIELD 1 -->
-    <article class="bg-green-50 border border-green-900/10 p-8 rounded-sm">
-      <div class="flex items-baseline justify-between mb-6">
-        <h3 class="font-display text-2xl text-green-950 font-medium" data-en="Field 1 — Pilot Block" data-es="Campo 1 — Bloque Piloto">Field 1 — Pilot Block</h3>
-        <span class="font-eyebrow text-[10px] text-green-700 uppercase">Guadua · 6Y</span>
-      </div>
-      <p class="text-sm text-ink-soft mb-6 leading-relaxed" data-en="The original research and selection plot. Smaller footprint, gentler terrain, used to calibrate planting density and culm-harvest timing for the larger block." data-es="La parcela original de investigación y selección. Superficie más pequeña, terreno más suave, usada para calibrar densidad de plantación y tiempos de cosecha de culmos para el bloque mayor.">
-      </p>
-      <div class="grid grid-cols-3 gap-5 mb-6">
-        <div><span class="metric-label" data-en="Area" data-es="Área">Area</span><div class="metric-value mt-1">0.26<span class="metric-unit">ha</span></div></div>
-        <div><span class="metric-label" data-en="Elevation" data-es="Altitud">Elevation</span><div class="metric-value mt-1">440<span class="metric-unit">m</span></div></div>
-        <div><span class="metric-label" data-en="Mean Slope" data-es="Pendiente">Mean Slope</span><div class="metric-value mt-1">12°</div></div>
-        <div><span class="metric-label">NDVI</span><div class="metric-value mt-1">0.69</div></div>
-        <div><span class="metric-label">NDMI</span><div class="metric-value mt-1">0.27</div></div>
-        <div><span class="metric-label" data-en="Aspect" data-es="Orient.">Aspect</span><div class="metric-value mt-1">N</div></div>
-      </div>
-      <div class="border-t divider pt-4 space-y-2 text-sm">
-        <div class="flex justify-between"><span class="text-ink-mute" data-en="Slope distribution" data-es="Distribución de pendiente">Slope distribution</span><span class="text-ink font-medium">66.7% · 5–15°</span></div>
-        <div class="flex justify-between"><span class="text-ink-mute" data-en="Elevation range" data-es="Rango de altitud">Elevation range</span><span class="text-ink font-medium">429 – 449 m</span></div>
-        <div class="flex justify-between"><span class="text-ink-mute" data-en="NDVI (wet / dry)" data-es="NDVI (húmedo / seco)">NDVI (wet / dry)</span><span class="text-ink font-medium">0.68 / 0.70</span></div>
-        <div class="flex justify-between"><span class="text-ink-mute" data-en="Sentinel-2 scenes" data-es="Escenas Sentinel-2">Sentinel-2 scenes</span><span class="text-ink font-medium">532</span></div>
-      </div>
-      <div class="mt-6 p-4 bg-green-900 text-cream-50 rounded-sm">
-        <p class="text-xs uppercase tracking-widest text-green-200 font-display mb-1" data-en="Agronomic read" data-es="Lectura agronómica">Agronomic read</p>
-        <p class="text-sm leading-relaxed" data-en="Gentle terrain, mature canopy. NDVI in the 0.69 range matches established Guadua stands — confirms the pilot is at productive maturity." data-es="Terreno suave, dosel maduro. NDVI alrededor de 0.69 coincide con rodales establecidos de Guadua — confirma que el piloto está en madurez productiva.">
-          Gentle terrain, mature canopy. NDVI in the 0.69 range matches established Guadua stands — confirms the pilot is at productive maturity.
-        </p>
-      </div>
-    </article>
-
-    <!-- FIELD 2 -->
-    <article class="bg-green-50 border border-green-900/10 p-8 rounded-sm">
-      <div class="flex items-baseline justify-between mb-6">
-        <h3 class="font-display text-2xl text-green-950 font-medium" data-en="Field 2 — Production Block" data-es="Campo 2 — Bloque de Producción">Field 2 — Production Block</h3>
-        <span class="font-eyebrow text-[10px] text-green-700 uppercase">Guadua</span>
-      </div>
-      <p class="text-sm text-ink-soft mb-6 leading-relaxed" data-en="The scale block. ~12× the footprint of the pilot, on the adjacent hillslope. Slope and elevation gradient drive the contour-planting layout." data-es="El bloque de escala. ~12× la superficie del piloto, en la ladera adyacente. La pendiente y el gradiente altitudinal determinan el diseño de plantación en contorno.">
-      </p>
-      <div class="grid grid-cols-3 gap-5 mb-6">
-        <div><span class="metric-label" data-en="Area" data-es="Área">Area</span><div class="metric-value mt-1">3.26<span class="metric-unit">ha</span></div></div>
-        <div><span class="metric-label" data-en="Elevation" data-es="Altitud">Elevation</span><div class="metric-value mt-1">481<span class="metric-unit">m</span></div></div>
-        <div><span class="metric-label" data-en="Mean Slope" data-es="Pendiente">Mean Slope</span><div class="metric-value mt-1">18°</div></div>
-        <div><span class="metric-label">NDVI</span><div class="metric-value mt-1">0.69</div></div>
-        <div><span class="metric-label">NDMI</span><div class="metric-value mt-1">0.28</div></div>
-        <div><span class="metric-label" data-en="Aspect" data-es="Orient.">Aspect</span><div class="metric-value mt-1">N</div></div>
-      </div>
-      <div class="border-t divider pt-4 space-y-2 text-sm">
-        <div class="flex justify-between"><span class="text-ink-mute" data-en="Slope distribution" data-es="Distribución de pendiente">Slope distribution</span><span class="text-ink font-medium">80.0% · 15–30°</span></div>
-        <div class="flex justify-between"><span class="text-ink-mute" data-en="Elevation range" data-es="Rango de altitud">Elevation range</span><span class="text-ink font-medium">434 – 541 m</span></div>
-        <div class="flex justify-between"><span class="text-ink-mute" data-en="NDVI (wet / dry)" data-es="NDVI (húmedo / seco)">NDVI (wet / dry)</span><span class="text-ink font-medium">0.68 / 0.70</span></div>
-        <div class="flex justify-between"><span class="text-ink-mute" data-en="Sentinel-2 scenes" data-es="Escenas Sentinel-2">Sentinel-2 scenes</span><span class="text-ink font-medium">532</span></div>
-      </div>
-      <div class="mt-6 p-4 bg-green-900 text-cream-50 rounded-sm">
-        <p class="text-xs uppercase tracking-widest text-green-200 font-display mb-1" data-en="Agronomic read" data-es="Lectura agronómica">Agronomic read</p>
-        <p class="text-sm leading-relaxed" data-en="Hillside terrain — 80% of the block falls in the 15–30° class. North-facing aspect favours moisture retention. Contour rows + erosion control are essential; vegetation indices already match the mature pilot." data-es="Terreno de ladera — 80% del bloque cae en el rango 15–30°. Orientación norte favorece la retención de humedad. Surcos en contorno + control de erosión son esenciales; los índices vegetales ya coinciden con el piloto maduro.">
-          Hillside terrain — 80% of the block falls in the 15–30° class. North-facing aspect favours moisture retention. Contour rows + erosion control are essential; vegetation indices already match the mature pilot.
-        </p>
-      </div>
-    </article>
-
+  <h2 class="font-display text-lg text-green-950 font-medium mb-4" data-en="02 · Field summary" data-es="02 · Resumen de campos">02 · Field summary</h2>
+  <div class="overflow-x-auto border border-green-900/10">
+    <table class="data" id="summary-table"></table>
   </div>
 </section>
 
-<!-- CLIMATE -->
-<section id="climate" class="bg-green-100 section-pad px-6 lg:px-12">
+<section class="bg-green-100/40 section-pad px-6 lg:px-12">
   <div class="max-w-7xl mx-auto">
-    <div class="mb-10">
-      <span class="font-eyebrow text-[10px] text-green-700 uppercase" data-en="02 — Climate" data-es="02 — Clima">02 — Climate</span>
-      <h2 class="font-display text-2xl md:text-3xl text-green-950 mt-2 font-medium" data-en="A monsoon-driven year with a mid-summer pause." data-es="Un año dominado por monzón con una pausa de medio verano.">
-        A monsoon-driven year with a mid-summer pause.
-      </h2>
-      <p class="text-ink-soft mt-3 max-w-3xl"
-         data-en="Annual rainfall averages <strong>994 mm</strong>, with <strong>96%</strong> falling May through October. The well-known <em>canícula</em> — a July rainfall dip between two wet peaks — is visible in the chart below."
-         data-es="La lluvia anual promedio es de <strong>994 mm</strong>, con el <strong>96%</strong> entre mayo y octubre. La conocida <em>canícula</em> — caída de lluvia en julio entre dos picos húmedos — se ve abajo.">
-        Annual rainfall averages <strong>994 mm</strong>, with <strong>96%</strong> falling May through October.
-      </p>
+    <h2 class="font-display text-lg text-green-950 font-medium mb-1" data-en="03 · Climate &amp; water balance" data-es="03 · Clima y balance hídrico">03 · Climate &amp; water balance</h2>
+    <p class="text-xs text-ink-mute mb-6 font-mono">TerraClimate 4 km · 2012–2021 climatology · centroid pixel</p>
+
+    <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3" data-en="Monthly rainfall (mm) — CHIRPS" data-es="Lluvia mensual (mm) — CHIRPS">Monthly rainfall (mm) — CHIRPS</h3>
+    <div class="bg-cream-50 border border-green-900/10 p-5 mb-8">
+      <svg id="rainChart" viewBox="0 0 720 240" class="w-full h-auto"></svg>
     </div>
 
-    <div class="bg-cream-50 border border-green-900/10 p-6 md:p-10 rounded-sm">
-      <h3 class="font-display text-sm uppercase tracking-widest text-ink-mute mb-6" data-en="Monthly rainfall — 10-year average (mm)" data-es="Lluvia mensual — promedio 10 años (mm)">
-        Monthly rainfall — 10-year average (mm)
-      </h3>
-      <svg id="rainChart" viewBox="0 0 720 280" class="w-full h-auto"></svg>
+    <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3" data-en="Monthly temperature (°C)" data-es="Temperatura mensual (°C)">Monthly temperature (°C)</h3>
+    <div class="bg-cream-50 border border-green-900/10 p-5 mb-8">
+      <svg id="tempChart" viewBox="0 0 720 240" class="w-full h-auto"></svg>
     </div>
 
-    <div class="grid md:grid-cols-4 gap-6 mt-8">
-      <div class="bg-cream-50 p-6 border border-green-900/10 rounded-sm">
-        <span class="metric-label" data-en="Annual mean" data-es="Promedio anual">Annual mean</span>
-        <div class="metric-value mt-2">994<span class="metric-unit">mm</span></div>
-      </div>
-      <div class="bg-cream-50 p-6 border border-green-900/10 rounded-sm">
-        <span class="metric-label" data-en="Wet season (May–Oct)" data-es="Época húmeda (May–Oct)">Wet season (May–Oct)</span>
-        <div class="metric-value mt-2">952<span class="metric-unit">mm</span></div>
-      </div>
-      <div class="bg-cream-50 p-6 border border-green-900/10 rounded-sm">
-        <span class="metric-label" data-en="Dry season (Nov–Apr)" data-es="Época seca (Nov–Abr)">Dry season (Nov–Apr)</span>
-        <div class="metric-value mt-2">41<span class="metric-unit">mm</span></div>
-      </div>
-      <div class="bg-cream-50 p-6 border border-green-900/10 rounded-sm">
-        <span class="metric-label" data-en="Year-to-year variation" data-es="Variación interanual">Year-to-year variation</span>
-        <div class="metric-value mt-2">612–1235<span class="metric-unit">mm</span></div>
-      </div>
+    <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3" data-en="Monthly water balance (mm)" data-es="Balance hídrico mensual (mm)">Monthly water balance (mm)</h3>
+    <div class="bg-cream-50 border border-green-900/10 p-5 mb-8">
+      <svg id="wbChart" viewBox="0 0 720 240" class="w-full h-auto"></svg>
     </div>
 
-    <h3 class="font-display text-sm uppercase tracking-widest text-ink-mute mt-12 mb-6" data-en="Annual rainfall 2016–2025 (mm)" data-es="Lluvia anual 2016–2025 (mm)">
-      Annual rainfall 2016–2025 (mm)
-    </h3>
-    <div class="bg-cream-50 border border-green-900/10 p-6 md:p-10 rounded-sm">
-      <svg id="annualChart" viewBox="0 0 720 240" class="w-full h-auto"></svg>
+    <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3" data-en="Monthly climate table — Field 1" data-es="Tabla climática mensual — Campo 1">Monthly climate table — Field 1</h3>
+    <div class="overflow-x-auto border border-green-900/10 mb-4">
+      <table class="data" id="clim-table-f1"></table>
+    </div>
+    <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3" data-en="Monthly climate table — Field 2" data-es="Tabla climática mensual — Campo 2">Monthly climate table — Field 2</h3>
+    <div class="overflow-x-auto border border-green-900/10">
+      <table class="data" id="clim-table-f2"></table>
     </div>
   </div>
 </section>
 
-<!-- TOPOGRAPHY DETAIL -->
 <section class="section-pad px-6 lg:px-12 max-w-7xl mx-auto">
-  <div class="mb-10">
-    <span class="font-eyebrow text-[10px] text-green-700 uppercase" data-en="03 — Topography" data-es="03 — Topografía">03 — Topography</span>
-    <h2 class="font-display text-2xl md:text-3xl text-green-950 mt-2 font-medium" data-en="The terrain decides the plant." data-es="El terreno determina la planta.">
-      The terrain decides the plant.
-    </h2>
-    <p class="text-ink-soft mt-3 max-w-3xl"
-       data-en="Slope class drives erosion risk, root anchoring, irrigation flow, and harvest access. The two blocks sit on the same hillside but represent very different terrain regimes."
-       data-es="La clase de pendiente determina el riesgo de erosión, el anclaje de raíces, el flujo de riego y el acceso a la cosecha. Los dos bloques están en la misma ladera pero representan regímenes de terreno muy distintos.">
-    </p>
+  <h2 class="font-display text-lg text-green-950 font-medium mb-1" data-en="04 · Annual rainfall" data-es="04 · Lluvia anual">04 · Annual rainfall</h2>
+  <p class="text-xs text-ink-mute mb-6 font-mono">CHIRPS 2.0 · 5 km · 2016–2025</p>
+  <div class="bg-cream-50 border border-green-900/10 p-5 mb-6">
+    <svg id="annualChart" viewBox="0 0 720 240" class="w-full h-auto"></svg>
   </div>
-
-  <div class="grid md:grid-cols-2 gap-10">
-    <div>
-      <h3 class="font-display text-base text-green-950 mb-4 font-medium" data-en="Field 1 — Slope distribution" data-es="Campo 1 — Distribución de pendiente">Field 1 — Slope distribution</h3>
-      <div class="space-y-3">
-        <div>
-          <div class="flex justify-between text-sm mb-1"><span class="text-ink-soft" data-en="Flat (&lt;5°)" data-es="Plano (&lt;5°)">Flat (&lt;5°)</span><span class="text-ink font-medium">11.1%</span></div>
-          <div class="h-2 bg-green-100 rounded-full overflow-hidden"><div class="h-full bg-green-500" style="width:11.1%"></div></div>
-        </div>
-        <div>
-          <div class="flex justify-between text-sm mb-1"><span class="text-ink-soft" data-en="Gentle (5–15°)" data-es="Suave (5–15°)">Gentle (5–15°)</span><span class="text-ink font-medium">66.7%</span></div>
-          <div class="h-2 bg-green-100 rounded-full overflow-hidden"><div class="h-full bg-green-700" style="width:66.7%"></div></div>
-        </div>
-        <div>
-          <div class="flex justify-between text-sm mb-1"><span class="text-ink-soft" data-en="Moderate (15–30°)" data-es="Moderada (15–30°)">Moderate (15–30°)</span><span class="text-ink font-medium">22.2%</span></div>
-          <div class="h-2 bg-green-100 rounded-full overflow-hidden"><div class="h-full bg-green-900" style="width:22.2%"></div></div>
-        </div>
-        <div>
-          <div class="flex justify-between text-sm mb-1"><span class="text-ink-soft" data-en="Steep (≥30°)" data-es="Fuerte (≥30°)">Steep (≥30°)</span><span class="text-ink font-medium">0.0%</span></div>
-          <div class="h-2 bg-green-100 rounded-full overflow-hidden"><div class="h-full bg-red-700" style="width:0%"></div></div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <h3 class="font-display text-base text-green-950 mb-4 font-medium" data-en="Field 2 — Slope distribution" data-es="Campo 2 — Distribución de pendiente">Field 2 — Slope distribution</h3>
-      <div class="space-y-3">
-        <div>
-          <div class="flex justify-between text-sm mb-1"><span class="text-ink-soft" data-en="Flat (&lt;5°)" data-es="Plano (&lt;5°)">Flat (&lt;5°)</span><span class="text-ink font-medium">0.0%</span></div>
-          <div class="h-2 bg-green-100 rounded-full overflow-hidden"><div class="h-full bg-green-500" style="width:0%"></div></div>
-        </div>
-        <div>
-          <div class="flex justify-between text-sm mb-1"><span class="text-ink-soft" data-en="Gentle (5–15°)" data-es="Suave (5–15°)">Gentle (5–15°)</span><span class="text-ink font-medium">20.0%</span></div>
-          <div class="h-2 bg-green-100 rounded-full overflow-hidden"><div class="h-full bg-green-700" style="width:20%"></div></div>
-        </div>
-        <div>
-          <div class="flex justify-between text-sm mb-1"><span class="text-ink-soft" data-en="Moderate (15–30°)" data-es="Moderada (15–30°)">Moderate (15–30°)</span><span class="text-ink font-medium">80.0%</span></div>
-          <div class="h-2 bg-green-100 rounded-full overflow-hidden"><div class="h-full bg-green-900" style="width:80%"></div></div>
-        </div>
-        <div>
-          <div class="flex justify-between text-sm mb-1"><span class="text-ink-soft" data-en="Steep (≥30°)" data-es="Fuerte (≥30°)">Steep (≥30°)</span><span class="text-ink font-medium">0.0%</span></div>
-          <div class="h-2 bg-green-100 rounded-full overflow-hidden"><div class="h-full bg-red-700" style="width:0%"></div></div>
-        </div>
-      </div>
-    </div>
+  <div class="overflow-x-auto border border-green-900/10">
+    <table class="data" id="annual-table"></table>
   </div>
 </section>
 
-<!-- VEGETATION -->
-<section class="bg-green-950 text-cream-50 section-pad px-6 lg:px-12">
+<section class="bg-green-100/40 section-pad px-6 lg:px-12">
   <div class="max-w-7xl mx-auto">
-    <span class="font-eyebrow text-[10px] text-green-500 uppercase" data-en="04 — Vegetation Health" data-es="04 — Salud Vegetal">04 — Vegetation Health</span>
-    <h2 class="font-display text-2xl md:text-3xl mt-2 font-medium max-w-3xl" data-en="Both blocks show mature, healthy, well-hydrated canopy." data-es="Ambos bloques muestran dosel maduro, sano y bien hidratado.">
-      Both blocks show mature, healthy, well-hydrated canopy.
-    </h2>
-    <p class="text-green-200 mt-3 max-w-3xl"
-       data-en="<strong class='text-cream-50'>NDVI</strong> measures greenness — how densely leaves cover the ground. <strong class='text-cream-50'>NDMI</strong> measures canopy water content. Both indices come from 10 years of Sentinel-2 imagery after cloud masking."
-       data-es="<strong class='text-cream-50'>NDVI</strong> mide la verdor — qué tan densa es la cobertura foliar. <strong class='text-cream-50'>NDMI</strong> mide el contenido hídrico del dosel. Ambos índices provienen de 10 años de imágenes Sentinel-2 con enmascaramiento de nubes.">
-    </p>
-
-    <div class="grid md:grid-cols-2 gap-6 mt-10">
-      <div class="bg-green-900/60 border border-green-700/30 p-8 rounded-sm">
-        <h3 class="font-display text-lg font-medium mb-6">Field 1</h3>
-        <div class="grid grid-cols-2 gap-6">
-          <div>
-            <p class="font-eyebrow text-[10px] uppercase text-green-200 mb-2">NDVI</p>
-            <div class="font-display text-3xl text-cream-50">0.69</div>
-            <div class="flex gap-4 mt-2 text-xs text-green-200">
-              <span data-en="Wet 0.68" data-es="Húm. 0.68">Wet 0.68</span>
-              <span data-en="Dry 0.70" data-es="Seco 0.70">Dry 0.70</span>
-            </div>
-          </div>
-          <div>
-            <p class="font-eyebrow text-[10px] uppercase text-green-200 mb-2">NDMI</p>
-            <div class="font-display text-3xl text-cream-50">0.27</div>
-            <div class="flex gap-4 mt-2 text-xs text-green-200">
-              <span data-en="Wet 0.27" data-es="Húm. 0.27">Wet 0.27</span>
-              <span data-en="Dry 0.27" data-es="Seco 0.27">Dry 0.27</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="bg-green-900/60 border border-green-700/30 p-8 rounded-sm">
-        <h3 class="font-display text-lg font-medium mb-6">Field 2</h3>
-        <div class="grid grid-cols-2 gap-6">
-          <div>
-            <p class="font-eyebrow text-[10px] uppercase text-green-200 mb-2">NDVI</p>
-            <div class="font-display text-3xl text-cream-50">0.69</div>
-            <div class="flex gap-4 mt-2 text-xs text-green-200">
-              <span data-en="Wet 0.68" data-es="Húm. 0.68">Wet 0.68</span>
-              <span data-en="Dry 0.70" data-es="Seco 0.70">Dry 0.70</span>
-            </div>
-          </div>
-          <div>
-            <p class="font-eyebrow text-[10px] uppercase text-green-200 mb-2">NDMI</p>
-            <div class="font-display text-3xl text-cream-50">0.28</div>
-            <div class="flex gap-4 mt-2 text-xs text-green-200">
-              <span data-en="Wet 0.27" data-es="Húm. 0.27">Wet 0.27</span>
-              <span data-en="Dry 0.28" data-es="Seco 0.28">Dry 0.28</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="mt-10 grid md:grid-cols-3 gap-6 text-sm">
-      <div class="border-l-2 border-green-500 pl-4">
-        <p class="text-green-200 text-xs uppercase font-display tracking-widest mb-2" data-en="NDVI scale" data-es="Escala NDVI">NDVI scale</p>
-        <p class="text-cream-50" data-en="0.69 places both blocks in the <em>dense, healthy</em> band — the range expected for established Guadua canopy." data-es="0.69 coloca ambos bloques en la banda <em>densa y sana</em> — el rango esperado para dosel de Guadua establecida.">0.69 places both blocks in the dense, healthy band.</p>
-      </div>
-      <div class="border-l-2 border-green-500 pl-4">
-        <p class="text-green-200 text-xs uppercase font-display tracking-widest mb-2" data-en="NDMI scale" data-es="Escala NDMI">NDMI scale</p>
-        <p class="text-cream-50" data-en="0.27–0.28 indicates <em>high canopy water content</em> — no chronic drought stress visible over the 10-year window." data-es="0.27–0.28 indica <em>alto contenido hídrico</em> — sin estrés hídrico crónico visible en la ventana de 10 años.">0.27–0.28 indicates high canopy water content.</p>
-      </div>
-      <div class="border-l-2 border-green-500 pl-4">
-        <p class="text-green-200 text-xs uppercase font-display tracking-widest mb-2" data-en="Seasonality" data-es="Estacionalidad">Seasonality</p>
-        <p class="text-cream-50" data-en="Dry-season NDVI <em>slightly higher</em> than wet season — explained by cleaner imagery and reduced cloud shadow, not declining canopy." data-es="NDVI seco <em>levemente mayor</em> que el húmedo — se explica por imagen más limpia y menos sombra de nubes, no por dosel en declive.">Dry-season NDVI slightly higher — cleaner imagery, not declining canopy.</p>
-      </div>
+    <h2 class="font-display text-lg text-green-950 font-medium mb-1" data-en="05 · Topography" data-es="05 · Topografía">05 · Topography</h2>
+    <p class="text-xs text-ink-mute mb-6 font-mono">Copernicus DEM GLO-30 · slope &amp; aspect via numerical gradient on UTM 14N grid</p>
+    <div class="overflow-x-auto border border-green-900/10">
+      <table class="data" id="topo-table"></table>
     </div>
   </div>
 </section>
 
-<!-- METHODOLOGY -->
-<section class="bg-cream-50 section-pad px-6 lg:px-12">
+<section class="section-pad px-6 lg:px-12 max-w-7xl mx-auto">
+  <h2 class="font-display text-lg text-green-950 font-medium mb-1" data-en="06 · Soil profile" data-es="06 · Perfil del suelo">06 · Soil profile</h2>
+  <p class="text-xs text-ink-mute mb-6 font-mono">SoilGrids 2.0 · 250 m · centroid query · mean predicted value</p>
+  <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3">Field 1</h3>
+  <div class="overflow-x-auto border border-green-900/10 mb-6">
+    <table class="data" id="soil-table-f1"></table>
+  </div>
+  <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3">Field 2</h3>
+  <div class="overflow-x-auto border border-green-900/10">
+    <table class="data" id="soil-table-f2"></table>
+  </div>
+</section>
+
+<section class="bg-green-100/40 section-pad px-6 lg:px-12">
   <div class="max-w-7xl mx-auto">
-    <span class="font-eyebrow text-[10px] text-green-700 uppercase" data-en="05 — Method" data-es="05 — Método">05 — Method</span>
-    <h2 class="font-display text-2xl md:text-3xl text-green-950 mt-2 font-medium max-w-3xl mb-10" data-en="Built on free, public Earth-observation data." data-es="Construido sobre datos de observación terrestre públicos y gratuitos.">
-      Built on free, public Earth-observation data.
-    </h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div>
-        <h3 class="font-display text-base text-green-900 font-medium mb-2" data-en="Topography" data-es="Topografía">Topography</h3>
-        <p class="text-sm text-ink-soft leading-relaxed mb-3"
-           data-en="Copernicus DEM GLO-30 (30m resolution), accessed via Microsoft Planetary Computer. Slope and aspect computed in UTM 14N using a gradient operator. Verified against NASADEM and ALOS AW3D30."
-           data-es="Copernicus DEM GLO-30 (30m), vía Microsoft Planetary Computer. Pendiente y orientación calculadas en UTM 14N con operador de gradiente. Verificado contra NASADEM y ALOS AW3D30.">
-        </p>
-        <p class="text-xs text-ink-mute font-display tracking-wide">cop-dem-glo-30</p>
-      </div>
-      <div>
-        <h3 class="font-display text-base text-green-900 font-medium mb-2" data-en="Rainfall" data-es="Lluvia">Rainfall</h3>
-        <p class="text-sm text-ink-soft leading-relaxed mb-3"
-           data-en="CHIRPS 2.0 monthly precipitation (5km), 120 monthly rasters from January 2016 through December 2025, sampled at each field polygon."
-           data-es="Precipitación mensual CHIRPS 2.0 (5km), 120 rásteres mensuales de enero 2016 a diciembre 2025, muestreados en cada polígono de campo.">
-        </p>
-        <p class="text-xs text-ink-mute font-display tracking-wide">UCSB CHC · 2016–2025</p>
-      </div>
-      <div>
-        <h3 class="font-display text-base text-green-900 font-medium mb-2" data-en="Vegetation" data-es="Vegetación">Vegetation</h3>
-        <p class="text-sm text-ink-soft leading-relaxed mb-3"
-           data-en="Sentinel-2 L2A surface reflectance (10m), 532 scenes per field, scenes &lt;60% cloud cover, SCL cloud mask applied. NDVI and NDMI computed per scene, aggregated to monthly medians."
-           data-es="Sentinel-2 L2A reflectancia superficial (10m), 532 escenas por campo, &lt;60% nubosidad, máscara SCL aplicada. NDVI y NDMI por escena, agregados a medianas mensuales.">
-        </p>
-        <p class="text-xs text-ink-mute font-display tracking-wide">sentinel-2-l2a · 2017–2026</p>
-      </div>
-    </div>
-
-    <div class="mt-12 p-6 bg-green-100/60 border-l-2 border-green-700 text-sm text-ink-soft">
-      <p class="font-display text-xs uppercase tracking-widest text-green-700 mb-2" data-en="Caveats" data-es="Salvedades">Caveats</p>
-      <ul class="space-y-1 list-disc list-inside"
-         data-en="<li>CHIRPS 5km exceeds the field size, so both blocks receive the same rainfall value — accurate for regional climate, not for in-field variation.</li><li>Slope is computed with a numerical gradient on 30m DEM pixels — appropriate for general terrain characterisation, not for drainage-engineering layouts.</li><li>NDVI/NDMI annual trends from this dataset are biased by uneven cloud-clear scene availability and should not be read as canopy decline.</li>"
-         data-es="<li>CHIRPS 5km supera el tamaño del campo, por lo que ambos bloques reciben el mismo valor de lluvia — preciso para clima regional, no para variación intra-campo.</li><li>La pendiente se calcula con gradiente numérico sobre píxeles de 30m — apropiado para caracterización general del terreno, no para diseño hidráulico fino.</li><li>Las tendencias anuales de NDVI/NDMI en este dataset están sesgadas por la disponibilidad desigual de imágenes sin nubes y no deben leerse como declive del dosel.</li>">
-        <li>CHIRPS 5km exceeds the field size, so both blocks receive the same rainfall value — accurate for regional climate, not for in-field variation.</li>
-        <li>Slope is computed with a numerical gradient on 30m DEM pixels — appropriate for general terrain characterisation, not for drainage-engineering layouts.</li>
-        <li>NDVI/NDMI annual trends from this dataset are biased by uneven cloud-clear scene availability and should not be read as canopy decline.</li>
-      </ul>
+    <h2 class="font-display text-lg text-green-950 font-medium mb-1" data-en="07 · Land cover" data-es="07 · Cobertura del suelo">07 · Land cover</h2>
+    <p class="text-xs text-ink-mute mb-6 font-mono">ESA WorldCover v200 · 10 m · 2021</p>
+    <div class="overflow-x-auto border border-green-900/10">
+      <table class="data" id="lc-table"></table>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="bg-green-950 text-cream-50 py-12 px-6 lg:px-12">
-  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
-    <div>
-      <p class="font-display text-xl font-medium">Pacífico Bambú</p>
-      <p class="text-green-200 text-sm mt-1" data-en="Vegetal steel, grown in Oaxaca." data-es="Acero vegetal, cultivado en Oaxaca.">Vegetal steel, grown in Oaxaca.</p>
+<section class="section-pad px-6 lg:px-12 max-w-7xl mx-auto">
+  <h2 class="font-display text-lg text-green-950 font-medium mb-1" data-en="08 · Surface water within 3 km" data-es="08 · Aguas superficiales en 3 km">08 · Surface water within 3 km</h2>
+  <p class="text-xs text-ink-mute mb-6 font-mono">OpenStreetMap (Overpass) · distance from field centroid to nearest geometry vertex</p>
+  <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3">Field 1</h3>
+  <div class="overflow-x-auto border border-green-900/10 mb-6">
+    <table class="data" id="hydro-table-f1"></table>
+  </div>
+  <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3">Field 2</h3>
+  <div class="overflow-x-auto border border-green-900/10">
+    <table class="data" id="hydro-table-f2"></table>
+  </div>
+</section>
+
+<section class="bg-green-100/40 section-pad px-6 lg:px-12">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="font-display text-lg text-green-950 font-medium mb-1" data-en="09 · Vegetation indices" data-es="09 · Índices vegetales">09 · Vegetation indices</h2>
+    <p class="text-xs text-ink-mute mb-6 font-mono">Sentinel-2 L2A · 10 m · SCL cloud-masked · monthly medians · 2017–2026</p>
+    <h3 class="font-display text-sm text-green-900 uppercase tracking-widest mb-3" data-en="NDVI / NDMI monthly climatology" data-es="NDVI / NDMI climatología mensual">NDVI / NDMI monthly climatology</h3>
+    <div class="overflow-x-auto border border-green-900/10">
+      <table class="data" id="veg-clim-table"></table>
     </div>
-    <div class="text-xs text-green-200 font-display tracking-wide">
-      <p data-en="Field analysis generated May 2026. Data: Copernicus, NASA, ESA, UCSB CHC." data-es="Análisis de campos generado en mayo 2026. Datos: Copernicus, NASA, ESA, UCSB CHC.">Field analysis generated May 2026.</p>
-      <p class="mt-1"><span data-en="Internal document." data-es="Documento interno.">Internal document.</span></p>
+  </div>
+</section>
+
+<footer class="bg-green-950 text-cream-50 py-10 px-6 lg:px-12">
+  <div class="max-w-7xl mx-auto">
+    <p class="font-display text-base font-medium mb-3">Pacífico Bambú · Field Data</p>
+    <p class="text-xs text-green-200 font-mono mb-4" data-en="Internal document. Generated from public Earth-observation sources." data-es="Documento interno. Generado a partir de fuentes de observación terrestre públicas.">
+      Internal document. Generated from public Earth-observation sources.
+    </p>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 text-[11px] text-green-200 font-mono">
+      <div><span class="font-display uppercase tracking-widest text-green-500">DEM</span><br/>Copernicus GLO-30 · ESA</div>
+      <div><span class="font-display uppercase tracking-widest text-green-500">Rainfall</span><br/>CHIRPS 2.0 · UCSB CHC</div>
+      <div><span class="font-display uppercase tracking-widest text-green-500">Climate / WB</span><br/>TerraClimate · U. Idaho</div>
+      <div><span class="font-display uppercase tracking-widest text-green-500">Vegetation</span><br/>Sentinel-2 L2A · ESA</div>
+      <div><span class="font-display uppercase tracking-widest text-green-500">Soil</span><br/>SoilGrids 2.0 · ISRIC</div>
+      <div><span class="font-display uppercase tracking-widest text-green-500">Land cover</span><br/>ESA WorldCover v200</div>
+      <div><span class="font-display uppercase tracking-widest text-green-500">Surface water</span><br/>OpenStreetMap · ODbL</div>
+      <div><span class="font-display uppercase tracking-widest text-green-500">Compute</span><br/>Microsoft Planetary Computer</div>
     </div>
   </div>
 </footer>
 
-<script id="field-data" type="application/json">{"fields":{"first":[[-96.512001,15.879773],[-96.512101,15.879728],[-96.512113,15.879718],[-96.512124,15.879704],[-96.512141,15.879678],[-96.512149,15.879668],[-96.512156,15.879651],[-96.512166,15.879635],[-96.512183,15.879599],[-96.512185,15.879592],[-96.512169,15.879591],[-96.512139,15.879575],[-96.512111,15.879554],[-96.512101,15.879549],[-96.512083,15.879544],[-96.512058,15.879535],[-96.51204,15.879516],[-96.512024,15.879493],[-96.512018,15.879484],[-96.511992,15.879438],[-96.511985,15.879424],[-96.511971,15.879407],[-96.511957,15.879396],[-96.511948,15.879385],[-96.511937,15.879375],[-96.511929,15.879356],[-96.511926,15.879344],[-96.511914,15.879331],[-96.511905,15.879328],[-96.511899,15.879322],[-96.511888,15.879304],[-96.511883,15.879292],[-96.511874,15.879287],[-96.511875,15.8793],[-96.511875,15.879288],[-96.511871,15.879282],[-96.511865,15.879279],[-96.511859,15.879281],[-96.511859,15.879267],[-96.511844,15.879265],[-96.511837,15.879273],[-96.511846,15.879278],[-96.511825,15.879284],[-96.511804,15.879283],[-96.511796,15.879281],[-96.511785,15.879271],[-96.511773,15.879266],[-96.51176,15.879253],[-96.511752,15.879235],[-96.511752,15.87923],[-96.511742,15.879225],[-96.511731,15.87923],[-96.511722,15.87923],[-96.511706,15.879243],[-96.511687,15.879257],[-96.511668,15.87926],[-96.511662,15.879256],[-96.511655,15.879258],[-96.511647,15.87925],[-96.511655,15.879261],[-96.511657,15.879269],[-96.511654,15.879274],[-96.511654,15.879288],[-96.511651,15.879304],[-96.511645,15.879328],[-96.511644,15.879339],[-96.511635,15.87934],[-96.511629,15.879336],[-96.511627,15.879346],[-96.51164,15.879357],[-96.511649,15.879393],[-96.511667,15.879446],[-96.511675,15.879473],[-96.511676,15.879502],[-96.51168,15.879518],[-96.511673,15.879525],[-96.511663,15.879527],[-96.51165,15.879534],[-96.511643,15.879543],[-96.511634,15.879546],[-96.511628,15.879553],[-96.511618,15.879572],[-96.511611,15.879583],[-96.511604,15.879587],[-96.511587,15.879607],[-96.511577,15.879613],[-96.511566,15.87963],[-96.511563,15.879644],[-96.511553,15.879662],[-96.511549,15.879675],[-96.511549,15.879684],[-96.511569,15.879708],[-96.511571,15.879713],[-96.511558,15.879723],[-96.511549,15.87974],[-96.511544,15.879758],[-96.511543,15.87978],[-96.511546,15.879785],[-96.511551,15.879785],[-96.511571,15.879795],[-96.511585,15.879799],[-96.511611,15.879787],[-96.511632,15.879781],[-96.511647,15.879775],[-96.511669,15.879773],[-96.511694,15.879769],[-96.511717,15.879776],[-96.511749,15.879778],[-96.511771,15.879775],[-96.511783,15.879779],[-96.511814,15.879778],[-96.511835,15.87977],[-96.511842,15.879769],[-96.511886,15.879772],[-96.51192,15.879778],[-96.511943,15.879779],[-96.511956,15.879789],[-96.511981,15.879781],[-96.51199,15.879774],[-96.511994,15.879765],[-96.512003,15.879764],[-96.512001,15.879773]],"second":[[-96.512018,15.879806],[-96.51203,15.879792],[-96.51205,15.879794],[-96.512069,15.879791],[-96.512095,15.879791],[-96.512111,15.879788],[-96.512136,15.879783],[-96.512151,15.879765],[-96.512179,15.879752],[-96.512211,15.879721],[-96.512214,15.879715],[-96.512255,15.879685],[-96.512276,15.879656],[-96.512285,15.879634],[-96.512308,15.879604],[-96.512319,15.879594],[-96.512326,15.879585],[-96.512342,15.879572],[-96.512372,15.879562],[-96.512396,15.879538],[-96.512432,15.879521],[-96.512453,15.879505],[-96.512478,15.879481],[-96.512485,15.879468],[-96.512495,15.879464],[-96.512513,15.879447],[-96.512527,15.879432],[-96.512544,15.879421],[-96.512551,15.879418],[-96.51255,15.879401],[-96.512569,15.87938],[-96.51258,15.87937],[-96.512587,15.879359],[-96.512594,15.879343],[-96.512614,15.879333],[-96.51263,15.879331],[-96.51266,15.879315],[-96.51268,15.879309],[-96.512693,15.879308],[-96.512718,15.879301],[-96.512734,15.879302],[-96.512788,15.879319],[-96.512831,15.879319],[-96.51287,15.879314],[-96.51288,15.879317],[-96.512899,15.879316],[-96.512915,15.879318],[-96.512935,15.879298],[-96.512958,15.87929],[-96.51298,15.879289],[-96.513023,15.879268],[-96.513036,15.87925],[-96.513046,15.879243],[-96.513049,15.879246],[-96.513079,15.879244],[-96.513084,15.879243],[-96.5131,15.879245],[-96.513118,15.879243],[-96.513156,15.879228],[-96.513162,15.879219],[-96.513174,15.879215],[-96.513182,15.879215],[-96.513196,15.879205],[-96.513201,15.879204],[-96.513213,15.879217],[-96.51322,15.879226],[-96.513229,15.879226],[-96.513239,15.879216],[-96.513244,15.879207],[-96.513253,15.879201],[-96.513253,15.879194],[-96.513259,15.879182],[-96.51327,15.879187],[-96.513295,15.879188],[-96.513308,15.87918],[-96.513323,15.879174],[-96.513331,15.879172],[-96.51334,15.879156],[-96.513364,15.879154],[-96.513374,15.879159],[-96.513395,15.879159],[-96.513408,15.879149],[-96.51341,15.879137],[-96.513424,15.87913],[-96.513445,15.879128],[-96.513467,15.879122],[-96.513482,15.87912],[-96.513505,15.879125],[-96.513516,15.879121],[-96.513501,15.879116],[-96.513495,15.879107],[-96.513495,15.879101],[-96.513506,15.879099],[-96.513547,15.879093],[-96.513561,15.879088],[-96.513577,15.879076],[-96.513589,15.879061],[-96.513598,15.879055],[-96.513613,15.879042],[-96.513621,15.879029],[-96.513632,15.879017],[-96.513643,15.879008],[-96.513652,15.878989],[-96.513667,15.878968],[-96.513661,15.878945],[-96.513677,15.878933],[-96.513688,15.878921],[-96.513693,15.878902],[-96.5137,15.878884],[-96.513713,15.878864],[-96.513733,15.878841],[-96.513752,15.878827],[-96.513765,15.878815],[-96.513778,15.878805],[-96.513788,15.878792],[-96.513803,15.878785],[-96.513815,15.878766],[-96.513833,15.878751],[-96.513832,15.878743],[-96.513844,15.878736],[-96.51384,15.878722],[-96.513848,15.878711],[-96.51385,15.8787],[-96.51383,15.878688],[-96.513816,15.878686],[-96.513832,15.878683],[-96.513833,15.878666],[-96.513848,15.878642],[-96.513854,15.878636],[-96.513856,15.878627],[-96.513856,15.878615],[-96.513859,15.878604],[-96.513859,15.878593],[-96.513856,15.878573],[-96.51386,15.878559],[-96.513868,15.878551],[-96.513885,15.878542],[-96.513896,15.87854],[-96.513903,15.878544],[-96.513909,15.878537],[-96.513904,15.878529],[-96.513887,15.878521],[-96.513889,15.878531],[-96.513876,15.878512],[-96.513899,15.878503],[-96.513917,15.878493],[-96.513908,15.878483],[-96.513892,15.878442],[-96.513891,15.878436],[-96.513897,15.878426],[-96.513899,15.878418],[-96.513909,15.878409],[-96.513915,15.878401],[-96.513913,15.878393],[-96.513927,15.878392],[-96.513931,15.878389],[-96.513942,15.878388],[-96.513929,15.878375],[-96.513921,15.878359],[-96.513922,15.878339],[-96.513918,15.878314],[-96.513925,15.878276],[-96.51393,15.878262],[-96.513943,15.878253],[-96.513944,15.878273],[-96.513945,15.878279],[-96.513956,15.878282],[-96.513954,15.878273],[-96.51395,15.878278],[-96.513921,15.878282],[-96.513901,15.878288],[-96.513899,15.878292],[-96.513889,15.878288],[-96.513895,15.878286],[-96.513891,15.878296],[-96.513896,15.878294],[-96.513897,15.878283],[-96.513901,15.878273],[-96.513901,15.878261],[-96.513903,15.87825],[-96.513908,15.878249],[-96.51396,15.878119],[-96.513962,15.878112],[-96.51396,15.878091],[-96.513964,15.878069],[-96.51399,15.878055],[-96.514004,15.878044],[-96.514007,15.878035],[-96.514017,15.878032],[-96.514027,15.878019],[-96.514039,15.878007],[-96.514043,15.877998],[-96.514055,15.877987],[-96.514057,15.877982],[-96.514064,15.87799],[-96.514081,15.87798],[-96.514085,15.87797],[-96.514079,15.87796],[-96.514075,15.877948],[-96.514084,15.877926],[-96.514085,15.877914],[-96.514097,15.877899],[-96.514099,15.877874],[-96.514099,15.877851],[-96.514101,15.877826],[-96.514112,15.877818],[-96.514116,15.877799],[-96.514107,15.8778],[-96.514111,15.877794],[-96.514105,15.877776],[-96.514091,15.877774],[-96.514111,15.87779],[-96.514115,15.87778],[-96.514109,15.877768],[-96.514106,15.877769],[-96.514105,15.877781],[-96.5141,15.877795],[-96.514093,15.877802],[-96.514069,15.877793],[-96.514072,15.877779],[-96.514081,15.877791],[-96.514104,15.877795],[-96.51411,15.877798],[-96.514132,15.877795],[-96.514139,15.877782],[-96.514153,15.877772],[-96.514165,15.877753],[-96.51417,15.87773],[-96.514162,15.877715],[-96.514167,15.877696],[-96.514164,15.877688],[-96.514166,15.877679],[-96.514162,15.877666],[-96.514152,15.87765],[-96.514164,15.877649],[-96.514162,15.877646],[-96.514165,15.877639],[-96.514176,15.877626],[-96.514198,15.877612],[-96.514209,15.877598],[-96.514248,15.877576],[-96.514261,15.877563],[-96.514269,15.877543],[-96.51427,15.877531],[-96.514269,15.87752],[-96.514281,15.877497],[-96.514273,15.87748],[-96.514272,15.877455],[-96.514274,15.877436],[-96.514269,15.877441],[-96.51427,15.877426],[-96.514268,15.877416],[-96.514257,15.877413],[-96.514249,15.877407],[-96.514237,15.877408],[-96.514227,15.877405],[-96.514223,15.8774],[-96.514234,15.877386],[-96.514226,15.877367],[-96.514213,15.87736],[-96.514194,15.877338],[-96.514186,15.877332],[-96.51418,15.877334],[-96.514163,15.87733],[-96.514154,15.877324],[-96.514148,15.877326],[-96.514137,15.877308],[-96.514125,15.877304],[-96.514124,15.877288],[-96.514134,15.877274],[-96.51414,15.877259],[-96.514139,15.87725],[-96.514133,15.877248],[-96.51412,15.877251],[-96.514125,15.877259],[-96.514137,15.87725],[-96.514141,15.877257],[-96.514154,15.877254],[-96.514169,15.877241],[-96.514179,15.877251],[-96.514168,15.877263],[-96.514179,15.877267],[-96.514178,15.877251],[-96.514165,15.877243],[-96.51416,15.877237],[-96.514147,15.877238],[-96.51395,15.877117],[-96.513939,15.877117],[-96.513923,15.877144],[-96.513909,15.877155],[-96.513887,15.877165],[-96.51388,15.877175],[-96.513865,15.877185],[-96.513849,15.877189],[-96.513841,15.877203],[-96.513823,15.877218],[-96.513816,15.877221],[-96.513808,15.877214],[-96.513796,15.877213],[-96.513789,15.877204],[-96.513784,15.877203],[-96.513785,15.87719],[-96.513785,15.877194],[-96.513795,15.877183],[-96.51379,15.877196],[-96.513779,15.877187],[-96.513786,15.877171],[-96.513795,15.877162],[-96.513783,15.877146],[-96.513792,15.877134],[-96.513814,15.87712],[-96.513806,15.877106],[-96.513791,15.877087],[-96.513788,15.877077],[-96.513788,15.877063],[-96.513785,15.877057],[-96.513789,15.877044],[-96.513787,15.877024],[-96.513785,15.876993],[-96.513772,15.876981],[-96.51375,15.876966],[-96.513734,15.876962],[-96.513718,15.876965],[-96.513693,15.876989],[-96.513679,15.876995],[-96.513661,15.876999],[-96.513636,15.876995],[-96.513616,15.876996],[-96.513606,15.876998],[-96.513596,15.876992],[-96.51359,15.876991],[-96.5136,15.877001],[-96.513587,15.877013],[-96.513576,15.877025],[-96.513572,15.87704],[-96.513582,15.877056],[-96.513605,15.877085],[-96.513598,15.8771],[-96.513594,15.877115],[-96.513596,15.877128],[-96.513588,15.877139],[-96.513574,15.877144],[-96.513576,15.877149],[-96.513563,15.87716],[-96.513543,15.87716],[-96.513542,15.877156],[-96.513535,15.877157],[-96.513543,15.877169],[-96.513559,15.877156],[-96.513571,15.877141],[-96.513581,15.877122],[-96.513576,15.877135],[-96.513569,15.877143],[-96.513571,15.877151],[-96.513563,15.877154],[-96.513565,15.877172],[-96.513569,15.877186],[-96.51357,15.877196],[-96.513577,15.877204],[-96.513566,15.87723],[-96.513559,15.877237],[-96.513543,15.877241],[-96.513531,15.877241],[-96.513516,15.877249],[-96.513508,15.877257],[-96.513505,15.877271],[-96.513501,15.877284],[-96.513502,15.877305],[-96.5135,15.877323],[-96.513491,15.877338],[-96.51347,15.877346],[-96.513446,15.877339],[-96.513442,15.877343],[-96.513452,15.877367],[-96.513453,15.877387],[-96.513446,15.877403],[-96.513449,15.877417],[-96.513445,15.877423],[-96.513463,15.877443],[-96.513465,15.877451],[-96.513473,15.877463],[-96.513466,15.877465],[-96.513464,15.877479],[-96.513471,15.877493],[-96.51348,15.877503],[-96.513481,15.877513],[-96.51349,15.877537],[-96.513494,15.877553],[-96.513499,15.877567],[-96.513488,15.877557],[-96.513484,15.877552],[-96.513477,15.877558],[-96.513473,15.877567],[-96.51346,15.877582],[-96.513455,15.87759],[-96.513461,15.877591],[-96.513448,15.87761],[-96.513445,15.877622],[-96.513448,15.877632],[-96.513453,15.877637],[-96.513452,15.87762],[-96.513464,15.877641],[-96.513476,15.87767],[-96.513483,15.877681],[-96.513491,15.877689],[-96.513512,15.877698],[-96.513514,15.877708],[-96.513518,15.877713],[-96.513511,15.877724],[-96.513513,15.87774],[-96.513504,15.877753],[-96.513481,15.877767],[-96.513468,15.877773],[-96.513456,15.877775],[-96.51344,15.877781],[-96.513424,15.877791],[-96.51337,15.877828],[-96.513363,15.877831],[-96.51334,15.877821],[-96.513339,15.877811],[-96.513331,15.877812],[-96.513319,15.877832],[-96.513309,15.877862],[-96.513304,15.877871],[-96.513299,15.877875],[-96.513298,15.87789],[-96.513269,15.877913],[-96.513258,15.877923],[-96.513249,15.877927],[-96.513219,15.877952],[-96.513207,15.877958],[-96.513181,15.877975],[-96.513148,15.877988],[-96.513133,15.877998],[-96.513124,15.878012],[-96.513129,15.878028],[-96.513132,15.87802],[-96.513171,15.878018],[-96.513183,15.878018],[-96.513199,15.878023],[-96.513191,15.878035],[-96.513182,15.878057],[-96.513175,15.878072],[-96.513144,15.878079],[-96.513128,15.878077],[-96.513114,15.878071],[-96.513101,15.878069],[-96.51309,15.878071],[-96.513081,15.878076],[-96.513054,15.878069],[-96.513033,15.878079],[-96.513017,15.878075],[-96.513004,15.878074],[-96.512995,15.87807],[-96.512992,15.878065],[-96.512984,15.878068],[-96.512963,15.878063],[-96.512948,15.878073],[-96.512943,15.878074],[-96.512939,15.878089],[-96.512931,15.878109],[-96.512925,15.878113],[-96.512916,15.878133],[-96.512913,15.878144],[-96.512918,15.878149],[-96.512912,15.878153],[-96.512901,15.87817],[-96.512882,15.878177],[-96.512871,15.878191],[-96.51286,15.878197],[-96.512842,15.878199],[-96.512842,15.878209],[-96.512831,15.878216],[-96.512813,15.878214],[-96.512799,15.878209],[-96.512787,15.878207],[-96.512777,15.878208],[-96.512755,15.878223],[-96.512738,15.878241],[-96.51273,15.878266],[-96.512727,15.878272],[-96.51272,15.878276],[-96.512719,15.878284],[-96.512727,15.878296],[-96.51274,15.878296],[-96.512723,15.878305],[-96.512706,15.878312],[-96.512684,15.878318],[-96.512671,15.878326],[-96.51266,15.878328],[-96.512654,15.878336],[-96.512645,15.878344],[-96.512638,15.878354],[-96.512629,15.878358],[-96.51262,15.878357],[-96.512614,15.878364],[-96.512609,15.878378],[-96.512602,15.878389],[-96.512591,15.878398],[-96.512584,15.878402],[-96.51258,15.878412],[-96.512551,15.878439],[-96.512536,15.878447],[-96.512526,15.878441],[-96.512517,15.878441],[-96.512504,15.878449],[-96.512492,15.878449],[-96.512465,15.878438],[-96.512443,15.878444],[-96.512438,15.878438],[-96.512416,15.878427],[-96.5124,15.878428],[-96.512385,15.878422],[-96.512374,15.878419],[-96.512363,15.87842],[-96.512347,15.878404],[-96.512337,15.8784],[-96.512327,15.878404],[-96.512318,15.878411],[-96.5123,15.878402],[-96.512278,15.878385],[-96.512275,15.878378],[-96.51226,15.878367],[-96.512268,15.878357],[-96.512257,15.878349],[-96.512249,15.878336],[-96.512243,15.878316],[-96.51224,15.878301],[-96.512244,15.878295],[-96.512233,15.878287],[-96.512229,15.878273],[-96.512223,15.878263],[-96.512207,15.878245],[-96.512195,15.878222],[-96.512176,15.87821],[-96.512156,15.878207],[-96.512145,15.878216],[-96.51215,15.878212],[-96.512154,15.878221],[-96.512153,15.878239],[-96.512158,15.878247],[-96.512147,15.878269],[-96.512146,15.878286],[-96.512135,15.878297],[-96.51213,15.878311],[-96.512134,15.878318],[-96.512134,15.878336],[-96.51213,15.878342],[-96.512134,15.87835],[-96.512134,15.878364],[-96.512136,15.878372],[-96.512136,15.878384],[-96.512143,15.878395],[-96.512148,15.878405],[-96.512143,15.878423],[-96.512152,15.878435],[-96.512151,15.878484],[-96.51214,15.878515],[-96.51213,15.878535],[-96.512104,15.878572],[-96.512091,15.878589],[-96.512078,15.878594],[-96.512073,15.878599],[-96.512077,15.878615],[-96.512065,15.878633],[-96.512049,15.87865],[-96.512054,15.878659],[-96.512051,15.878666],[-96.51205,15.878659],[-96.512057,15.878655],[-96.512039,15.878684],[-96.512024,15.8787],[-96.512021,15.878706],[-96.512022,15.878725],[-96.512044,15.878748],[-96.512047,15.878764],[-96.512054,15.878781],[-96.512055,15.878789],[-96.512059,15.878799],[-96.512064,15.878805],[-96.512062,15.878816],[-96.512059,15.878819],[-96.512062,15.878832],[-96.512086,15.878859],[-96.512088,15.878866],[-96.512081,15.878874],[-96.512073,15.878878],[-96.512068,15.878883],[-96.512074,15.878915],[-96.512084,15.878939],[-96.512104,15.878956],[-96.512108,15.878986],[-96.512114,15.879012],[-96.512121,15.879023],[-96.512123,15.87904],[-96.512124,15.879059],[-96.512149,15.879095],[-96.512155,15.879104],[-96.512156,15.879125],[-96.512158,15.879144],[-96.512157,15.879151],[-96.512142,15.879167],[-96.512128,15.87917],[-96.512104,15.879168],[-96.512094,15.879172],[-96.512082,15.879183],[-96.512072,15.879174],[-96.512041,15.879176],[-96.512032,15.879175],[-96.512027,15.879171],[-96.512015,15.879172],[-96.512007,15.879181],[-96.511995,15.879189],[-96.511987,15.879192],[-96.511974,15.87919],[-96.511952,15.879195],[-96.511939,15.8792],[-96.511933,15.879206],[-96.511916,15.879211],[-96.511905,15.879217],[-96.511884,15.879239],[-96.51187,15.879244],[-96.511869,15.879251],[-96.511873,15.879268],[-96.511878,15.879282],[-96.511888,15.879292],[-96.511889,15.879304],[-96.511897,15.87931],[-96.511899,15.879318],[-96.511904,15.879317],[-96.51191,15.879312],[-96.511905,15.87931],[-96.511959,15.879766],[-96.511971,15.879764],[-96.512018,15.879806]]},"stats":{"first_field":{"field_key":"first_field","area_ha":"0.256","area_m2":"2560.4","pixel_count":"9","elev_mean_m":"439.8","elev_min_m":"429.1","elev_max_m":"448.6","elev_std_m":"6.46","slope_mean_deg":"11.97","slope_max_deg":"17.87","slope_std_deg":"4.02","dominant_aspect":"N","flat_lt5_pct":"11.1","gentle_5_15_pct":"66.7","moderate_15_30_pct":"22.2","steep_gte30_pct":"0.0","annual_mean_mm":"993.5","annual_min_mm":"612.4","annual_max_mm":"1234.5","annual_std_mm":"191.9","wet_season_mm":"952.5","dry_season_mm":"40.9","wet_share_pct":"95.9","scene_count":"532","ndvi_mean":"0.693","ndvi_std":"0.171","ndmi_mean":"0.272","ndmi_std":"0.074","ndvi_wet_mean":"0.684","ndvi_dry_mean":"0.699","ndmi_wet_mean":"0.274","ndmi_dry_mean":"0.27","ndvi_trend_per_year":"-0.0489","ndmi_trend_per_year":"-0.017"},"second_field":{"field_key":"second_field","area_ha":"3.2614","area_m2":"32614.0","pixel_count":"60","elev_mean_m":"480.6","elev_min_m":"434.3","elev_max_m":"540.5","elev_std_m":"25.65","slope_mean_deg":"17.96","slope_max_deg":"27.39","slope_std_deg":"4.27","dominant_aspect":"N","flat_lt5_pct":"0.0","gentle_5_15_pct":"20.0","moderate_15_30_pct":"80.0","steep_gte30_pct":"0.0","annual_mean_mm":"993.5","annual_min_mm":"612.4","annual_max_mm":"1234.5","annual_std_mm":"191.9","wet_season_mm":"952.5","dry_season_mm":"40.9","wet_share_pct":"95.9","scene_count":"532","ndvi_mean":"0.692","ndvi_std":"0.17","ndmi_mean":"0.275","ndmi_std":"0.074","ndvi_wet_mean":"0.679","ndvi_dry_mean":"0.703","ndmi_wet_mean":"0.266","ndmi_dry_mean":"0.281","ndvi_trend_per_year":"-0.0492","ndmi_trend_per_year":"-0.0179"}},"monthly_rain":[{"m":1,"mm":3.3},{"m":2,"mm":5.7},{"m":3,"mm":7.6},{"m":4,"mm":6.7},{"m":5,"mm":55.8},{"m":6,"mm":237.2},{"m":7,"mm":91.0},{"m":8,"mm":157.0},{"m":9,"mm":219.6},{"m":10,"mm":191.9},{"m":11,"mm":12.7},{"m":12,"mm":4.9}],"annual_rain":[{"y":2016,"mm":612.4},{"y":2017,"mm":1102.9},{"y":2018,"mm":1071.8},{"y":2019,"mm":1234.5},{"y":2020,"mm":772.1},{"y":2021,"mm":1067.6},{"y":2022,"mm":1084.7},{"y":2023,"mm":770.3},{"y":2024,"mm":1169.6},{"y":2025,"mm":1048.5}]}</script>
+<script id="field-data" type="application/json">{"fields":{"first":[[-96.512001,15.879773],[-96.512101,15.879728],[-96.512113,15.879718],[-96.512124,15.879704],[-96.512141,15.879678],[-96.512149,15.879668],[-96.512156,15.879651],[-96.512166,15.879635],[-96.512183,15.879599],[-96.512185,15.879592],[-96.512169,15.879591],[-96.512139,15.879575],[-96.512111,15.879554],[-96.512101,15.879549],[-96.512083,15.879544],[-96.512058,15.879535],[-96.51204,15.879516],[-96.512024,15.879493],[-96.512018,15.879484],[-96.511992,15.879438],[-96.511985,15.879424],[-96.511971,15.879407],[-96.511957,15.879396],[-96.511948,15.879385],[-96.511937,15.879375],[-96.511929,15.879356],[-96.511926,15.879344],[-96.511914,15.879331],[-96.511905,15.879328],[-96.511899,15.879322],[-96.511888,15.879304],[-96.511883,15.879292],[-96.511874,15.879287],[-96.511875,15.8793],[-96.511875,15.879288],[-96.511871,15.879282],[-96.511865,15.879279],[-96.511859,15.879281],[-96.511859,15.879267],[-96.511844,15.879265],[-96.511837,15.879273],[-96.511846,15.879278],[-96.511825,15.879284],[-96.511804,15.879283],[-96.511796,15.879281],[-96.511785,15.879271],[-96.511773,15.879266],[-96.51176,15.879253],[-96.511752,15.879235],[-96.511752,15.87923],[-96.511742,15.879225],[-96.511731,15.87923],[-96.511722,15.87923],[-96.511706,15.879243],[-96.511687,15.879257],[-96.511668,15.87926],[-96.511662,15.879256],[-96.511655,15.879258],[-96.511647,15.87925],[-96.511655,15.879261],[-96.511657,15.879269],[-96.511654,15.879274],[-96.511654,15.879288],[-96.511651,15.879304],[-96.511645,15.879328],[-96.511644,15.879339],[-96.511635,15.87934],[-96.511629,15.879336],[-96.511627,15.879346],[-96.51164,15.879357],[-96.511649,15.879393],[-96.511667,15.879446],[-96.511675,15.879473],[-96.511676,15.879502],[-96.51168,15.879518],[-96.511673,15.879525],[-96.511663,15.879527],[-96.51165,15.879534],[-96.511643,15.879543],[-96.511634,15.879546],[-96.511628,15.879553],[-96.511618,15.879572],[-96.511611,15.879583],[-96.511604,15.879587],[-96.511587,15.879607],[-96.511577,15.879613],[-96.511566,15.87963],[-96.511563,15.879644],[-96.511553,15.879662],[-96.511549,15.879675],[-96.511549,15.879684],[-96.511569,15.879708],[-96.511571,15.879713],[-96.511558,15.879723],[-96.511549,15.87974],[-96.511544,15.879758],[-96.511543,15.87978],[-96.511546,15.879785],[-96.511551,15.879785],[-96.511571,15.879795],[-96.511585,15.879799],[-96.511611,15.879787],[-96.511632,15.879781],[-96.511647,15.879775],[-96.511669,15.879773],[-96.511694,15.879769],[-96.511717,15.879776],[-96.511749,15.879778],[-96.511771,15.879775],[-96.511783,15.879779],[-96.511814,15.879778],[-96.511835,15.87977],[-96.511842,15.879769],[-96.511886,15.879772],[-96.51192,15.879778],[-96.511943,15.879779],[-96.511956,15.879789],[-96.511981,15.879781],[-96.51199,15.879774],[-96.511994,15.879765],[-96.512003,15.879764],[-96.512001,15.879773]],"second":[[-96.512018,15.879806],[-96.51203,15.879792],[-96.51205,15.879794],[-96.512069,15.879791],[-96.512095,15.879791],[-96.512111,15.879788],[-96.512136,15.879783],[-96.512151,15.879765],[-96.512179,15.879752],[-96.512211,15.879721],[-96.512214,15.879715],[-96.512255,15.879685],[-96.512276,15.879656],[-96.512285,15.879634],[-96.512308,15.879604],[-96.512319,15.879594],[-96.512326,15.879585],[-96.512342,15.879572],[-96.512372,15.879562],[-96.512396,15.879538],[-96.512432,15.879521],[-96.512453,15.879505],[-96.512478,15.879481],[-96.512485,15.879468],[-96.512495,15.879464],[-96.512513,15.879447],[-96.512527,15.879432],[-96.512544,15.879421],[-96.512551,15.879418],[-96.51255,15.879401],[-96.512569,15.87938],[-96.51258,15.87937],[-96.512587,15.879359],[-96.512594,15.879343],[-96.512614,15.879333],[-96.51263,15.879331],[-96.51266,15.879315],[-96.51268,15.879309],[-96.512693,15.879308],[-96.512718,15.879301],[-96.512734,15.879302],[-96.512788,15.879319],[-96.512831,15.879319],[-96.51287,15.879314],[-96.51288,15.879317],[-96.512899,15.879316],[-96.512915,15.879318],[-96.512935,15.879298],[-96.512958,15.87929],[-96.51298,15.879289],[-96.513023,15.879268],[-96.513036,15.87925],[-96.513046,15.879243],[-96.513049,15.879246],[-96.513079,15.879244],[-96.513084,15.879243],[-96.5131,15.879245],[-96.513118,15.879243],[-96.513156,15.879228],[-96.513162,15.879219],[-96.513174,15.879215],[-96.513182,15.879215],[-96.513196,15.879205],[-96.513201,15.879204],[-96.513213,15.879217],[-96.51322,15.879226],[-96.513229,15.879226],[-96.513239,15.879216],[-96.513244,15.879207],[-96.513253,15.879201],[-96.513253,15.879194],[-96.513259,15.879182],[-96.51327,15.879187],[-96.513295,15.879188],[-96.513308,15.87918],[-96.513323,15.879174],[-96.513331,15.879172],[-96.51334,15.879156],[-96.513364,15.879154],[-96.513374,15.879159],[-96.513395,15.879159],[-96.513408,15.879149],[-96.51341,15.879137],[-96.513424,15.87913],[-96.513445,15.879128],[-96.513467,15.879122],[-96.513482,15.87912],[-96.513505,15.879125],[-96.513516,15.879121],[-96.513501,15.879116],[-96.513495,15.879107],[-96.513495,15.879101],[-96.513506,15.879099],[-96.513547,15.879093],[-96.513561,15.879088],[-96.513577,15.879076],[-96.513589,15.879061],[-96.513598,15.879055],[-96.513613,15.879042],[-96.513621,15.879029],[-96.513632,15.879017],[-96.513643,15.879008],[-96.513652,15.878989],[-96.513667,15.878968],[-96.513661,15.878945],[-96.513677,15.878933],[-96.513688,15.878921],[-96.513693,15.878902],[-96.5137,15.878884],[-96.513713,15.878864],[-96.513733,15.878841],[-96.513752,15.878827],[-96.513765,15.878815],[-96.513778,15.878805],[-96.513788,15.878792],[-96.513803,15.878785],[-96.513815,15.878766],[-96.513833,15.878751],[-96.513832,15.878743],[-96.513844,15.878736],[-96.51384,15.878722],[-96.513848,15.878711],[-96.51385,15.8787],[-96.51383,15.878688],[-96.513816,15.878686],[-96.513832,15.878683],[-96.513833,15.878666],[-96.513848,15.878642],[-96.513854,15.878636],[-96.513856,15.878627],[-96.513856,15.878615],[-96.513859,15.878604],[-96.513859,15.878593],[-96.513856,15.878573],[-96.51386,15.878559],[-96.513868,15.878551],[-96.513885,15.878542],[-96.513896,15.87854],[-96.513903,15.878544],[-96.513909,15.878537],[-96.513904,15.878529],[-96.513887,15.878521],[-96.513889,15.878531],[-96.513876,15.878512],[-96.513899,15.878503],[-96.513917,15.878493],[-96.513908,15.878483],[-96.513892,15.878442],[-96.513891,15.878436],[-96.513897,15.878426],[-96.513899,15.878418],[-96.513909,15.878409],[-96.513915,15.878401],[-96.513913,15.878393],[-96.513927,15.878392],[-96.513931,15.878389],[-96.513942,15.878388],[-96.513929,15.878375],[-96.513921,15.878359],[-96.513922,15.878339],[-96.513918,15.878314],[-96.513925,15.878276],[-96.51393,15.878262],[-96.513943,15.878253],[-96.513944,15.878273],[-96.513945,15.878279],[-96.513956,15.878282],[-96.513954,15.878273],[-96.51395,15.878278],[-96.513921,15.878282],[-96.513901,15.878288],[-96.513899,15.878292],[-96.513889,15.878288],[-96.513895,15.878286],[-96.513891,15.878296],[-96.513896,15.878294],[-96.513897,15.878283],[-96.513901,15.878273],[-96.513901,15.878261],[-96.513903,15.87825],[-96.513908,15.878249],[-96.51396,15.878119],[-96.513962,15.878112],[-96.51396,15.878091],[-96.513964,15.878069],[-96.51399,15.878055],[-96.514004,15.878044],[-96.514007,15.878035],[-96.514017,15.878032],[-96.514027,15.878019],[-96.514039,15.878007],[-96.514043,15.877998],[-96.514055,15.877987],[-96.514057,15.877982],[-96.514064,15.87799],[-96.514081,15.87798],[-96.514085,15.87797],[-96.514079,15.87796],[-96.514075,15.877948],[-96.514084,15.877926],[-96.514085,15.877914],[-96.514097,15.877899],[-96.514099,15.877874],[-96.514099,15.877851],[-96.514101,15.877826],[-96.514112,15.877818],[-96.514116,15.877799],[-96.514107,15.8778],[-96.514111,15.877794],[-96.514105,15.877776],[-96.514091,15.877774],[-96.514111,15.87779],[-96.514115,15.87778],[-96.514109,15.877768],[-96.514106,15.877769],[-96.514105,15.877781],[-96.5141,15.877795],[-96.514093,15.877802],[-96.514069,15.877793],[-96.514072,15.877779],[-96.514081,15.877791],[-96.514104,15.877795],[-96.51411,15.877798],[-96.514132,15.877795],[-96.514139,15.877782],[-96.514153,15.877772],[-96.514165,15.877753],[-96.51417,15.87773],[-96.514162,15.877715],[-96.514167,15.877696],[-96.514164,15.877688],[-96.514166,15.877679],[-96.514162,15.877666],[-96.514152,15.87765],[-96.514164,15.877649],[-96.514162,15.877646],[-96.514165,15.877639],[-96.514176,15.877626],[-96.514198,15.877612],[-96.514209,15.877598],[-96.514248,15.877576],[-96.514261,15.877563],[-96.514269,15.877543],[-96.51427,15.877531],[-96.514269,15.87752],[-96.514281,15.877497],[-96.514273,15.87748],[-96.514272,15.877455],[-96.514274,15.877436],[-96.514269,15.877441],[-96.51427,15.877426],[-96.514268,15.877416],[-96.514257,15.877413],[-96.514249,15.877407],[-96.514237,15.877408],[-96.514227,15.877405],[-96.514223,15.8774],[-96.514234,15.877386],[-96.514226,15.877367],[-96.514213,15.87736],[-96.514194,15.877338],[-96.514186,15.877332],[-96.51418,15.877334],[-96.514163,15.87733],[-96.514154,15.877324],[-96.514148,15.877326],[-96.514137,15.877308],[-96.514125,15.877304],[-96.514124,15.877288],[-96.514134,15.877274],[-96.51414,15.877259],[-96.514139,15.87725],[-96.514133,15.877248],[-96.51412,15.877251],[-96.514125,15.877259],[-96.514137,15.87725],[-96.514141,15.877257],[-96.514154,15.877254],[-96.514169,15.877241],[-96.514179,15.877251],[-96.514168,15.877263],[-96.514179,15.877267],[-96.514178,15.877251],[-96.514165,15.877243],[-96.51416,15.877237],[-96.514147,15.877238],[-96.51395,15.877117],[-96.513939,15.877117],[-96.513923,15.877144],[-96.513909,15.877155],[-96.513887,15.877165],[-96.51388,15.877175],[-96.513865,15.877185],[-96.513849,15.877189],[-96.513841,15.877203],[-96.513823,15.877218],[-96.513816,15.877221],[-96.513808,15.877214],[-96.513796,15.877213],[-96.513789,15.877204],[-96.513784,15.877203],[-96.513785,15.87719],[-96.513785,15.877194],[-96.513795,15.877183],[-96.51379,15.877196],[-96.513779,15.877187],[-96.513786,15.877171],[-96.513795,15.877162],[-96.513783,15.877146],[-96.513792,15.877134],[-96.513814,15.87712],[-96.513806,15.877106],[-96.513791,15.877087],[-96.513788,15.877077],[-96.513788,15.877063],[-96.513785,15.877057],[-96.513789,15.877044],[-96.513787,15.877024],[-96.513785,15.876993],[-96.513772,15.876981],[-96.51375,15.876966],[-96.513734,15.876962],[-96.513718,15.876965],[-96.513693,15.876989],[-96.513679,15.876995],[-96.513661,15.876999],[-96.513636,15.876995],[-96.513616,15.876996],[-96.513606,15.876998],[-96.513596,15.876992],[-96.51359,15.876991],[-96.5136,15.877001],[-96.513587,15.877013],[-96.513576,15.877025],[-96.513572,15.87704],[-96.513582,15.877056],[-96.513605,15.877085],[-96.513598,15.8771],[-96.513594,15.877115],[-96.513596,15.877128],[-96.513588,15.877139],[-96.513574,15.877144],[-96.513576,15.877149],[-96.513563,15.87716],[-96.513543,15.87716],[-96.513542,15.877156],[-96.513535,15.877157],[-96.513543,15.877169],[-96.513559,15.877156],[-96.513571,15.877141],[-96.513581,15.877122],[-96.513576,15.877135],[-96.513569,15.877143],[-96.513571,15.877151],[-96.513563,15.877154],[-96.513565,15.877172],[-96.513569,15.877186],[-96.51357,15.877196],[-96.513577,15.877204],[-96.513566,15.87723],[-96.513559,15.877237],[-96.513543,15.877241],[-96.513531,15.877241],[-96.513516,15.877249],[-96.513508,15.877257],[-96.513505,15.877271],[-96.513501,15.877284],[-96.513502,15.877305],[-96.5135,15.877323],[-96.513491,15.877338],[-96.51347,15.877346],[-96.513446,15.877339],[-96.513442,15.877343],[-96.513452,15.877367],[-96.513453,15.877387],[-96.513446,15.877403],[-96.513449,15.877417],[-96.513445,15.877423],[-96.513463,15.877443],[-96.513465,15.877451],[-96.513473,15.877463],[-96.513466,15.877465],[-96.513464,15.877479],[-96.513471,15.877493],[-96.51348,15.877503],[-96.513481,15.877513],[-96.51349,15.877537],[-96.513494,15.877553],[-96.513499,15.877567],[-96.513488,15.877557],[-96.513484,15.877552],[-96.513477,15.877558],[-96.513473,15.877567],[-96.51346,15.877582],[-96.513455,15.87759],[-96.513461,15.877591],[-96.513448,15.87761],[-96.513445,15.877622],[-96.513448,15.877632],[-96.513453,15.877637],[-96.513452,15.87762],[-96.513464,15.877641],[-96.513476,15.87767],[-96.513483,15.877681],[-96.513491,15.877689],[-96.513512,15.877698],[-96.513514,15.877708],[-96.513518,15.877713],[-96.513511,15.877724],[-96.513513,15.87774],[-96.513504,15.877753],[-96.513481,15.877767],[-96.513468,15.877773],[-96.513456,15.877775],[-96.51344,15.877781],[-96.513424,15.877791],[-96.51337,15.877828],[-96.513363,15.877831],[-96.51334,15.877821],[-96.513339,15.877811],[-96.513331,15.877812],[-96.513319,15.877832],[-96.513309,15.877862],[-96.513304,15.877871],[-96.513299,15.877875],[-96.513298,15.87789],[-96.513269,15.877913],[-96.513258,15.877923],[-96.513249,15.877927],[-96.513219,15.877952],[-96.513207,15.877958],[-96.513181,15.877975],[-96.513148,15.877988],[-96.513133,15.877998],[-96.513124,15.878012],[-96.513129,15.878028],[-96.513132,15.87802],[-96.513171,15.878018],[-96.513183,15.878018],[-96.513199,15.878023],[-96.513191,15.878035],[-96.513182,15.878057],[-96.513175,15.878072],[-96.513144,15.878079],[-96.513128,15.878077],[-96.513114,15.878071],[-96.513101,15.878069],[-96.51309,15.878071],[-96.513081,15.878076],[-96.513054,15.878069],[-96.513033,15.878079],[-96.513017,15.878075],[-96.513004,15.878074],[-96.512995,15.87807],[-96.512992,15.878065],[-96.512984,15.878068],[-96.512963,15.878063],[-96.512948,15.878073],[-96.512943,15.878074],[-96.512939,15.878089],[-96.512931,15.878109],[-96.512925,15.878113],[-96.512916,15.878133],[-96.512913,15.878144],[-96.512918,15.878149],[-96.512912,15.878153],[-96.512901,15.87817],[-96.512882,15.878177],[-96.512871,15.878191],[-96.51286,15.878197],[-96.512842,15.878199],[-96.512842,15.878209],[-96.512831,15.878216],[-96.512813,15.878214],[-96.512799,15.878209],[-96.512787,15.878207],[-96.512777,15.878208],[-96.512755,15.878223],[-96.512738,15.878241],[-96.51273,15.878266],[-96.512727,15.878272],[-96.51272,15.878276],[-96.512719,15.878284],[-96.512727,15.878296],[-96.51274,15.878296],[-96.512723,15.878305],[-96.512706,15.878312],[-96.512684,15.878318],[-96.512671,15.878326],[-96.51266,15.878328],[-96.512654,15.878336],[-96.512645,15.878344],[-96.512638,15.878354],[-96.512629,15.878358],[-96.51262,15.878357],[-96.512614,15.878364],[-96.512609,15.878378],[-96.512602,15.878389],[-96.512591,15.878398],[-96.512584,15.878402],[-96.51258,15.878412],[-96.512551,15.878439],[-96.512536,15.878447],[-96.512526,15.878441],[-96.512517,15.878441],[-96.512504,15.878449],[-96.512492,15.878449],[-96.512465,15.878438],[-96.512443,15.878444],[-96.512438,15.878438],[-96.512416,15.878427],[-96.5124,15.878428],[-96.512385,15.878422],[-96.512374,15.878419],[-96.512363,15.87842],[-96.512347,15.878404],[-96.512337,15.8784],[-96.512327,15.878404],[-96.512318,15.878411],[-96.5123,15.878402],[-96.512278,15.878385],[-96.512275,15.878378],[-96.51226,15.878367],[-96.512268,15.878357],[-96.512257,15.878349],[-96.512249,15.878336],[-96.512243,15.878316],[-96.51224,15.878301],[-96.512244,15.878295],[-96.512233,15.878287],[-96.512229,15.878273],[-96.512223,15.878263],[-96.512207,15.878245],[-96.512195,15.878222],[-96.512176,15.87821],[-96.512156,15.878207],[-96.512145,15.878216],[-96.51215,15.878212],[-96.512154,15.878221],[-96.512153,15.878239],[-96.512158,15.878247],[-96.512147,15.878269],[-96.512146,15.878286],[-96.512135,15.878297],[-96.51213,15.878311],[-96.512134,15.878318],[-96.512134,15.878336],[-96.51213,15.878342],[-96.512134,15.87835],[-96.512134,15.878364],[-96.512136,15.878372],[-96.512136,15.878384],[-96.512143,15.878395],[-96.512148,15.878405],[-96.512143,15.878423],[-96.512152,15.878435],[-96.512151,15.878484],[-96.51214,15.878515],[-96.51213,15.878535],[-96.512104,15.878572],[-96.512091,15.878589],[-96.512078,15.878594],[-96.512073,15.878599],[-96.512077,15.878615],[-96.512065,15.878633],[-96.512049,15.87865],[-96.512054,15.878659],[-96.512051,15.878666],[-96.51205,15.878659],[-96.512057,15.878655],[-96.512039,15.878684],[-96.512024,15.8787],[-96.512021,15.878706],[-96.512022,15.878725],[-96.512044,15.878748],[-96.512047,15.878764],[-96.512054,15.878781],[-96.512055,15.878789],[-96.512059,15.878799],[-96.512064,15.878805],[-96.512062,15.878816],[-96.512059,15.878819],[-96.512062,15.878832],[-96.512086,15.878859],[-96.512088,15.878866],[-96.512081,15.878874],[-96.512073,15.878878],[-96.512068,15.878883],[-96.512074,15.878915],[-96.512084,15.878939],[-96.512104,15.878956],[-96.512108,15.878986],[-96.512114,15.879012],[-96.512121,15.879023],[-96.512123,15.87904],[-96.512124,15.879059],[-96.512149,15.879095],[-96.512155,15.879104],[-96.512156,15.879125],[-96.512158,15.879144],[-96.512157,15.879151],[-96.512142,15.879167],[-96.512128,15.87917],[-96.512104,15.879168],[-96.512094,15.879172],[-96.512082,15.879183],[-96.512072,15.879174],[-96.512041,15.879176],[-96.512032,15.879175],[-96.512027,15.879171],[-96.512015,15.879172],[-96.512007,15.879181],[-96.511995,15.879189],[-96.511987,15.879192],[-96.511974,15.87919],[-96.511952,15.879195],[-96.511939,15.8792],[-96.511933,15.879206],[-96.511916,15.879211],[-96.511905,15.879217],[-96.511884,15.879239],[-96.51187,15.879244],[-96.511869,15.879251],[-96.511873,15.879268],[-96.511878,15.879282],[-96.511888,15.879292],[-96.511889,15.879304],[-96.511897,15.87931],[-96.511899,15.879318],[-96.511904,15.879317],[-96.51191,15.879312],[-96.511905,15.87931],[-96.511959,15.879766],[-96.511971,15.879764],[-96.512018,15.879806]]},"summary":{"first_field":{"field_key":"first_field","display_name":"Field 1","centroid_lat":15.879562,"centroid_lon":-96.511834,"area_ha":0.256,"area_m2":2560.4,"pixel_count_dem":9,"elev_mean_m":439.8,"elev_min_m":429.1,"elev_max_m":448.6,"elev_std_m":6.46,"elev_range_m":19.5,"slope_mean_deg":11.97,"slope_median_deg":12.82,"slope_max_deg":17.87,"slope_std_deg":4.02,"flat_lt5_pct":11.1,"gentle_5_15_pct":66.7,"moderate_15_30_pct":22.2,"steep_gte30_pct":0.0,"aspect_dominant":"N","ppt_annual_mean_mm":993.5,"ppt_annual_min_mm":612.4,"ppt_annual_max_mm":1234.5,"ppt_annual_std_mm":191.9,"ppt_wet_may_oct_mm":952.5,"ppt_dry_nov_apr_mm":40.9,"ppt_wet_share_pct":95.9,"tmean_annual_c":25.37,"tmax_annual_c":32.79,"tmin_annual_c":17.95,"tmean_wet_c":25.93,"tmean_dry_c":24.82,"pet_annual_mm":1675.0,"aet_annual_mm":1017.43,"deficit_annual_mm":657.58,"soil_moisture_annual_mm":169.78,"runoff_annual_mm":238.29,"srad_annual_wm2":210.13,"vpd_annual_kpa":1.19,"wind_speed_annual_ms":2.88,"scene_count":532,"ndvi_mean":0.693,"ndvi_std":0.171,"ndvi_min":0.389,"ndvi_max":0.909,"ndvi_wet":0.684,"ndvi_dry":0.699,"ndmi_mean":0.272,"ndmi_std":0.074,"ndmi_min":0.03,"ndmi_max":0.373,"ndmi_wet":0.274,"ndmi_dry":0.27,"lc_dominant":"Tree cover","lc_dominant_pct":100.0,"soil_ph_0_5cm":6.1,"soil_soc_0_5cm_g_kg":48.9,"soil_clay_0_5cm_pct":18.9,"soil_silt_0_5cm_pct":25.4,"soil_sand_0_5cm_pct":55.6,"soil_bdod_0_5cm_kg_dm3":1.14,"soil_cec_0_5cm_cmol_kg":23.6,"soil_nitrogen_0_5cm_g_kg":3.52,"osm_waterways_within_3km":2,"nearest_water_m":1554.0,"nearest_water_type":"river"},"second_field":{"field_key":"second_field","display_name":"Field 2","centroid_lat":15.878483,"centroid_lon":-96.513115,"area_ha":3.2614,"area_m2":32614.0,"pixel_count_dem":60,"elev_mean_m":480.6,"elev_min_m":434.3,"elev_max_m":540.5,"elev_std_m":25.65,"elev_range_m":106.2,"slope_mean_deg":17.96,"slope_median_deg":17.74,"slope_max_deg":27.39,"slope_std_deg":4.27,"flat_lt5_pct":0.0,"gentle_5_15_pct":20.0,"moderate_15_30_pct":80.0,"steep_gte30_pct":0.0,"aspect_dominant":"N","ppt_annual_mean_mm":993.5,"ppt_annual_min_mm":612.4,"ppt_annual_max_mm":1234.5,"ppt_annual_std_mm":191.9,"ppt_wet_may_oct_mm":952.5,"ppt_dry_nov_apr_mm":40.9,"ppt_wet_share_pct":95.9,"tmean_annual_c":25.37,"tmax_annual_c":32.79,"tmin_annual_c":17.95,"tmean_wet_c":25.93,"tmean_dry_c":24.82,"pet_annual_mm":1675.0,"aet_annual_mm":1017.43,"deficit_annual_mm":657.58,"soil_moisture_annual_mm":169.78,"runoff_annual_mm":238.29,"srad_annual_wm2":210.13,"vpd_annual_kpa":1.19,"wind_speed_annual_ms":2.88,"scene_count":532,"ndvi_mean":0.692,"ndvi_std":0.17,"ndvi_min":0.387,"ndvi_max":0.906,"ndvi_wet":0.679,"ndvi_dry":0.703,"ndmi_mean":0.275,"ndmi_std":0.074,"ndmi_min":0.044,"ndmi_max":0.387,"ndmi_wet":0.266,"ndmi_dry":0.281,"lc_dominant":"Tree cover","lc_dominant_pct":100.0,"soil_ph_0_5cm":6.2,"soil_soc_0_5cm_g_kg":45.3,"soil_clay_0_5cm_pct":18.9,"soil_silt_0_5cm_pct":26.4,"soil_sand_0_5cm_pct":54.6,"soil_bdod_0_5cm_kg_dm3":1.14,"soil_cec_0_5cm_cmol_kg":24.1,"soil_nitrogen_0_5cm_g_kg":4.43,"osm_waterways_within_3km":2,"nearest_water_m":1702.0,"nearest_water_type":"river"}},"monthly_climate":[{"m":1,"f1":{"rain_chirps":3.3,"rain_terra":2.05,"tmin":15.61,"tmax":32.58,"tmean":24.1,"pet":138.83,"aet":56.14,"def":82.69,"soil":120.9,"q":0.09,"srad":189.32},"f2":{"rain_chirps":3.3,"rain_terra":2.05,"tmin":15.61,"tmax":32.58,"tmean":24.1,"pet":138.83,"aet":56.14,"def":82.69,"soil":120.9,"q":0.09,"srad":189.32}},{"m":2,"f1":{"rain_chirps":5.7,"rain_terra":1.82,"tmin":15.75,"tmax":33.27,"tmean":24.51,"pet":140.22,"aet":37.06,"def":103.16,"soil":85.56,"q":0.09,"srad":229.25},"f2":{"rain_chirps":5.7,"rain_terra":1.82,"tmin":15.75,"tmax":33.27,"tmean":24.51,"pet":140.22,"aet":37.06,"def":103.16,"soil":85.56,"q":0.09,"srad":229.25}},{"m":3,"f1":{"rain_chirps":7.6,"rain_terra":5.86,"tmin":16.67,"tmax":33.75,"tmean":25.21,"pet":166.71,"aet":25.45,"def":141.27,"soil":65.67,"q":0.31,"srad":231.99},"f2":{"rain_chirps":7.6,"rain_terra":5.86,"tmin":16.67,"tmax":33.75,"tmean":25.21,"pet":166.71,"aet":25.45,"def":141.27,"soil":65.67,"q":0.31,"srad":231.99}},{"m":4,"f1":{"rain_chirps":6.7,"rain_terra":6.0,"tmin":17.73,"tmax":33.89,"tmean":25.81,"pet":154.69,"aet":17.6,"def":137.1,"soil":53.76,"q":0.31,"srad":220.83},"f2":{"rain_chirps":6.7,"rain_terra":6.0,"tmin":17.73,"tmax":33.89,"tmean":25.81,"pet":154.69,"aet":17.6,"def":137.1,"soil":53.76,"q":0.31,"srad":220.83}},{"m":5,"f1":{"rain_chirps":55.8,"rain_terra":136.44,"tmin":19.17,"tmax":33.63,"tmean":26.4,"pet":156.26,"aet":115.9,"def":40.36,"soil":67.48,"q":6.84,"srad":220.17},"f2":{"rain_chirps":55.8,"rain_terra":136.44,"tmin":19.17,"tmax":33.63,"tmean":26.4,"pet":156.26,"aet":115.9,"def":40.36,"soil":67.48,"q":6.84,"srad":220.17}},{"m":6,"f1":{"rain_chirps":237.2,"rain_terra":316.97,"tmin":19.45,"tmax":32.19,"tmean":25.82,"pet":132.65,"aet":130.15,"def":2.5,"soil":201.63,"q":52.65,"srad":212.09},"f2":{"rain_chirps":237.2,"rain_terra":316.97,"tmin":19.45,"tmax":32.19,"tmean":25.82,"pet":132.65,"aet":130.15,"def":2.5,"soil":201.63,"q":52.65,"srad":212.09}},{"m":7,"f1":{"rain_chirps":91.0,"rain_terra":115.24,"tmin":19.8,"tmax":32.8,"tmean":26.3,"pet":149.45,"aet":124.14,"def":25.3,"soil":186.97,"q":5.76,"srad":237.19},"f2":{"rain_chirps":91.0,"rain_terra":115.24,"tmin":19.8,"tmax":32.8,"tmean":26.3,"pet":149.45,"aet":124.14,"def":25.3,"soil":186.97,"q":5.76,"srad":237.19}},{"m":8,"f1":{"rain_chirps":157.0,"rain_terra":260.8,"tmin":19.36,"tmax":32.58,"tmean":25.97,"pet":143.02,"aet":132.84,"def":10.18,"soil":258.3,"q":56.68,"srad":227.16},"f2":{"rain_chirps":157.0,"rain_terra":260.8,"tmin":19.36,"tmax":32.58,"tmean":25.97,"pet":143.02,"aet":132.84,"def":10.18,"soil":258.3,"q":56.68,"srad":227.16}},{"m":9,"f1":{"rain_chirps":219.6,"rain_terra":231.99,"tmin":19.46,"tmax":31.75,"tmean":25.6,"pet":119.73,"aet":119.73,"def":0.0,"soil":288.47,"q":82.1,"srad":195.09},"f2":{"rain_chirps":219.6,"rain_terra":231.99,"tmin":19.46,"tmax":31.75,"tmean":25.6,"pet":119.73,"aet":119.73,"def":0.0,"soil":288.47,"q":82.1,"srad":195.09}},{"m":10,"f1":{"rain_chirps":191.9,"rain_terra":151.49,"tmin":18.83,"tmax":32.1,"tmean":25.47,"pet":120.48,"aet":109.75,"def":10.73,"soil":298.16,"q":32.05,"srad":184.08},"f2":{"rain_chirps":191.9,"rain_terra":151.49,"tmin":18.83,"tmax":32.1,"tmean":25.47,"pet":120.48,"aet":109.75,"def":10.73,"soil":298.16,"q":32.05,"srad":184.08}},{"m":11,"f1":{"rain_chirps":12.7,"rain_terra":19.96,"tmin":17.65,"tmax":32.48,"tmean":25.06,"pet":128.91,"aet":82.95,"def":45.96,"soil":234.17,"q":0.99,"srad":193.09},"f2":{"rain_chirps":12.7,"rain_terra":19.96,"tmin":17.65,"tmax":32.48,"tmean":25.06,"pet":128.91,"aet":82.95,"def":45.96,"soil":234.17,"q":0.99,"srad":193.09}},{"m":12,"f1":{"rain_chirps":4.9,"rain_terra":8.31,"tmin":15.95,"tmax":32.45,"tmean":24.2,"pet":124.05,"aet":65.72,"def":58.33,"soil":176.32,"q":0.42,"srad":181.35},"f2":{"rain_chirps":4.9,"rain_terra":8.31,"tmin":15.95,"tmax":32.45,"tmean":24.2,"pet":124.05,"aet":65.72,"def":58.33,"soil":176.32,"q":0.42,"srad":181.35}}],"annual_rain":[{"y":2016,"f1":612.4,"f2":612.4},{"y":2017,"f1":1102.9,"f2":1102.9},{"y":2018,"f1":1071.8,"f2":1071.8},{"y":2019,"f1":1234.5,"f2":1234.5},{"y":2020,"f1":772.1,"f2":772.1},{"y":2021,"f1":1067.6,"f2":1067.6},{"y":2022,"f1":1084.7,"f2":1084.7},{"y":2023,"f1":770.3,"f2":770.3},{"y":2024,"f1":1169.6,"f2":1169.6},{"y":2025,"f1":1048.5,"f2":1048.5}],"soil":{"first_field":{"phh2o_0-5cm":[6.1,"-"],"phh2o_5-15cm":[6.1,"-"],"phh2o_15-30cm":[6.1,"-"],"phh2o_30-60cm":[6.1,"-"],"soc_0-5cm":[48.9,"g/kg"],"soc_5-15cm":[30.5,"g/kg"],"soc_15-30cm":[14.4,"g/kg"],"soc_30-60cm":[9.6,"g/kg"],"clay_0-5cm":[18.9,"%"],"clay_5-15cm":[18.9,"%"],"clay_15-30cm":[19.5,"%"],"clay_30-60cm":[22.1,"%"],"silt_0-5cm":[25.4,"%"],"silt_5-15cm":[24.9,"%"],"silt_15-30cm":[25.6,"%"],"silt_30-60cm":[25.7,"%"],"sand_0-5cm":[55.6,"%"],"sand_5-15cm":[56.2,"%"],"sand_15-30cm":[54.9,"%"],"sand_30-60cm":[52.3,"%"],"bdod_0-5cm":[1.14,"kg/dm³"],"bdod_5-15cm":[1.19,"kg/dm³"],"bdod_15-30cm":[1.23,"kg/dm³"],"bdod_30-60cm":[1.29,"kg/dm³"],"cec_0-5cm":[23.6,"cmol(c)/kg"],"cec_5-15cm":[22.8,"cmol(c)/kg"],"cec_15-30cm":[22.3,"cmol(c)/kg"],"cec_30-60cm":[21.3,"cmol(c)/kg"],"nitrogen_0-5cm":[3.52,"g/kg"],"nitrogen_5-15cm":[4.18,"g/kg"],"nitrogen_15-30cm":[2.89,"g/kg"],"nitrogen_30-60cm":[2.5,"g/kg"]},"second_field":{"phh2o_0-5cm":[6.2,"-"],"phh2o_5-15cm":[6.1,"-"],"phh2o_15-30cm":[6.2,"-"],"phh2o_30-60cm":[6.1,"-"],"soc_0-5cm":[45.3,"g/kg"],"soc_5-15cm":[28.6,"g/kg"],"soc_15-30cm":[13.9,"g/kg"],"soc_30-60cm":[8.9,"g/kg"],"clay_0-5cm":[18.9,"%"],"clay_5-15cm":[18.9,"%"],"clay_15-30cm":[19.7,"%"],"clay_30-60cm":[22.4,"%"],"silt_0-5cm":[26.4,"%"],"silt_5-15cm":[25.8,"%"],"silt_15-30cm":[26.4,"%"],"silt_30-60cm":[26.2,"%"],"sand_0-5cm":[54.6,"%"],"sand_5-15cm":[55.3,"%"],"sand_15-30cm":[53.9,"%"],"sand_30-60cm":[51.4,"%"],"bdod_0-5cm":[1.14,"kg/dm³"],"bdod_5-15cm":[1.19,"kg/dm³"],"bdod_15-30cm":[1.24,"kg/dm³"],"bdod_30-60cm":[1.3,"kg/dm³"],"cec_0-5cm":[24.1,"cmol(c)/kg"],"cec_5-15cm":[23.1,"cmol(c)/kg"],"cec_15-30cm":[22.8,"cmol(c)/kg"],"cec_30-60cm":[21.8,"cmol(c)/kg"],"nitrogen_0-5cm":[4.43,"g/kg"],"nitrogen_5-15cm":[5.39,"g/kg"],"nitrogen_15-30cm":[3.2,"g/kg"],"nitrogen_30-60cm":[3.01,"g/kg"]}},"land_cover":{"first_field":{"Tree cover":100.0},"second_field":{"Tree cover":100.0}},"hydrology":{"first_field":[{"type":"river","name":"(unnamed)","distance_m":1554.0,"osm_id":218124627},{"type":"stream","name":"(unnamed)","distance_m":1993.0,"osm_id":452317987}],"second_field":[{"type":"river","name":"(unnamed)","distance_m":1702.0,"osm_id":218124627},{"type":"stream","name":"(unnamed)","distance_m":1896.0,"osm_id":452317987}]},"veg_clim":{"first_field":{"ndvi":{"1":0.742,"2":0.687,"3":0.673,"4":0.663,"5":0.64,"6":0.691,"7":0.662,"8":0.714,"9":0.676,"10":0.708,"11":0.727,"12":0.708},"ndmi":{"1":0.302,"2":0.271,"3":0.25,"4":0.248,"5":0.237,"6":0.247,"7":0.289,"8":0.29,"9":0.284,"10":0.288,"11":0.284,"12":0.267}},"second_field":{"ndvi":{"1":0.745,"2":0.695,"3":0.679,"4":0.656,"5":0.633,"6":0.636,"7":0.689,"8":0.716,"9":0.671,"10":0.708,"11":0.721,"12":0.727},"ndmi":{"1":0.315,"2":0.284,"3":0.26,"4":0.24,"5":0.233,"6":0.228,"7":0.283,"8":0.283,"9":0.277,"10":0.284,"11":0.293,"12":0.3}}},"generated":"2026-05-17"}</script>
 
 <script>
-(function() {
-  const DATA = JSON.parse(document.getElementById('field-data').textContent);
+(function(){
+const D = JSON.parse(document.getElementById('field-data').textContent);
+document.getElementById('gen-date').textContent = D.generated || '—';
 
-  // ===== Leaflet map =====
-  const center = [15.8788, -96.5128];
-  const map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView(center, 17);
-  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-    attribution: 'Imagery © Esri',
-    maxZoom: 19,
-  }).addTo(map);
+const map = L.map('map', { zoomControl: true, scrollWheelZoom: false }).setView([15.8788,-96.5128], 17);
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  { attribution: 'Imagery © Esri', maxZoom: 19 }).addTo(map);
+const toLL = c => c.map(p => [p[1], p[0]]);
+const f1 = L.polygon(toLL(D.fields.first), { color:'#74C69D', weight:2.5, fillColor:'#74C69D', fillOpacity:0.35 }).addTo(map);
+const f2 = L.polygon(toLL(D.fields.second), { color:'#FFB347', weight:2.5, fillColor:'#FFB347', fillOpacity:0.25 }).addTo(map);
+map.fitBounds(L.featureGroup([f1,f2]).getBounds(), { padding:[40,40] });
 
-  function toLatLng(coords) { return coords.map(c => [c[1], c[0]]); }
+const L_EN = {months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']};
+const L_ES = {months:['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']};
+function lang(){ return document.documentElement.getAttribute('data-lang')==='es' ? L_ES : L_EN; }
 
-  const f1 = L.polygon(toLatLng(DATA.fields.first), {
-    color: '#74C69D', weight: 2.5, fillColor: '#74C69D', fillOpacity: 0.35,
-  }).addTo(map).bindTooltip('Field 1 — 0.26 ha', { permanent: false });
+function drawBars(svgId, data, valKey, color, yMaxRound, labelFn){
+  const svg=document.getElementById(svgId); const w=720,h=240,padL=50,padR=20,padT=20,padB=44;
+  const max=Math.ceil(Math.max(...data.map(d=>d[valKey]))/yMaxRound)*yMaxRound;
+  const bw=(w-padL-padR)/data.length; const ch=h-padT-padB; let s='';
+  for(let i=0;i<=5;i++){const y=padT+(ch*i/5);const v=max-(max*i/5);
+    s+=`<line x1="${padL}" y1="${y}" x2="${w-padR}" y2="${y}" stroke="#E5E7EB"/>`;
+    s+=`<text x="${padL-6}" y="${y+4}" text-anchor="end" font-size="10" fill="#6B7280" font-family="JetBrains Mono">${Math.round(v)}</text>`;}
+  data.forEach((d,i)=>{const bh=(d[valKey]/max)*ch;const x=padL+bw*i+bw*0.15;const y=padT+ch-bh;const wB=bw*0.7;
+    s+=`<rect x="${x}" y="${y}" width="${wB}" height="${bh}" fill="${color}" rx="1"/>`;
+    if(d[valKey]>max*0.12) s+=`<text x="${x+wB/2}" y="${y-4}" text-anchor="middle" font-size="9" fill="#1B4332" font-family="JetBrains Mono">${Math.round(d[valKey])}</text>`;
+    s+=`<text x="${x+wB/2}" y="${h-padB+16}" text-anchor="middle" font-size="10" fill="#6B7280" font-family="JetBrains Mono">${labelFn(d,i)}</text>`;});
+  svg.innerHTML=s;
+}
 
-  const f2 = L.polygon(toLatLng(DATA.fields.second), {
-    color: '#FFB347', weight: 2.5, fillColor: '#FFB347', fillOpacity: 0.25,
-  }).addTo(map).bindTooltip('Field 2 — 3.26 ha', { permanent: false });
-
-  const group = L.featureGroup([f1, f2]);
-  map.fitBounds(group.getBounds(), { padding: [40, 40] });
-
-  // ===== Rainfall climatology chart =====
-  function drawRainChart() {
-    const svg = document.getElementById('rainChart');
-    const w = 720, h = 280, padL = 50, padR = 20, padT = 20, padB = 50;
-    const data = DATA.monthly_rain;
-    const maxV = Math.ceil(Math.max(...data.map(d => d.mm)) / 50) * 50;
-    const barW = (w - padL - padR) / data.length;
-    const chartH = h - padT - padB;
-    const months = {
-      en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      es: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-    };
-    const lang = document.documentElement.getAttribute('data-lang') || 'en';
-    const wetSet = new Set([5, 6, 7, 8, 9, 10]);
-    let html = '';
-    // grid lines
-    for (let i = 0; i <= 5; i++) {
-      const y = padT + (chartH * i / 5);
-      const v = maxV - (maxV * i / 5);
-      html += `<line x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}" stroke="#E5E7EB" stroke-width="1"/>`;
-      html += `<text x="${padL - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="#6B7280" font-family="Space Grotesk">${Math.round(v)}</text>`;
-    }
-    // bars
-    data.forEach((d, i) => {
-      const barH = (d.mm / maxV) * chartH;
-      const x = padL + barW * i + barW * 0.15;
-      const y = padT + chartH - barH;
-      const wBar = barW * 0.7;
-      const color = wetSet.has(d.m) ? '#116c4a' : '#86d7ad';
-      html += `<rect x="${x}" y="${y}" width="${wBar}" height="${barH}" fill="${color}" rx="1"/>`;
-      // value label on top
-      if (d.mm > 30) {
-        html += `<text x="${x + wBar / 2}" y="${y - 6}" text-anchor="middle" font-size="11" fill="#1B4332" font-family="Space Grotesk" font-weight="500">${Math.round(d.mm)}</text>`;
-      }
-      // month label
-      html += `<text x="${x + wBar / 2}" y="${h - padB + 18}" text-anchor="middle" font-size="11" fill="#6B7280" font-family="Space Grotesk">${months[lang][i]}</text>`;
-    });
-    // canícula annotation
-    const julyIdx = 6;
-    const julyX = padL + barW * julyIdx + barW * 0.5;
-    html += `<text x="${julyX}" y="${h - padB + 38}" text-anchor="middle" font-size="10" fill="#012d1d" font-family="Space Grotesk" font-style="italic">canícula</text>`;
-    svg.innerHTML = html;
-  }
-
-  // ===== Annual rainfall chart =====
-  function drawAnnualChart() {
-    const svg = document.getElementById('annualChart');
-    const w = 720, h = 240, padL = 50, padR = 20, padT = 20, padB = 40;
-    const data = DATA.annual_rain;
-    const maxV = Math.ceil(Math.max(...data.map(d => d.mm)) / 200) * 200;
-    const barW = (w - padL - padR) / data.length;
-    const chartH = h - padT - padB;
-    const mean = data.reduce((a, b) => a + b.mm, 0) / data.length;
-    let html = '';
-    for (let i = 0; i <= 4; i++) {
-      const y = padT + (chartH * i / 4);
-      const v = maxV - (maxV * i / 4);
-      html += `<line x1="${padL}" y1="${y}" x2="${w - padR}" y2="${y}" stroke="#E5E7EB" stroke-width="1"/>`;
-      html += `<text x="${padL - 8}" y="${y + 4}" text-anchor="end" font-size="11" fill="#6B7280" font-family="Space Grotesk">${v}</text>`;
-    }
-    data.forEach((d, i) => {
-      const barH = (d.mm / maxV) * chartH;
-      const x = padL + barW * i + barW * 0.15;
-      const y = padT + chartH - barH;
-      const wBar = barW * 0.7;
-      const color = d.mm < mean ? '#86d7ad' : '#116c4a';
-      html += `<rect x="${x}" y="${y}" width="${wBar}" height="${barH}" fill="${color}" rx="1"/>`;
-      html += `<text x="${x + wBar / 2}" y="${y - 6}" text-anchor="middle" font-size="11" fill="#1B4332" font-family="Space Grotesk" font-weight="500">${Math.round(d.mm)}</text>`;
-      html += `<text x="${x + wBar / 2}" y="${h - padB + 18}" text-anchor="middle" font-size="11" fill="#6B7280" font-family="Space Grotesk">${d.y}</text>`;
-    });
-    // mean line
-    const meanY = padT + chartH - (mean / maxV) * chartH;
-    html += `<line x1="${padL}" y1="${meanY}" x2="${w - padR}" y2="${meanY}" stroke="#012d1d" stroke-width="1" stroke-dasharray="4 4"/>`;
-    html += `<text x="${w - padR - 4}" y="${meanY - 4}" text-anchor="end" font-size="10" fill="#012d1d" font-family="Space Grotesk">mean ${Math.round(mean)} mm</text>`;
-    svg.innerHTML = html;
-  }
-
-  drawRainChart();
-  drawAnnualChart();
-
-  // ===== Language toggle =====
-  const root = document.documentElement;
-  const langToggle = document.querySelector('[data-lang-toggle]');
-  const enChip = langToggle.querySelector('[data-lang-en]');
-  const esChip = langToggle.querySelector('[data-lang-es]');
-
-  function setLang(lang) {
-    root.setAttribute('lang', lang);
-    root.setAttribute('data-lang', lang);
-    const attr = 'data-' + lang;
-    document.querySelectorAll('[data-en]').forEach(el => {
-      const v = el.getAttribute(attr);
-      if (v != null) el.innerHTML = v;
-    });
-    enChip.classList.toggle('font-bold', lang === 'en');
-    esChip.classList.toggle('font-bold', lang === 'es');
-    enChip.classList.toggle('opacity-50', lang !== 'en');
-    esChip.classList.toggle('opacity-50', lang !== 'es');
-    try { localStorage.setItem('pb-lang', lang); } catch (e) {}
-    const url = new URL(window.location.href);
-    if (lang === 'es') url.searchParams.set('lang', 'es'); else url.searchParams.delete('lang');
-    history.replaceState(null, '', url.toString());
-    drawRainChart();
-  }
-
-  langToggle.addEventListener('click', () => {
-    setLang(root.getAttribute('data-lang') === 'es' ? 'en' : 'es');
+function drawLines(svgId, lines, yMin, yMax, xLabels){
+  const svg=document.getElementById(svgId); const w=720,h=240,padL=50,padR=20,padT=30,padB=44;
+  const n=xLabels.length; const ch=h-padT-padB; const cw=w-padL-padR; let s='';
+  for(let i=0;i<=5;i++){const y=padT+(ch*i/5);const v=yMax-((yMax-yMin)*i/5);
+    s+=`<line x1="${padL}" y1="${y}" x2="${w-padR}" y2="${y}" stroke="#E5E7EB"/>`;
+    s+=`<text x="${padL-6}" y="${y+4}" text-anchor="end" font-size="10" fill="#6B7280" font-family="JetBrains Mono">${Math.round(v)}</text>`;}
+  xLabels.forEach((lbl,i)=>{const x=padL+(cw*(i+0.5)/n);
+    s+=`<text x="${x}" y="${h-padB+16}" text-anchor="middle" font-size="10" fill="#6B7280" font-family="JetBrains Mono">${lbl}</text>`;});
+  lines.forEach(line=>{
+    const pts=line.values.map((v,i)=>{const x=padL+(cw*(i+0.5)/n);const y=padT+ch-((v-yMin)/(yMax-yMin)*ch);return [x,y];});
+    let path=''; pts.forEach((p,i)=>{path+=(i===0?'M':'L')+p[0]+','+p[1];});
+    s+=`<path d="${path}" stroke="${line.color}" stroke-width="2" fill="none"/>`;
+    pts.forEach(p=>{s+=`<circle cx="${p[0]}" cy="${p[1]}" r="2.5" fill="${line.color}"/>`;});
   });
+  // legend at top
+  let lx=padL;
+  lines.forEach(line=>{s+=`<rect x="${lx}" y="6" width="10" height="10" fill="${line.color}"/>`;
+    s+=`<text x="${lx+14}" y="15" font-size="10" fill="#1F2937" font-family="JetBrains Mono">${line.label}</text>`;
+    lx+= line.label.length*7 + 24;});
+  svg.innerHTML=s;
+}
 
-  const urlLang = new URL(window.location.href).searchParams.get('lang');
-  let savedLang = null;
-  try { savedLang = localStorage.getItem('pb-lang'); } catch (e) {}
-  if (urlLang === 'es' || (!urlLang && savedLang === 'es')) setLang('es');
-  else setLang('en');
+function renderCharts(){
+  const ms=lang().months;
+  drawBars('rainChart', D.monthly_climate.map(d=>({m:d.m, mm:d.f1.rain_chirps})), 'mm', '#116c4a', 50, (d,i)=>ms[d.m-1]);
+  const tmin = D.monthly_climate.map(d=>d.f1.tmin);
+  const tmean = D.monthly_climate.map(d=>d.f1.tmean);
+  const tmax = D.monthly_climate.map(d=>d.f1.tmax);
+  const tMin = Math.floor(Math.min(...tmin)/5)*5;
+  const tMax = Math.ceil(Math.max(...tmax)/5)*5;
+  drawLines('tempChart', [
+    {label:'Tmax', color:'#DC2626', values: tmax},
+    {label:'Tmean', color:'#F59E0B', values: tmean},
+    {label:'Tmin', color:'#3B82F6', values: tmin},
+  ], tMin, tMax, ms);
+  const ppt = D.monthly_climate.map(d=>d.f1.rain_terra);
+  const pet = D.monthly_climate.map(d=>d.f1.pet);
+  const aet = D.monthly_climate.map(d=>d.f1.aet);
+  const defv = D.monthly_climate.map(d=>d.f1.def);
+  const q = D.monthly_climate.map(d=>d.f1.q);
+  const wbMax = Math.ceil(Math.max(...ppt, ...pet)/50)*50;
+  drawLines('wbChart', [
+    {label:'PPT', color:'#116c4a', values: ppt},
+    {label:'PET', color:'#F59E0B', values: pet},
+    {label:'AET', color:'#74C69D', values: aet},
+    {label:'Def', color:'#DC2626', values: defv},
+    {label:'Q', color:'#3B82F6', values: q},
+  ], 0, wbMax, ms);
+  drawBars('annualChart', D.annual_rain.map(d=>({y:d.y, mm:d.f1})), 'mm', '#116c4a', 200, (d,i)=>d.y);
+}
+
+function tag(t,a,h){const e=document.createElement(t);if(a)Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));if(h!=null)e.innerHTML=h;return e;}
+function tr(cells){const r=tag('tr');cells.forEach(c=>{const cell=tag(c.th?'th':'td',c.attrs||{},c.html!=null?c.html:c.text);if(c.cls)cell.className=c.cls;r.appendChild(cell);});return r;}
+function fmt(v, dec){if(v===null||v===undefined||(typeof v==='number'&&isNaN(v)))return '—';return typeof v==='number' ? v.toFixed(dec||0) : v;}
+
+function renderSummary(){
+  const t=document.getElementById('summary-table'); t.innerHTML='';
+  const s1=D.summary.first_field, s2=D.summary.second_field;
+  const rows=[
+    {head:'GEOMETRY'},
+    ['Area (ha)', s1.area_ha, s2.area_ha],
+    ['Area (m²)', Math.round(s1.area_m2).toLocaleString(), Math.round(s2.area_m2).toLocaleString()],
+    ['Centroid (lat, lon)', `${s1.centroid_lat}, ${s1.centroid_lon}`, `${s2.centroid_lat}, ${s2.centroid_lon}`],
+    {head:'TOPOGRAPHY (Copernicus DEM 30 m)'},
+    ['Elevation mean (m)', s1.elev_mean_m, s2.elev_mean_m],
+    ['Elevation min / max (m)', `${s1.elev_min_m} / ${s1.elev_max_m}`, `${s2.elev_min_m} / ${s2.elev_max_m}`],
+    ['Elevation range (m)', s1.elev_range_m, s2.elev_range_m],
+    ['Slope mean / max (°)', `${s1.slope_mean_deg} / ${s1.slope_max_deg}`, `${s2.slope_mean_deg} / ${s2.slope_max_deg}`],
+    ['Aspect dominant (8 sectors)', s1.aspect_dominant, s2.aspect_dominant],
+    {head:'RAINFALL (CHIRPS 2016–2025)'},
+    ['Annual mean (mm)', s1.ppt_annual_mean_mm, s2.ppt_annual_mean_mm],
+    ['Annual min / max (mm)', `${s1.ppt_annual_min_mm} / ${s1.ppt_annual_max_mm}`, `${s2.ppt_annual_min_mm} / ${s2.ppt_annual_max_mm}`],
+    ['Wet May–Oct (mm)', s1.ppt_wet_may_oct_mm, s2.ppt_wet_may_oct_mm],
+    ['Dry Nov–Apr (mm)', s1.ppt_dry_nov_apr_mm, s2.ppt_dry_nov_apr_mm],
+    {head:'CLIMATE (TerraClimate 2012–2021 climatology)'},
+    ['Mean temperature (°C)', s1.tmean_annual_c, s2.tmean_annual_c],
+    ['Max temperature (°C)', s1.tmax_annual_c, s2.tmax_annual_c],
+    ['Min temperature (°C)', s1.tmin_annual_c, s2.tmin_annual_c],
+    ['Tmean wet / dry (°C)', `${s1.tmean_wet_c} / ${s1.tmean_dry_c}`, `${s2.tmean_wet_c} / ${s2.tmean_dry_c}`],
+    {head:'WATER BALANCE (TerraClimate annual)'},
+    ['PET (mm/yr)', s1.pet_annual_mm, s2.pet_annual_mm],
+    ['AET (mm/yr)', s1.aet_annual_mm, s2.aet_annual_mm],
+    ['Climate water deficit (mm/yr)', s1.deficit_annual_mm, s2.deficit_annual_mm],
+    ['Soil moisture top 1 m (mm)', s1.soil_moisture_annual_mm, s2.soil_moisture_annual_mm],
+    ['Runoff (mm/yr)', s1.runoff_annual_mm, s2.runoff_annual_mm],
+    ['Shortwave radiation (W/m²)', s1.srad_annual_wm2, s2.srad_annual_wm2],
+    ['VPD (kPa)', s1.vpd_annual_kpa, s2.vpd_annual_kpa],
+    ['Wind speed 10 m (m/s)', s1.wind_speed_annual_ms, s2.wind_speed_annual_ms],
+    {head:'VEGETATION (Sentinel-2 2017–2026)'},
+    ['Scenes used', s1.scene_count, s2.scene_count],
+    ['NDVI mean', s1.ndvi_mean, s2.ndvi_mean],
+    ['NDVI wet / dry', `${s1.ndvi_wet} / ${s1.ndvi_dry}`, `${s2.ndvi_wet} / ${s2.ndvi_dry}`],
+    ['NDMI mean', s1.ndmi_mean, s2.ndmi_mean],
+    ['NDMI wet / dry', `${s1.ndmi_wet} / ${s1.ndmi_dry}`, `${s2.ndmi_wet} / ${s2.ndmi_dry}`],
+    {head:'SOIL (SoilGrids 0–5 cm at centroid)'},
+    ['pH (H2O)', s1.soil_ph_0_5cm, s2.soil_ph_0_5cm],
+    ['Organic carbon (g/kg)', s1.soil_soc_0_5cm_g_kg, s2.soil_soc_0_5cm_g_kg],
+    ['Sand / silt / clay (%)', `${s1.soil_sand_0_5cm_pct} / ${s1.soil_silt_0_5cm_pct} / ${s1.soil_clay_0_5cm_pct}`, `${s2.soil_sand_0_5cm_pct} / ${s2.soil_silt_0_5cm_pct} / ${s2.soil_clay_0_5cm_pct}`],
+    ['Bulk density (kg/dm³)', s1.soil_bdod_0_5cm_kg_dm3, s2.soil_bdod_0_5cm_kg_dm3],
+    ['CEC (cmol(c)/kg)', s1.soil_cec_0_5cm_cmol_kg, s2.soil_cec_0_5cm_cmol_kg],
+    ['Total nitrogen (g/kg)', s1.soil_nitrogen_0_5cm_g_kg, s2.soil_nitrogen_0_5cm_g_kg],
+    {head:'LAND COVER & HYDROLOGY'},
+    ['Land cover dominant', `${s1.lc_dominant} (${s1.lc_dominant_pct}%)`, `${s2.lc_dominant} (${s2.lc_dominant_pct}%)`],
+    ['Waterways within 3 km', s1.osm_waterways_within_3km, s2.osm_waterways_within_3km],
+    ['Nearest water (m)', s1.nearest_water_m ?? '—', s2.nearest_water_m ?? '—'],
+    ['Nearest water type', s1.nearest_water_type || '—', s2.nearest_water_type || '—'],
+  ];
+  t.appendChild(tr([{th:true,text:'Metric'},{th:true,text:'Field 1'},{th:true,text:'Field 2'}]));
+  rows.forEach(r=>{
+    if(r.head){const td=tag('td',{colspan:3,style:'background:#0F2922;color:#D8F3DC;font-family:Space Grotesk;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:500;padding:10px 12px;'},r.head);const row=tag('tr');row.appendChild(td);t.appendChild(row);}
+    else{t.appendChild(tr([{text:r[0],cls:'label'},{text:r[1]},{text:r[2]}]));}
+  });
+}
+
+function renderClimTable(elId, fkey){
+  const t=document.getElementById(elId); t.innerHTML='';
+  const ms=lang().months;
+  const cols=[
+    ['Mo',d=>ms[d.m-1]],['Rain CHIRPS',d=>fmt(d[fkey].rain_chirps,1)],
+    ['Rain TC',d=>fmt(d[fkey].rain_terra,1)],['Tmin °C',d=>fmt(d[fkey].tmin,1)],
+    ['Tmax °C',d=>fmt(d[fkey].tmax,1)],['Tmean °C',d=>fmt(d[fkey].tmean,1)],
+    ['PET mm',d=>fmt(d[fkey].pet,0)],['AET mm',d=>fmt(d[fkey].aet,0)],
+    ['Def mm',d=>fmt(d[fkey].def,0)],['Soil mm',d=>fmt(d[fkey].soil,0)],
+    ['Runoff mm',d=>fmt(d[fkey].q,1)],['SRad W/m²',d=>fmt(d[fkey].srad,0)],
+  ];
+  t.appendChild(tr(cols.map(c=>({th:true,text:c[0]}))));
+  D.monthly_climate.forEach(d=>t.appendChild(tr(cols.map(c=>({text:c[1](d)})))));
+}
+
+function renderAnnualTable(){
+  const t=document.getElementById('annual-table'); t.innerHTML='';
+  t.appendChild(tr([{th:true,text:'Year'},{th:true,text:'Field 1 (mm)'},{th:true,text:'Field 2 (mm)'}]));
+  D.annual_rain.forEach(d=>t.appendChild(tr([{text:d.y},{text:fmt(d.f1,1)},{text:fmt(d.f2,1)}])));
+}
+
+function renderTopoTable(){
+  const t=document.getElementById('topo-table'); t.innerHTML='';
+  const s1=D.summary.first_field, s2=D.summary.second_field;
+  const rows=[
+    ['DEM pixels in polygon', s1.pixel_count_dem, s2.pixel_count_dem],
+    ['Elevation mean (m)', s1.elev_mean_m, s2.elev_mean_m],
+    ['Elevation min (m)', s1.elev_min_m, s2.elev_min_m],
+    ['Elevation max (m)', s1.elev_max_m, s2.elev_max_m],
+    ['Elevation range (m)', s1.elev_range_m, s2.elev_range_m],
+    ['Elevation std (m)', s1.elev_std_m, s2.elev_std_m],
+    ['Slope mean (°)', s1.slope_mean_deg, s2.slope_mean_deg],
+    ['Slope median (°)', s1.slope_median_deg, s2.slope_median_deg],
+    ['Slope max (°)', s1.slope_max_deg, s2.slope_max_deg],
+    ['Slope std (°)', s1.slope_std_deg, s2.slope_std_deg],
+    ['% slope < 5°', s1.flat_lt5_pct, s2.flat_lt5_pct],
+    ['% slope 5–15°', s1.gentle_5_15_pct, s2.gentle_5_15_pct],
+    ['% slope 15–30°', s1.moderate_15_30_pct, s2.moderate_15_30_pct],
+    ['% slope ≥ 30°', s1.steep_gte30_pct, s2.steep_gte30_pct],
+    ['Aspect dominant (8 sectors)', s1.aspect_dominant, s2.aspect_dominant],
+  ];
+  t.appendChild(tr([{th:true,text:'Metric'},{th:true,text:'Field 1'},{th:true,text:'Field 2'}]));
+  rows.forEach(r=>t.appendChild(tr([{text:r[0],cls:'label'},{text:r[1]},{text:r[2]}])));
+}
+
+function renderSoil(elId, fkey){
+  const t=document.getElementById(elId); t.innerHTML='';
+  const props=[['phh2o','pH (H2O)','—'],['soc','Organic carbon','g/kg'],
+               ['clay','Clay','%'],['silt','Silt','%'],['sand','Sand','%'],
+               ['bdod','Bulk density','kg/dm³'],['cec','CEC','cmol(c)/kg'],
+               ['nitrogen','Total nitrogen','g/kg']];
+  const depths=['0-5cm','5-15cm','15-30cm','30-60cm'];
+  t.appendChild(tr([{th:true,text:'Property'},{th:true,text:'Unit'},...depths.map(d=>({th:true,text:d}))]));
+  props.forEach(p=>{
+    const cells=[{text:p[1],cls:'label'},{text:p[2],cls:'unit'}];
+    depths.forEach(d=>{const v=D.soil[fkey][`${p[0]}_${d}`];cells.push({text:v&&v[0]!=null?v[0]:'—'});});
+    t.appendChild(tr(cells));
+  });
+}
+
+function renderLC(){
+  const t=document.getElementById('lc-table'); t.innerHTML='';
+  const allCls=new Set([...Object.keys(D.land_cover.first_field), ...Object.keys(D.land_cover.second_field)]);
+  t.appendChild(tr([{th:true,text:'Class'},{th:true,text:'Field 1 (%)'},{th:true,text:'Field 2 (%)'}]));
+  [...allCls].sort().forEach(cls=>{
+    t.appendChild(tr([{text:cls,cls:'label'},{text:D.land_cover.first_field[cls] ?? 0},{text:D.land_cover.second_field[cls] ?? 0}]));
+  });
+}
+
+function renderHydro(elId, fkey){
+  const t=document.getElementById(elId); t.innerHTML='';
+  const items=D.hydrology[fkey];
+  t.appendChild(tr([{th:true,text:'Type'},{th:true,text:'Name'},{th:true,text:'Distance (m)'},{th:true,text:'OSM ID'}]));
+  if(!items.length){
+    const row=tag('tr'); const td=tag('td',{colspan:4,style:'color:#6B7280;padding:14px 12px;'},'No mapped surface water within 3 km.');
+    row.appendChild(td); t.appendChild(row); return;
+  }
+  items.slice(0,30).forEach(h=>{
+    t.appendChild(tr([{text:h.type},{text:h.name,cls:'label'},{text:Math.round(h.distance_m)},{text:h.osm_id}]));
+  });
+}
+
+function renderVegClim(){
+  const t=document.getElementById('veg-clim-table'); t.innerHTML='';
+  const ms=lang().months;
+  t.appendChild(tr([{th:true,text:'Mo'},{th:true,text:'F1 NDVI'},{th:true,text:'F2 NDVI'},{th:true,text:'F1 NDMI'},{th:true,text:'F2 NDMI'}]));
+  for(let m=1;m<=12;m++){
+    const f1n=D.veg_clim?.first_field?.ndvi?.[m] ?? '—';
+    const f2n=D.veg_clim?.second_field?.ndvi?.[m] ?? '—';
+    const f1m=D.veg_clim?.first_field?.ndmi?.[m] ?? '—';
+    const f2m=D.veg_clim?.second_field?.ndmi?.[m] ?? '—';
+    t.appendChild(tr([{text:ms[m-1],cls:'label'},{text:f1n},{text:f2n},{text:f1m},{text:f2m}]));
+  }
+}
+
+function renderAll(){
+  renderSummary(); renderClimTable('clim-table-f1','f1'); renderClimTable('clim-table-f2','f2');
+  renderAnnualTable(); renderTopoTable();
+  renderSoil('soil-table-f1','first_field'); renderSoil('soil-table-f2','second_field');
+  renderLC();
+  renderHydro('hydro-table-f1','first_field'); renderHydro('hydro-table-f2','second_field');
+  renderVegClim(); renderCharts();
+}
+renderAll();
+
+const root=document.documentElement;
+const langToggle=document.querySelector('[data-lang-toggle]');
+const enChip=langToggle.querySelector('[data-lang-en]');
+const esChip=langToggle.querySelector('[data-lang-es]');
+function setLang(lang){
+  root.setAttribute('lang', lang); root.setAttribute('data-lang', lang);
+  const attr='data-'+lang;
+  document.querySelectorAll('[data-en]').forEach(el=>{const v=el.getAttribute(attr); if(v!=null) el.innerHTML=v;});
+  enChip.classList.toggle('font-bold', lang==='en'); esChip.classList.toggle('font-bold', lang==='es');
+  enChip.classList.toggle('opacity-50', lang!=='en'); esChip.classList.toggle('opacity-50', lang!=='es');
+  try{localStorage.setItem('pb-lang', lang);}catch(e){}
+  const url=new URL(window.location.href);
+  if(lang==='es') url.searchParams.set('lang','es'); else url.searchParams.delete('lang');
+  history.replaceState(null,'',url.toString());
+  renderAll();
+}
+langToggle.addEventListener('click', ()=>setLang(root.getAttribute('data-lang')==='es'?'en':'es'));
+const urlLang=new URL(window.location.href).searchParams.get('lang');
+let savedLang=null; try{savedLang=localStorage.getItem('pb-lang');}catch(e){}
+if(urlLang==='es' || (!urlLang && savedLang==='es')) setLang('es'); else setLang('en');
 })();
 </script>
 
