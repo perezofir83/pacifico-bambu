@@ -41,6 +41,28 @@ table.data tr:hover td { background: #F7FDF9; }
 .section-pad { padding-top: 4rem; padding-bottom: 4rem; }
 @media (max-width: 768px) { .section-pad { padding-top: 2.5rem; padding-bottom: 2.5rem; } #map { height: 360px; } table.data { font-size: 12px; } table.data th, table.data td { padding: 6px 8px; } }
 .legend-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+/* Tooltips */
+.term { cursor: help; border-bottom: 1px dotted #6B7280; position: relative; }
+.term:hover, .term:focus { color: #012d1d; border-bottom-color: #012d1d; }
+.term:hover::after, .term:focus::after {
+  content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 0;
+  background: #0F2922; color: #F0FFF4; padding: 8px 12px; border-radius: 3px;
+  font-size: 11px; font-family: "Be Vietnam Pro", sans-serif; font-variant-numeric: normal;
+  line-height: 1.5; width: 280px; max-width: 80vw; z-index: 100;
+  white-space: normal; box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  pointer-events: none; text-transform: none; letter-spacing: normal; font-weight: 400;
+}
+.term:hover::before, .term:focus::before {
+  content: ''; position: absolute; bottom: calc(100% + 1px); left: 8px;
+  border: 5px solid transparent; border-top-color: #0F2922; z-index: 101;
+}
+@media (max-width: 768px) { .term:hover::after, .term:focus::after { width: 240px; font-size: 11px; } }
+/* Score chips */
+.score-chip { display: inline-block; padding: 2px 8px; border-radius: 2px; font-size: 11px; font-family: "Space Grotesk", sans-serif; font-weight: 500; letter-spacing: 0.05em; }
+.score-good { background: #D8F3DC; color: #1B4332; }
+.score-mid  { background: #FEF3C7; color: #92400E; }
+.score-low  { background: #FECACA; color: #991B1B; }
+.score-na   { background: #E5E7EB; color: #6B7280; }
 </style>
 </head>
 <body class="bg-background text-ink">
@@ -184,6 +206,43 @@ table.data tr:hover td { background: #F7FDF9; }
       <table class="data" id="veg-clim-table"></table>
     </div>
   </div>
+</section>
+
+<!-- 10 · Optimal conditions assessment -->
+<section class="section-pad px-6 lg:px-12 max-w-7xl mx-auto">
+  <h2 class="font-display text-lg text-green-950 font-medium mb-1" data-en="10 · Optimal growing conditions — Guadua angustifolia &amp; Olhamí" data-es="10 · Condiciones óptimas de cultivo — Guadua angustifolia y Olhamí">10 · Optimal growing conditions — Guadua angustifolia &amp; Olhamí</h2>
+  <p class="text-xs text-ink-mute mb-6 font-mono" data-en="Field conditions vs. published optimal ranges for tropical Guadua bamboo cultivation. Sources: INBAR, Londoño 2002, Riaño et al. 2002, Cruz-Ramírez 2009." data-es="Condiciones del campo vs. rangos óptimos publicados para el cultivo de bambú Guadua tropical. Fuentes: INBAR, Londoño 2002, Riaño et al. 2002, Cruz-Ramírez 2009.">Field conditions vs. published optimal ranges for tropical Guadua bamboo cultivation. Sources: INBAR, Londoño 2002, Riaño et al. 2002, Cruz-Ramírez 2009.</p>
+
+  <div class="flex gap-4 items-center text-xs font-mono mb-4">
+    <span class="score-chip score-good">✓ Optimal</span>
+    <span class="score-chip score-mid">◐ Marginal</span>
+    <span class="score-chip score-low">✗ Sub-optimal</span>
+  </div>
+
+  <div class="overflow-x-auto border border-green-900/10 mb-6">
+    <table class="data" id="optimal-table"></table>
+  </div>
+
+  <div class="grid sm:grid-cols-2 gap-4 mt-6">
+    <div class="border border-green-900/10 p-5 bg-green-50">
+      <p class="font-eyebrow text-[10px] text-green-700 uppercase mb-2" data-en="Field 1 overall score" data-es="Puntuación general Campo 1">Field 1 overall score</p>
+      <div class="flex items-baseline gap-3">
+        <span class="font-display text-3xl text-green-900 font-medium" id="score-f1">—</span>
+        <span class="font-mono text-xs text-ink-mute" id="score-f1-detail"></span>
+      </div>
+    </div>
+    <div class="border border-green-900/10 p-5 bg-green-50">
+      <p class="font-eyebrow text-[10px] text-green-700 uppercase mb-2" data-en="Field 2 overall score" data-es="Puntuación general Campo 2">Field 2 overall score</p>
+      <div class="flex items-baseline gap-3">
+        <span class="font-display text-3xl text-green-900 font-medium" id="score-f2">—</span>
+        <span class="font-mono text-xs text-ink-mute" id="score-f2-detail"></span>
+      </div>
+    </div>
+  </div>
+
+  <p class="text-[11px] text-ink-mute mt-6 font-mono leading-relaxed" data-en="Note: Olhamí (Olmeca / Otatea spp., Mexican lowland bamboo) tolerates more variable rainfall and shadier conditions than Guadua angustifolia. Where the table flags rainfall or water-deficit as marginal for Guadua, Olhamí typically scores one tier higher." data-es="Nota: el Olhamí (Olmeca / Otatea spp., bambú nativo mexicano de tierras bajas) tolera lluvia más variable y más sombra que Guadua angustifolia. Donde la tabla marca la lluvia o el déficit hídrico como marginales para Guadua, el Olhamí suele puntuar un nivel arriba.">
+    Note: Olhamí (Olmeca / Otatea spp., Mexican lowland bamboo) tolerates more variable rainfall and shadier conditions than Guadua angustifolia. Where the table flags rainfall or water-deficit as marginal for Guadua, Olhamí typically scores one tier higher.
+  </p>
 </section>
 
 <footer class="bg-green-950 text-cream-50 py-10 px-6 lg:px-12">
@@ -447,6 +506,127 @@ function renderVegClim(){
   }
 }
 
+// ----- TOOLTIPS dictionary -----
+const TIPS = {
+  // Climate
+  'Mean temperature (°C)': {en:'Annual mean of monthly average temperatures. Baseline for plant metabolism and growth rate.', es:'Promedio anual de temperaturas medias mensuales. Línea base para el metabolismo y la tasa de crecimiento de las plantas.'},
+  'Max temperature (°C)': {en:'Annual mean of monthly maximum temperatures. Sustained values >35°C induce heat stress in most bamboos.', es:'Promedio anual de máximas mensuales. Valores sostenidos >35°C inducen estrés térmico en la mayoría de los bambúes.'},
+  'Min temperature (°C)': {en:'Annual mean of monthly minimum temperatures. Values near 0°C risk frost damage to young culms.', es:'Promedio anual de mínimas mensuales. Valores cercanos a 0°C arriesgan daño por helada en culmos jóvenes.'},
+  'Tmean wet / dry (°C)': {en:'Wet-season vs dry-season mean temperature. Larger gap = more pronounced seasonality.', es:'Temperatura media en temporada húmeda vs seca. Mayor diferencia = estacionalidad más marcada.'},
+  'PET (mm/yr)': {en:'Potential Evapotranspiration — water that would evaporate under no-supply-limit (only climate-driven). Compare to rainfall to assess drying pressure.', es:'Evapotranspiración Potencial — agua que se evaporaría sin limitación de suministro (solo clima). Comparar con la lluvia para evaluar presión de sequía.'},
+  'AET (mm/yr)': {en:'Actual Evapotranspiration — water that actually leaves soil + plants. AET < PET indicates moisture-limited periods.', es:'Evapotranspiración Real — agua que efectivamente sale del suelo y las plantas. AET < PET indica períodos con limitación hídrica.'},
+  'Climate water deficit (mm/yr)': {en:'PET minus AET. The amount of additional water the climate "demands" beyond what is available. >300 mm/yr = significant irrigation benefit.', es:'PET menos AET. Cantidad de agua que el clima "pide" más allá de lo disponible. >300 mm/yr = riego claramente beneficioso.'},
+  'Soil moisture top 1 m (mm)': {en:'Modeled column water content in the top 1 m of soil, monthly mean. Drives plant root-zone availability.', es:'Contenido de agua modelado en el primer metro de suelo, promedio mensual. Determina la disponibilidad en la zona radicular.'},
+  'Runoff (mm/yr)': {en:'Surface + subsurface water leaving the area (not infiltrating). High runoff with steep slopes signals erosion risk.', es:'Agua superficial + subsuperficial que sale del área (no infiltra). Mucho escurrimiento + pendiente fuerte = riesgo de erosión.'},
+  'Shortwave radiation (W/m²)': {en:'Mean incoming solar energy at the surface. Bamboo needs full sun for vigorous culm production.', es:'Energía solar media incidente en superficie. El bambú necesita sol pleno para producción vigorosa de culmos.'},
+  'VPD (kPa)': {en:'Vapor Pressure Deficit — dryness of the air. >2 kPa = high evaporative demand; >3 kPa stresses stomata.', es:'Déficit de Presión de Vapor — sequedad del aire. >2 kPa = alta demanda evaporativa; >3 kPa estresa los estomas.'},
+  'Wind speed 10 m (m/s)': {en:'Mean wind speed at 10 m height. >5 m/s sustained can damage tall culms and increase transpiration.', es:'Velocidad media del viento a 10 m. >5 m/s sostenido puede dañar culmos altos y aumentar la transpiración.'},
+  'Annual mean (mm)': {en:'Mean annual precipitation over the reference period. Compare to crop requirement (Guadua: 1500–2500 mm).', es:'Precipitación anual media en el período. Comparar con el requerimiento del cultivo (Guadua: 1500–2500 mm).'},
+  'Wet May–Oct (mm)': {en:'Total rainfall during the wet season (May–Oct). Concentration of rain in this window is typical of monsoon climates.', es:'Lluvia total en la temporada húmeda (May–Oct). La concentración en esta ventana es típica de climas monzónicos.'},
+  'Dry Nov–Apr (mm)': {en:'Total rainfall in the dry season. <100 mm = drought-prone window when supplementary irrigation matters most.', es:'Lluvia total en la temporada seca. <100 mm = ventana propensa a sequía donde el riego suplementario es más crítico.'},
+  // Vegetation
+  'NDVI mean': {en:'Normalized Difference Vegetation Index = (NIR − Red) / (NIR + Red). 0.6–0.9 = dense healthy canopy; 0.2–0.5 = sparse / stressed; <0.2 = bare soil.', es:'Índice de Vegetación = (NIR − Rojo) / (NIR + Rojo). 0,6–0,9 = dosel denso y sano; 0,2–0,5 = ralo o estresado; <0,2 = suelo desnudo.'},
+  'NDVI wet / dry': {en:'NDVI averaged separately over wet and dry seasons. Stable canopy across seasons indicates a perennial broadleaf system.', es:'NDVI promediado por temporada húmeda y seca. Dosel estable a lo largo del año indica sistema perenne de hoja ancha.'},
+  'NDMI mean': {en:'Normalized Difference Moisture Index = (NIR − SWIR) / (NIR + SWIR). >0.3 = wet canopy; 0.1–0.3 = moderate water; <0 = water stress.', es:'Índice de Humedad = (NIR − SWIR) / (NIR + SWIR). >0,3 = dosel húmedo; 0,1–0,3 = humedad moderada; <0 = estrés hídrico.'},
+  'NDMI wet / dry': {en:'NDMI by season. Big drop in dry season = the canopy is losing leaf water; stable = the species buffers drought well.', es:'NDMI por temporada. Caída fuerte en seca = el dosel pierde agua foliar; estable = la especie tolera bien la sequía.'},
+  // Topo
+  'Aspect dominant (8 sectors)': {en:'Compass direction the slope faces (N/NE/E/…). In dry tropics, N-facing slopes retain more soil moisture (less direct sun).', es:'Orientación de la ladera (N/NE/E/…). En trópico seco, las laderas con orientación N retienen más humedad (menos sol directo).'},
+  'Slope mean / max (°)': {en:'Average and steepest slope inside the polygon. >15° generally requires contour rows; >30° requires terraces to prevent erosion.', es:'Pendiente media y máxima dentro del polígono. >15° suele requerir surcos en contorno; >30° requiere terrazas para evitar erosión.'},
+  'Elevation mean (m)': {en:'Mean elevation. Guadua angustifolia grows from 0 to 2000 m, optimum 500–1600 m.', es:'Altitud media. Guadua angustifolia crece de 0 a 2000 m, óptimo 500–1600 m.'},
+  // Soil
+  'pH (H2O)': {en:'Soil acidity. Guadua tolerates 4.5–7.5; optimum 5.5–6.5. <5 limits nutrient uptake; >7 reduces P and micronutrient availability.', es:'Acidez del suelo. Guadua tolera 4,5–7,5; óptimo 5,5–6,5. <5 limita absorción de nutrientes; >7 reduce disponibilidad de P y micronutrientes.'},
+  'Organic carbon (g/kg)': {en:'Soil Organic Carbon (SOC). Multiply ×1.72 for organic matter. >17 g/kg = high fertility; <10 g/kg = needs compost/biochar.', es:'Carbono Orgánico del Suelo (SOC). Multiplicar ×1,72 para materia orgánica. >17 g/kg = alta fertilidad; <10 g/kg = requiere compost/biochar.'},
+  'Sand / silt / clay (%)': {en:'Texture triangle. Sandy loam (40–60% sand) drains well and warms quickly, ideal for bamboo rhizomes. Heavy clay (>40%) risks waterlogging.', es:'Triángulo textural. Franco arenoso (40–60% arena) drena bien y se calienta rápido, ideal para rizomas de bambú. Arcilla pesada (>40%) corre riesgo de encharcamiento.'},
+  'Bulk density (kg/dm³)': {en:'Mass per volume of dry soil. <1.4 = healthy structure; >1.6 = compacted, restricts roots and water.', es:'Masa por volumen de suelo seco. <1,4 = estructura sana; >1,6 = compactado, restringe raíces y agua.'},
+  'CEC (cmol(c)/kg)': {en:'Cation Exchange Capacity — soil ability to hold positively-charged nutrients (Ca²⁺, K⁺, Mg²⁺, NH₄⁺). >20 = highly fertile; <10 = sandy/poor.', es:'Capacidad de Intercambio Catiónico — capacidad del suelo de retener cationes (Ca²⁺, K⁺, Mg²⁺, NH₄⁺). >20 = muy fértil; <10 = arenoso/pobre.'},
+  'Total nitrogen (g/kg)': {en:'Total N in topsoil. >2 g/kg supports vigorous bamboo growth without synthetic fertilizer in the first years.', es:'N total en el suelo superficial. >2 g/kg sostiene crecimiento vigoroso de bambú sin fertilizante sintético en los primeros años.'},
+  // Land cover & hydro
+  'Land cover dominant': {en:'Most-frequent ESA WorldCover class inside the polygon (10 m). "Tree cover" reflects the existing canopy of the planted block.', es:'Clase ESA WorldCover dominante dentro del polígono (10 m). "Tree cover" refleja el dosel existente del bloque plantado.'},
+  'Waterways within 3 km': {en:'Count of OSM-mapped streams, rivers, and water bodies within a 3 km buffer. Indicates accessibility to surface irrigation.', es:'Cantidad de cursos de agua mapeados (OSM) en un buffer de 3 km. Indica acceso potencial a riego superficial.'},
+  'Nearest water (m)': {en:'Straight-line distance from field centroid to the nearest mapped water geometry vertex.', es:'Distancia en línea recta desde el centroide del campo al vértice más cercano de geometría de agua mapeada.'},
+};
+
+function applyTips(){
+  const lang=document.documentElement.getAttribute('data-lang')||'en';
+  document.querySelectorAll('table.data td.label').forEach(td=>{
+    const text=td.textContent.trim();
+    if(TIPS[text]){
+      td.classList.add('term');
+      td.setAttribute('tabindex','0');
+      td.setAttribute('data-tip',TIPS[text][lang]);
+    }
+  });
+}
+
+// ----- OPTIMAL conditions assessment (Guadua angustifolia primary; Olhamí caveats) -----
+// Sources: INBAR (2020) "Guadua angustifolia: cultivo, manejo, aprovechamiento";
+//          Londoño X. (2002); Riaño NM et al. (2002); Cruz-Ramírez H. (2009).
+const OPTIMAL = [
+  {key:'Elevation', unit:'m', optimal:'500–1600 (max 2000)', get:s=>s.elev_mean_m, score:v=>v>=500&&v<=1600?'good':(v>=200&&v<=2000?'mid':'low'), tip:{en:'Guadua grows 0–2000 m. Below 500 m and above 1600 m culm strength and growth rate decline.', es:'Guadua crece 0–2000 m. Bajo 500 m y sobre 1600 m la resistencia del culmo y la tasa de crecimiento disminuyen.'}},
+  {key:'Mean annual temperature', unit:'°C', optimal:'20–26', get:s=>s.tmean_annual_c, score:v=>v>=20&&v<=26?'good':(v>=17&&v<=29?'mid':'low'), tip:{en:'Optimal 20–26 °C. Below 18 °C growth slows; above 30 °C heat stress and transpiration losses dominate.', es:'Óptimo 20–26 °C. <18 °C el crecimiento se ralentiza; >30 °C predomina el estrés térmico y la transpiración.'}},
+  {key:'Min temperature coldest month', unit:'°C', optimal:'>12 (frost-free)', get:s=>{const j=s._monthly?.[0]?.tmin;return j;}, score:v=>v==null?'na':(v>=12?'good':(v>=5?'mid':'low')), tip:{en:'Guadua is frost-intolerant. Coldest-month Tmin must stay above 0 °C; above 12 °C avoids growth pause.', es:'Guadua no tolera heladas. La Tmin del mes más frío debe mantenerse sobre 0 °C; sobre 12 °C evita pausa de crecimiento.'}},
+  {key:'Max temperature hottest month', unit:'°C', optimal:'<34', get:s=>Math.max(...(s._monthly||[]).map(x=>x.tmax)), score:v=>v==null?'na':(v<34?'good':(v<37?'mid':'low')), tip:{en:'Hottest-month Tmax >36 °C causes leaf damage and reduced photosynthesis in tropical bamboos.', es:'Tmax del mes más cálido >36 °C causa daño foliar y reduce la fotosíntesis en bambúes tropicales.'}},
+  {key:'Annual rainfall (CHIRPS)', unit:'mm/yr', optimal:'1500–2500', get:s=>s.ppt_annual_mean_mm, score:v=>v>=1500?'good':(v>=1100?'mid':'low'), tip:{en:'Guadua angustifolia is highly water-demanding. <1100 mm requires irrigation; <800 mm severely limits commercial yield.', es:'Guadua angustifolia tiene alta demanda de agua. <1100 mm requiere riego; <800 mm limita gravemente el rendimiento comercial.'}},
+  {key:'Annual rainfall (TerraClimate)', unit:'mm/yr', optimal:'1500–2500', get:s=>{const tot=(s._monthly||[]).reduce((a,b)=>a+b.rain_terra,0);return Math.round(tot);}, score:v=>v==null?'na':(v>=1500?'good':(v>=1100?'mid':'low')), tip:{en:'TerraClimate uses different gauges than CHIRPS; comparing both gives a confidence range.', es:'TerraClimate usa pluviómetros distintos a CHIRPS; comparar ambos da un rango de confianza.'}},
+  {key:'Dry-season length', unit:'months <50 mm', optimal:'≤3', get:s=>(s._monthly||[]).filter(x=>x.rain_chirps<50).length, score:v=>v<=3?'good':(v<=5?'mid':'low'), tip:{en:'Months with <50 mm rainfall. Guadua tolerates ≤4 dry months; longer windows demand irrigation.', es:'Meses con <50 mm de lluvia. Guadua tolera ≤4 meses secos; ventanas mayores exigen riego.'}},
+  {key:'Climate water deficit', unit:'mm/yr', optimal:'<300', get:s=>s.deficit_annual_mm, score:v=>v<300?'good':(v<700?'mid':'low'), tip:{en:'Annual gap between PET and AET. <300 = rain-fed feasible; 300–700 = supplementary irrigation; >700 = irrigation essential.', es:'Brecha anual entre PET y AET. <300 = factible de secano; 300–700 = riego suplementario; >700 = riego esencial.'}},
+  {key:'VPD', unit:'kPa', optimal:'<1.5', get:s=>s.vpd_annual_kpa, score:v=>v<1.5?'good':(v<2.5?'mid':'low'), tip:{en:'Higher VPD = drier air = higher transpiration. >2 kPa increases stomatal closure and reduces growth.', es:'VPD mayor = aire más seco = mayor transpiración. >2 kPa aumenta el cierre estomático y reduce el crecimiento.'}},
+  {key:'Solar radiation', unit:'W/m²', optimal:'>180 (full sun)', get:s=>s.srad_annual_wm2, score:v=>v>=180?'good':(v>=140?'mid':'low'), tip:{en:'Guadua needs full sun. <150 W/m² means significant shading or persistent cloud cover.', es:'Guadua necesita sol pleno. <150 W/m² indica sombra significativa o nubosidad persistente.'}},
+  {key:'Soil pH (0–5 cm)', unit:'pH', optimal:'5.5–6.5', get:s=>s.soil_ph_0_5cm, score:v=>v>=5.5&&v<=6.5?'good':(v>=4.5&&v<=7.5?'mid':'low'), tip:{en:'Guadua optimum slightly acid. <5 = aluminum toxicity; >7 = micronutrient lock-out.', es:'Guadua óptimo ligeramente ácido. <5 = toxicidad por aluminio; >7 = bloqueo de micronutrientes.'}},
+  {key:'Soil organic carbon (0–5 cm)', unit:'g/kg', optimal:'>17', get:s=>s.soil_soc_0_5cm_g_kg, score:v=>v>17?'good':(v>10?'mid':'low'), tip:{en:'Equivalent organic matter ≈ SOC × 1.72. >30 g/kg = excellent. Sustains microbial activity and N mineralization.', es:'Materia orgánica equivalente ≈ SOC × 1,72. >30 g/kg = excelente. Sostiene actividad microbiana y mineralización de N.'}},
+  {key:'Soil texture', unit:'class', optimal:'sandy loam / loam', get:s=>{const c=s.soil_clay_0_5cm_pct,si=s.soil_silt_0_5cm_pct,sa=s.soil_sand_0_5cm_pct;if(sa>=43&&sa<=85&&c<=20)return 'Sandy loam';if(sa>=23&&sa<=52&&si>=28&&si<=50&&c<=27)return 'Loam';if(c>40)return 'Clay';return 'Mixed';}, score:v=>v==='Sandy loam'||v==='Loam'?'good':(v==='Mixed'?'mid':'low'), tip:{en:'Sandy loam and loam drain well while holding nutrients — ideal for bamboo rhizomes. Heavy clay risks waterlogging.', es:'Franco arenoso y franco drenan bien reteniendo nutrientes — ideal para rizomas de bambú. Arcilla pesada corre riesgo de encharcamiento.'}},
+  {key:'Soil bulk density (0–5 cm)', unit:'kg/dm³', optimal:'<1.4', get:s=>s.soil_bdod_0_5cm_kg_dm3, score:v=>v<1.4?'good':(v<1.6?'mid':'low'), tip:{en:'>1.4 indicates compaction; >1.6 severely restricts root extension and infiltration.', es:'>1,4 indica compactación; >1,6 restringe gravemente el desarrollo radicular y la infiltración.'}},
+  {key:'CEC (0–5 cm)', unit:'cmol(c)/kg', optimal:'>15', get:s=>s.soil_cec_0_5cm_cmol_kg, score:v=>v>15?'good':(v>8?'mid':'low'), tip:{en:'CEC > 20 = strong nutrient retention. Bamboo benefits from this in lieu of synthetic fertilizer.', es:'CEC > 20 = fuerte retención de nutrientes. El bambú aprovecha esto en lugar de fertilización sintética.'}},
+  {key:'Total nitrogen (0–5 cm)', unit:'g/kg', optimal:'>2', get:s=>s.soil_nitrogen_0_5cm_g_kg, score:v=>v>2?'good':(v>1?'mid':'low'), tip:{en:'Nitrogen drives biomass and culm production. <1 g/kg requires legume cover crop or N supplementation.', es:'El nitrógeno impulsa biomasa y producción de culmos. <1 g/kg requiere cobertura con leguminosas o N suplementario.'}},
+  {key:'Mean slope', unit:'°', optimal:'<15 (manageable <30)', get:s=>s.slope_mean_deg, score:v=>v<15?'good':(v<30?'mid':'low'), tip:{en:'<15° = mechanizable. 15–30° = contour planting + erosion control. >30° = terraces required.', es:'<15° = mecanizable. 15–30° = plantación en contorno + control de erosión. >30° = terrazas requeridas.'}},
+  {key:'Aspect', unit:'cardinal', optimal:'N or NE (in N hemisphere dry tropics)', get:s=>s.aspect_dominant, score:v=>['N','NE','NW'].includes(v)?'good':(['E','W'].includes(v)?'mid':'low'), tip:{en:'In northern-hemisphere dry tropics, north-facing slopes retain more soil moisture and limit afternoon heat stress.', es:'En trópico seco del hemisferio norte, las laderas con orientación norte retienen más humedad y reducen el estrés térmico vespertino.'}},
+  {key:'Surface water within 3 km', unit:'count', optimal:'≥1 stream/river', get:s=>s.osm_waterways_within_3km, score:v=>v>=1?'good':'mid', tip:{en:'Access to surface water expands irrigation options during the dry season.', es:'El acceso a agua superficial amplía las opciones de riego durante la temporada seca.'}},
+];
+
+function renderOptimal(){
+  const t=document.getElementById('optimal-table'); if(!t) return;
+  t.innerHTML='';
+  const lang=document.documentElement.getAttribute('data-lang')||'en';
+  // Attach monthly to summary objects so getters can use them
+  D.summary.first_field._monthly = D.monthly_climate.map(x=>x.f1);
+  D.summary.second_field._monthly = D.monthly_climate.map(x=>x.f2);
+  t.appendChild(tr([
+    {th:true,text:lang==='es'?'Parámetro':'Parameter'},
+    {th:true,text:lang==='es'?'Unidad':'Unit'},
+    {th:true,text:lang==='es'?'Óptimo (Guadua)':'Optimal (Guadua)'},
+    {th:true,text:'Field 1'}, {th:true,text:'F1'},
+    {th:true,text:'Field 2'}, {th:true,text:'F2'},
+  ]));
+  const counts={f1:{good:0,mid:0,low:0,na:0},f2:{good:0,mid:0,low:0,na:0}};
+  OPTIMAL.forEach(row=>{
+    const v1=row.get(D.summary.first_field);
+    const v2=row.get(D.summary.second_field);
+    const s1=row.score(v1); const s2=row.score(v2);
+    counts.f1[s1]=(counts.f1[s1]||0)+1; counts.f2[s2]=(counts.f2[s2]||0)+1;
+    const chip=s=>`<span class="score-chip score-${s==='good'?'good':s==='mid'?'mid':s==='low'?'low':'na'}">${s==='good'?'✓':s==='mid'?'◐':s==='low'?'✗':'—'}</span>`;
+    const labelCell=tag('td',null,row.key);
+    labelCell.className='label term'; labelCell.setAttribute('tabindex','0');
+    labelCell.setAttribute('data-tip', row.tip[lang]);
+    const tr_=tag('tr');
+    tr_.appendChild(labelCell);
+    [{text:row.unit,cls:'unit'},{text:row.optimal},{text:fmt(v1,(typeof v1==='number'?(v1<10?2:1):0))},{html:chip(s1)},{text:fmt(v2,(typeof v2==='number'?(v2<10?2:1):0))},{html:chip(s2)}].forEach(c=>{
+      const cell=tag(c.html?'td':'td',null,c.html||c.text);
+      if(c.cls) cell.className=c.cls;
+      tr_.appendChild(cell);
+    });
+    t.appendChild(tr_);
+  });
+  // Overall score (0-100 with good=1, mid=0.5, low=0)
+  function pct(c){const n=c.good+c.mid+c.low;return n?Math.round(100*(c.good+0.5*c.mid)/n):0;}
+  const p1=pct(counts.f1), p2=pct(counts.f2);
+  const label1=p1>=80?(lang==='es'?'Excelente':'Excellent'):p1>=60?(lang==='es'?'Bueno':'Good'):p1>=40?(lang==='es'?'Marginal':'Marginal'):(lang==='es'?'Limitado':'Limited');
+  const label2=p2>=80?(lang==='es'?'Excelente':'Excellent'):p2>=60?(lang==='es'?'Bueno':'Good'):p2>=40?(lang==='es'?'Marginal':'Marginal'):(lang==='es'?'Limitado':'Limited');
+  document.getElementById('score-f1').textContent=p1+'%';
+  document.getElementById('score-f2').textContent=p2+'%';
+  document.getElementById('score-f1-detail').textContent=`${label1} · ${counts.f1.good||0}✓ ${counts.f1.mid||0}◐ ${counts.f1.low||0}✗`;
+  document.getElementById('score-f2-detail').textContent=`${label2} · ${counts.f2.good||0}✓ ${counts.f2.mid||0}◐ ${counts.f2.low||0}✗`;
+}
+
 function renderAll(){
   renderSummary(); renderClimTable('clim-table-f1','f1'); renderClimTable('clim-table-f2','f2');
   renderAnnualTable(); renderTopoTable();
@@ -454,6 +634,8 @@ function renderAll(){
   renderLC();
   renderHydro('hydro-table-f1','first_field'); renderHydro('hydro-table-f2','second_field');
   renderVegClim(); renderCharts();
+  renderOptimal();
+  applyTips();
 }
 renderAll();
 
