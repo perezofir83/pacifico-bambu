@@ -59,13 +59,13 @@ html { font-family: "Be Vietnam Pro", system-ui, sans-serif; }
 <!-- HEADER -->
 <header class="fixed top-0 w-full z-50 bg-cream-50/85 backdrop-blur-md border-b border-green-900/10 h-16">
   <div class="max-w-7xl mx-auto h-full px-6 lg:px-12 flex items-center justify-between">
-    <a href="./index.html" class="font-display text-lg font-medium text-green-900 tracking-tight">
+    <span class="font-display text-lg font-medium text-green-900 tracking-tight">
       Pacífico Bambú
-    </a>
+    </span>
     <nav class="hidden md:flex items-center gap-8 font-display text-xs uppercase tracking-widest">
-      <a href="./index.html" class="text-ink-soft hover:text-green-900 transition-colors" data-en="Home" data-es="Inicio">Home</a>
-      <a href="#map-section" class="text-green-900 border-b border-green-900" data-en="Sites" data-es="Campos">Sites</a>
-      <a href="./index.html#contact" class="text-ink-soft hover:text-green-900 transition-colors" data-en="Contact" data-es="Contacto">Contact</a>
+      <span class="text-green-900 border-b border-green-900" data-en="Field Analysis" data-es="Análisis de Campos">Field Analysis</span>
+      <a href="#map-section" class="text-ink-soft hover:text-green-900 transition-colors" data-en="Sites" data-es="Campos">Sites</a>
+      <a href="#climate" class="text-ink-soft hover:text-green-900 transition-colors" data-en="Climate" data-es="Clima">Climate</a>
     </nav>
     <button data-lang-toggle class="font-display text-xs tracking-widest text-green-900 hover:opacity-70">
       <span data-lang-en class="font-bold">EN</span><span class="opacity-50 mx-1">/</span><span data-lang-es>ES</span>
@@ -187,7 +187,7 @@ html { font-family: "Be Vietnam Pro", system-ui, sans-serif; }
 </section>
 
 <!-- CLIMATE -->
-<section class="bg-green-100 section-pad px-6 lg:px-12">
+<section id="climate" class="bg-green-100 section-pad px-6 lg:px-12">
   <div class="max-w-7xl mx-auto">
     <div class="mb-10">
       <span class="font-eyebrow text-[10px] text-green-700 uppercase" data-en="02 — Climate" data-es="02 — Clima">02 — Climate</span>
@@ -425,7 +425,7 @@ html { font-family: "Be Vietnam Pro", system-ui, sans-serif; }
     </div>
     <div class="text-xs text-green-200 font-display tracking-wide">
       <p data-en="Field analysis generated May 2026. Data: Copernicus, NASA, ESA, UCSB CHC." data-es="Análisis de campos generado en mayo 2026. Datos: Copernicus, NASA, ESA, UCSB CHC.">Field analysis generated May 2026.</p>
-      <p class="mt-1"><a href="./index.html" class="underline decoration-green-500 hover:text-cream-50" data-en="← Back to main site" data-es="← Volver al sitio principal">← Back to main site</a></p>
+      <p class="mt-1"><span data-en="Internal document." data-es="Documento interno.">Internal document.</span></p>
     </div>
   </div>
 </footer>
