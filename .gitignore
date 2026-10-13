@@ -10,6 +10,8 @@ Pacifico_Bambu_Gantt_2026-2032.xlsx
 Pacifico_Bambu_Pitch_Deck_v3.pptx
 Mexico_Bamboo_Competitive_Landscape.md
 Mexico_Bamboo_Competitors.xlsx
+Mexico_Bamboo_Demand_Ecosystem.xlsx
+Pacifico_Bambu_Deck_v3.pdf
 Ecosystem_Dashboard_Design_Research.md
 CLAUDE.md
 generate_pitch_deck.py
@@ -18,3 +20,15 @@ scripts/
 docs/ecosystem.html
 docs/study/
 analysis/
+
+# Internal work — never publish (added Oct 2026)
+Paraderos_Bambu_Municipal_Playbook.md
+Propuesta_Paraderos_Bambu_*
+propuesta-assets/
+Image bus stop\ /
+anuncio-trabajador.pdf
+landing-sketch.md
+docs/gtm.html
+docs/compare.html
+docs/content/
+*.pdf
